@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>--project-name</key>
+	<string>STRABO-MultiRecorder</string>
+	<key>--project-company</key>
+	<string>Strabo, LLC</string>
+	<key>--project-version</key>
+	<string>1.0.0(1.0)</string>
+	<key>--company-id</key>
+	<string>com.strabogis</string>
+	<key>--ignore</key>
+	<array>
+		<string>src</string>
+		<string>Libraries</string>
+		<string>Frameworks</string>
+		<string>Testing</string>
+		<string>.m</string>
+	</array>
+	<key>--output</key>
+	<string>~/Documents/Developer/StraboGIS/Documentation/MultiRecorder</string>
+	<key>--create-docset</key>
+	<true/>
+	<key>--install-docset</key>
+	<true/>
+	<key>--verbose</key>
+	<integer>4</integer>
+	<key>--logformat</key>
+	<integer>1</integer>
+	<key>--include</key>
+	<string>./help</string>
+</dict>
+</plist>

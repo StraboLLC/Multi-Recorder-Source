@@ -72,6 +72,31 @@
 
 @end
 
+@interface STRCaptureViewController () {
+    
+    id delegate;
+    BOOL isRecording;
+    
+    // Preferences
+    //STRUserPreferencesManager * preferencesManager;
+    
+    // Location support
+    CLLocationManager * locationManager;
+    STRGeoLocationData * geoLocationData;
+    
+    // Camera capture support
+    STRCaptureDataCollector * captureDataCollector;
+    AVCaptureVideoPreviewLayer * capturePreviewLayer;
+    IBOutlet UIView * videoPreviewLayer;
+    
+    // General capture support
+    double mediaStartTime;
+    UIDeviceOrientation currentOrientation;
+    
+}
+
+@end
+
 @implementation STRCaptureViewController
 
 @synthesize delegate = _delegate;
@@ -156,6 +181,13 @@
     }
 }
 
+#pragma mark - Class Methods
+
++(STRCaptureViewController *)captureManager {
+    UIStoryboard * recorderStoryboard = [UIStoryboard storyboardWithName:@"STRMultiRecorderStoryboard" bundle:[NSBundle mainBundle]];
+    return [recorderStoryboard instantiateViewControllerWithIdentifier:@"captureViewController"];
+}
+
 #pragma mark - Button Handling
 
 -(IBAction)doneButtonWasPressed:(id)sender {
@@ -213,7 +245,6 @@
 
 -(void)recordCurrentLocationToGeodataObject {
     // Add a point taken from the locationManager
-    NSLog(@"STRCaptureViewController: Recording a geodata point");
     [geoLocationData addDataPointWithLatitude:locationManager.location.coordinate.latitude
                                     longitude:locationManager.location.coordinate.longitude 
                                       heading:locationManager.heading.trueHeading 
