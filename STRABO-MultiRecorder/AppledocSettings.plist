@@ -29,6 +29,6 @@
 	<key>--logformat</key>
 	<integer>1</integer>
 	<key>--include</key>
-	<string>./help</string>
+	<string>~/Documents/Developer/StraboGIS/Multi-Recorder/STRABO-MultiRecorder/STRABO-MultiRecorder/help</string>
 </dict>
 </plist>

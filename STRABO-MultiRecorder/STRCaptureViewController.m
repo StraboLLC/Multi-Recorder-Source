@@ -22,7 +22,7 @@
 /**
  Set up the camera capture object.
  
- Set up the STRCaptureDataCollector to receive data from video and audio sources. Prepare to record either audio or video.
+ Set up the STRCaptureDataCollector to receive data from video and audio sources. Prepare to record either an image or video.
  */
 -(void)setUpCaptureServices;
 
@@ -47,6 +47,19 @@
 -(void)startCapturingVideo;
 -(void)stopCapturingVideo;
 -(void)captureStillImage;
+
+// -- File Handling -- //
+
+/**
+ Coppies the temporary files to a more permanent and organized location.
+ 
+ This method is called whenever a capture has finished recording to the temp files and is ready to be moved into the documents file heirarchy.
+ 
+ @param captureType The media type captured by the recorder. This value can either be the string @"video" or @"image" for now.
+ 
+ @warning This code should probably be in a model. The logic for moving files should be located somewhere else, not in the view controller, but this works for now.
+ */
+-(void)resaveTemporaryFilesOfType:(NSString *)captureType;
 
 @end
 
@@ -73,25 +86,6 @@
 @end
 
 @interface STRCaptureViewController () {
-    
-    id delegate;
-    BOOL isRecording;
-    
-    // Preferences
-    //STRUserPreferencesManager * preferencesManager;
-    
-    // Location support
-    CLLocationManager * locationManager;
-    STRGeoLocationData * geoLocationData;
-    
-    // Camera capture support
-    STRCaptureDataCollector * captureDataCollector;
-    AVCaptureVideoPreviewLayer * capturePreviewLayer;
-    IBOutlet UIView * videoPreviewLayer;
-    
-    // General capture support
-    double mediaStartTime;
-    UIDeviceOrientation currentOrientation;
     
 }
 
@@ -134,7 +128,7 @@
     [self setUpLocationServices];
     [self setUpCaptureServices];
     
-    // Now that the capture services are set up, 
+    // Now that the capture services are set up,
     // load the video preview layer with the captureSesson
     capturePreviewLayer = [AVCaptureVideoPreviewLayer layerWithSession:[captureDataCollector session]];
     capturePreviewLayer.frame = videoPreviewLayer.bounds;
@@ -167,8 +161,8 @@
     
     if (currentOrientation
         && newOrientation
-        && (currentOrientation != newOrientation) 
-        && (!isRecording) 
+        && (currentOrientation != newOrientation)
+        && (!isRecording)
         && (newOrientation != UIDeviceOrientationFaceUp)
         && (newOrientation != UIDeviceOrientationFaceDown)) {
         
@@ -246,9 +240,9 @@
 -(void)recordCurrentLocationToGeodataObject {
     // Add a point taken from the locationManager
     [geoLocationData addDataPointWithLatitude:locationManager.location.coordinate.latitude
-                                    longitude:locationManager.location.coordinate.longitude 
-                                      heading:locationManager.heading.trueHeading 
-                                    timestamp:(CACurrentMediaTime() - mediaStartTime) 
+                                    longitude:locationManager.location.coordinate.longitude
+                                      heading:locationManager.heading.trueHeading
+                                    timestamp:(CACurrentMediaTime() - mediaStartTime)
                                      accuracy:locationManager.location.horizontalAccuracy];
 }
 
@@ -261,6 +255,31 @@
 }
 
 -(void)captureStillImage {
+    
+}
+
+#pragma mark - File Handling
+
+-(void)resaveTemporaryFilesOfType:(NSString *)captureType {
+    
+    // Start the activity spinner
+    #warning Incomplete implementation
+    
+    // Perform saving actions
+    STRCaptureFileOrganizer * fileOrganizer = [[STRCaptureFileOrganizer alloc] init];
+    
+    if ([captureType isEqualToString:@"video"]) {
+        // Move video files
+        [fileOrganizer saveTempVideoFiles];
+    } else if ([captureType isEqualToString:@"image"]) {
+        // Move image files
+        [fileOrganizer saveTempImageFiles];
+    } else {
+        NSLog(@"Method resaveTemporaryFilesOfType: called with improper parameters. Please see documentation.");
+    }
+    
+    // Stop the activity spinner
+    #warning Incomplete implementation
     
 }
 
@@ -292,6 +311,7 @@
     }
     
     // Update the compass
+    
 }
 
 -(BOOL)locationManagerShouldDisplayHeadingCalibration:(CLLocationManager *)manager {

@@ -15,6 +15,7 @@
                             <view translatesAutoresizingMaskIntoConstraints="NO" contentMode="scaleToFill" id="rR0-8X-aX8">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
+                            <switch translatesAutoresizingMaskIntoConstraints="NO" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="Mdy-cd-KT3"/>
                             <button translatesAutoresizingMaskIntoConstraints="NO" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" hasAttributedTitle="NO" lineBreakMode="middleTruncation" id="GM6-NA-oN1" userLabel="Done">
                                 <accessibility key="accessibilityConfiguration" label=""/>
                                 <constraints>
@@ -53,17 +54,20 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="GM6-NA-oN1" firstAttribute="top" secondItem="JHB-wg-pPE" secondAttribute="top" constant="20" symbolic="YES" type="default" id="8FS-se-p3C"/>
-                            <constraint firstItem="rR0-8X-aX8" firstAttribute="trailing" secondItem="JHB-wg-pPE" secondAttribute="trailing" type="default" id="Hca-vw-w76"/>
+                            <constraint firstItem="rR0-8X-aX8" firstAttribute="leading" secondItem="JHB-wg-pPE" secondAttribute="leading" type="default" id="Gaa-kj-XJS"/>
                             <constraint firstAttribute="bottom" secondItem="bY2-ma-qXh" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="HpP-VJ-tJc"/>
-                            <constraint firstItem="rR0-8X-aX8" firstAttribute="leading" secondItem="JHB-wg-pPE" secondAttribute="leading" type="default" id="UsL-Vq-yjb"/>
-                            <constraint firstItem="rR0-8X-aX8" firstAttribute="top" secondItem="JHB-wg-pPE" secondAttribute="top" type="default" id="W3W-41-Osc"/>
-                            <constraint firstItem="rR0-8X-aX8" firstAttribute="bottom" secondItem="JHB-wg-pPE" secondAttribute="bottom" type="default" id="Z4n-v2-gBr"/>
+                            <constraint firstItem="Mdy-cd-KT3" firstAttribute="leading" secondItem="JHB-wg-pPE" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="IEd-1k-AEh"/>
+                            <constraint firstAttribute="bottom" secondItem="Mdy-cd-KT3" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="Rww-Am-XQf"/>
+                            <constraint firstItem="rR0-8X-aX8" firstAttribute="trailing" secondItem="JHB-wg-pPE" secondAttribute="trailing" type="default" id="gAJ-Xp-Wuo"/>
+                            <constraint firstItem="rR0-8X-aX8" firstAttribute="top" secondItem="JHB-wg-pPE" secondAttribute="top" type="default" id="izX-gM-gKX"/>
+                            <constraint firstItem="rR0-8X-aX8" firstAttribute="bottom" secondItem="JHB-wg-pPE" secondAttribute="bottom" type="default" id="jIE-c3-YR8"/>
                             <constraint firstAttribute="trailing" secondItem="bY2-ma-qXh" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="rSO-dx-y1O"/>
                             <constraint firstItem="GM6-NA-oN1" firstAttribute="leading" secondItem="JHB-wg-pPE" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="wIK-DJ-4g1"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="videoPreviewLayer" destination="rR0-8X-aX8" id="dXT-VI-YEV"/>
+                        <outlet property="captureSelector" destination="Mdy-cd-KT3" id="K1P-5A-mKS"/>
+                        <outlet property="videoPreviewLayer" destination="rR0-8X-aX8" id="UXo-PN-Aw6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JQb-KP-Ja9" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -80,6 +84,7 @@
             <relationships>
                 <relationship kind="action" name="doneButtonWasPressed:"/>
                 <relationship kind="action" name="recordButtonWasPressed:"/>
+                <relationship kind="outlet" name="captureSelector" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="videoPreviewLayer" candidateClass="UIView"/>
             </relationships>
         </class>
