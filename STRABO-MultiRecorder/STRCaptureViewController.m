@@ -180,8 +180,7 @@
 #pragma mark - Button Handling
 
 -(IBAction)doneButtonWasPressed:(id)sender {
-    NSLog(@"STRCaptureViewController: Dismissing capture controller.");
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.delegate parentShouldDismissCaptureViewController:self];
 }
 
 -(IBAction)recordButtonWasPressed:(id)sender {
@@ -190,7 +189,7 @@
         [self stopCapturingVideo];
     } else {
         NSLog(@"STRCaptureViewController: Rec button pressed - starting capture session.");
-        geoLocationData = [[STRGeoLocationData alloc] init];
+        
         [self startCapturingVideo];
     }
 }
@@ -243,6 +242,7 @@
 }
 
 -(void)startCapturingVideo {
+    geoLocationData = [[STRGeoLocationData alloc] init];
     [captureDataCollector startCapturingVideoWithOrientation:currentOrientation];
 }
 
@@ -326,7 +326,12 @@
     
     // Force record the first geodata point
     mediaStartTime = CACurrentMediaTime();
-    [self recordCurrentLocationToGeodataObject];
+    // Write an initial point to the data
+    [geoLocationData addDataPointWithLatitude:locationManager.location.coordinate.latitude
+                                    longitude:locationManager.location.coordinate.longitude
+                                      heading:locationManager.heading.trueHeading
+                                    timestamp:0.00
+                                     accuracy:locationManager.location.horizontalAccuracy];
 }
 
 -(void)videoRecordingDidEnd {
@@ -337,6 +342,8 @@
     [geoLocationData writeDataPointsToTempFile];
     
     // Write files to a more permanent location
+    STRCaptureFileOrganizer * fileOrganizer = [[STRCaptureFileOrganizer alloc] init];
+    [fileOrganizer saveTempVideoFiles];
     
     // Add video to the user's album
     

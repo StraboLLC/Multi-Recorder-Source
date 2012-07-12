@@ -41,7 +41,7 @@
 
 -(void)saveTempVideoFiles {
     NSFileManager * fileManager = [NSFileManager defaultManager];
-    NSString * newDirectoryPath = [[self docsDirectoryPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]];
+    NSString * newDirectoryPath = [[self docsDirectoryPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%d", (int)[[NSDate date] timeIntervalSince1970]]];
     
     // Make the new directory
     [fileManager createDirectoryAtPath:newDirectoryPath withIntermediateDirectories:YES attributes:nil error:nil];
@@ -50,8 +50,8 @@
     NSString * mediaTempPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"output.mov"];
     NSString * geoDataTempPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"output.json"];
     // New paths
-    NSString * mediaNewPath = [newDirectoryPath stringByAppendingPathComponent:[[self randomFileName] stringByAppendingPathExtension:@".mov"]];
-    NSString * geoDataNewPath = [newDirectoryPath stringByAppendingPathComponent:[[self randomFileName] stringByAppendingPathExtension:@".json"]];
+    NSString * mediaNewPath = [newDirectoryPath stringByAppendingPathComponent:[[self randomFileName] stringByAppendingPathExtension:@"mov"]];
+    NSString * geoDataNewPath = [newDirectoryPath stringByAppendingPathComponent:[[self randomFileName] stringByAppendingPathExtension:@"json"]];
     
     // Copy the files from temp to new
     [fileManager copyItemAtPath:mediaTempPath toPath:mediaNewPath error:nil];
@@ -62,15 +62,29 @@
 
 @implementation STRCaptureFileOrganizer (InternalMethods)
 
+#define kSTRUniqueIdentifierKey @"kSTRUniqueIdentifierKey"
+
 -(NSString *)randomFileName {
-    return [NSString stringWithFormat:@"%@-%f", [[NSUUID UUID] UUIDString], [[NSDate date] timeIntervalSince1970]];
+    
+    // Get UUID
+    NSString * uniqueIdentifier;
+    NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
+    // Generate a new identifier if one does not already exist
+    if (![userDefaults objectForKey:kSTRUniqueIdentifierKey]) {
+
+        [userDefaults setObject:[[NSUUID UUID] UUIDString] forKey:kSTRUniqueIdentifierKey];
+        [userDefaults synchronize];
+    }
+    uniqueIdentifier = [userDefaults objectForKey:kSTRUniqueIdentifierKey];
+    
+    return [NSString stringWithFormat:@"%@-%d", uniqueIdentifier, (int)[[NSDate date] timeIntervalSince1970]];
 }
 
 -(NSString *)docsDirectoryPath {
     
     NSString * docPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/StraboCaptures"];
     
-    if (![[NSFileManager defaultManager] fileExistsAtPath:docPath isDirectory:YES]) {
+    if (![[NSFileManager defaultManager] fileExistsAtPath:docPath isDirectory:nil]) {
         [[NSFileManager defaultManager] createDirectoryAtPath:docPath withIntermediateDirectories:YES attributes:nil error:nil];
     }
     

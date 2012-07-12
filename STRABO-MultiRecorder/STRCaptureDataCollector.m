@@ -33,7 +33,8 @@
 
 // Utility Methods
 -(NSURL *)videoTempFileURL;
-  
+-(NSURL *)imageTempFileURL;
+
 @end
 
 @implementation STRCaptureDataCollector
@@ -69,8 +70,27 @@
     [_delegate videoRecordingDidEnd];
 }
 
--(void)captureStillImage {
+- (void)captureStillImage {
+	AVCaptureConnection *videoConnection = nil;
+	for (AVCaptureConnection *connection in [_imageFileOutput connections]) {
+		for (AVCaptureInputPort *port in [connection inputPorts]) {
+			if ([[port mediaType] isEqual:AVMediaTypeVideo]) {
+				videoConnection = connection;
+				break;
+			}
+		}
+		if (videoConnection) {
+            break;
+        }
+	}
     
+	NSLog(@"about to request a capture from: %@", _imageFileOutput);
+	[_imageFileOutput captureStillImageAsynchronouslyFromConnection:videoConnection
+                                                         completionHandler:^(CMSampleBufferRef imageSampleBuffer, NSError *error) {
+                                                             
+                                                             NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
+                                                             UIImage * image = [[UIImage alloc] initWithData:imageData];
+                                                         }];
 }
 
 @end
@@ -148,6 +168,16 @@
         [fileManager removeItemAtPath:outputPath error:nil];
     }
     return outputURL;
+}
+
+-(NSURL *)imageTempFileURL {
+    NSString * outputPath = [[NSString alloc] initWithFormat:@"%@%@", NSTemporaryDirectory(), @"output.jpg"];
+    NSURL * outputURL = [[NSURL alloc] initFileURLWithPath:outputPath];
+    NSFileManager * fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:outputPath]) {
+        [fileManager removeItemAtPath:outputPath error:nil];
+    }
+    return outputPath;
 }
 
 @end
