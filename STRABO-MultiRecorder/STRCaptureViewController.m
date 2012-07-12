@@ -194,6 +194,10 @@
     }
 }
 
+-(IBAction)tempImgButtonPressed:(id)sender {
+    [self captureStillImage];
+}
+
 @end
 
 @implementation STRCaptureViewController (InternalMathods)
@@ -251,7 +255,7 @@
 }
 
 -(void)captureStillImage {
-    
+    [captureDataCollector captureStillImage];
 }
 
 #pragma mark - File Handling

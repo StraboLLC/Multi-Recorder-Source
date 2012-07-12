@@ -12,4 +12,4 @@ Contents of the guide:
 1. [Getting The SDK](GettingTheSDK)
 1. [Working With the SDK](Working With the SDK)
 
-This SDK was built by Nate Beatty. Please feel free to send me an email with any questions or issues: nate@strabogis.com.
+This SDK was built by Nate Beatty. Please feel free to send me an email with any questions or issues: nate@strabogis.com. Alternatively, you can contact Strabo support at support@strabogis.com.

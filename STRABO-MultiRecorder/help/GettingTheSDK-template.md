@@ -23,10 +23,18 @@ The contents of this repo should be as follows:
 			My Great Capture Recorder/
 				-sample xcode project files
 		scripts/
-			gatherSRC.sh
-			generateDocumentation.sh
+			buildSDK
+			installDocs
 		src/
 			libStrabo-Multi-Recorder.a
+
+Installing the Documentation
+---
+
+The complete documentation for the project comes packaged with the SDK. To install the docs to the Xcode library, open a new terminal window and run the installDocs script.
+
+	$ cd ...Multi-Recorder/scripts/installDocs
+	$ ./installDocs
 
 Integrating With a Project
 ---
@@ -38,4 +46,3 @@ The "src" folder contains everything that you need. Find the folder in your clon
 <img src="xcode-dialog.png" width="450px" />
 
 You can choose whether or not to select the dialog box to copy the files into your project. If you choose to leave it deselected, you can pull the most recent changes from the remote git repository and your files will automatically be kept in sync with the most recent bugfixes, etc. Otherwise, you will need to re-copy the src folder anytime you wish to update to the most recent build.
-

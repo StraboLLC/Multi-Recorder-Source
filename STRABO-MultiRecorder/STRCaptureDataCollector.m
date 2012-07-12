@@ -71,6 +71,8 @@
 }
 
 - (void)captureStillImage {
+    #warning Incomplete implementation
+    NSLog(@"Capturung a still image..");
 	AVCaptureConnection *videoConnection = nil;
 	for (AVCaptureConnection *connection in [_imageFileOutput connections]) {
 		for (AVCaptureInputPort *port in [connection inputPorts]) {
@@ -85,11 +87,13 @@
 	}
     
 	NSLog(@"about to request a capture from: %@", _imageFileOutput);
+    
 	[_imageFileOutput captureStillImageAsynchronouslyFromConnection:videoConnection
                                                          completionHandler:^(CMSampleBufferRef imageSampleBuffer, NSError *error) {
                                                              
                                                              NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
                                                              UIImage * image = [[UIImage alloc] initWithData:imageData];
+                                                             [UIImageJPEGRepresentation(image, 1.0) writeToFile:[NSString stringWithFormat:@"%@", [self imageTempFileURL]] atomically:YES];
                                                          }];
 }
 
@@ -177,7 +181,7 @@
     if ([fileManager fileExistsAtPath:outputPath]) {
         [fileManager removeItemAtPath:outputPath error:nil];
     }
-    return outputPath;
+    return outputURL;
 }
 
 @end

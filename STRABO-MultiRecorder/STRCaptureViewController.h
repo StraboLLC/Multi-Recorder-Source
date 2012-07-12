@@ -113,6 +113,8 @@
  You should never need to call this method. It is handled in the SDK Storyboard.
  */
 -(IBAction)recordButtonWasPressed:(id)sender;
+
+-(IBAction)tempImgButtonPressed:(id)sender;
     
 
 @end
