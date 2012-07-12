@@ -85,15 +85,11 @@
 
 @end
 
-@interface STRCaptureViewController () {
-    
-}
+@interface STRCaptureViewController ()
 
 @end
 
 @implementation STRCaptureViewController
-
-@synthesize delegate = _delegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -129,12 +125,11 @@
     [self setUpCaptureServices];
     
     // Now that the capture services are set up,
-    // load the video preview layer with the captureSesson
+    // load the video preview layer with the captureSession
     capturePreviewLayer = [AVCaptureVideoPreviewLayer layerWithSession:[captureDataCollector session]];
     capturePreviewLayer.frame = videoPreviewLayer.bounds;
     capturePreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
     [videoPreviewLayer.layer addSublayer:capturePreviewLayer];
-    
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -195,6 +190,7 @@
         [self stopCapturingVideo];
     } else {
         NSLog(@"STRCaptureViewController: Rec button pressed - starting capture session.");
+        geoLocationData = [[STRGeoLocationData alloc] init];
         [self startCapturingVideo];
     }
 }

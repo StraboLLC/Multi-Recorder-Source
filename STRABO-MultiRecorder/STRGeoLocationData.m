@@ -61,9 +61,13 @@
     NSString *outputPath = [[NSString alloc] initWithFormat:@"%@%@%@", NSTemporaryDirectory(), @"output", @".json"];
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
+    // Remove the old file
     if ([fileManager fileExistsAtPath:outputPath]) {
         [fileManager removeItemAtPath:outputPath error:nil];
     }
+    // Create a new file
+    [fileManager createFileAtPath:outputPath contents:nil attributes:nil];
+    
     return outputPath;
 }
 

@@ -38,13 +38,6 @@
 
 @implementation STRCaptureDataCollector
 
-@synthesize delegate = _delegate;
-@synthesize session = _session;
-@synthesize videoInput = _videoInput;
-@synthesize audioInput = _audioInput;
-@synthesize movieFileOutput = _movieFileOutput;
-@synthesize imageFileOutput = _imageFileOutput;
-
 - (id)init
 {
     self = [super init];
@@ -114,7 +107,6 @@
     
     if (![_session isRunning]) {
         [_session startRunning];
-        NSLog(@"STRCaptureDataCollector: Session successfully started.");
     }
 }
 

@@ -15,8 +15,6 @@
 		96B1C8B515AB39870041F8AC /* STRCaptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B1C8B115AB39870041F8AC /* STRCaptureViewController.m */; };
 		96B1C8B615AB39870041F8AC /* STRGeoLocationData.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B1C8B315AB39870041F8AC /* STRGeoLocationData.m */; };
 		96E6F89215AB306E00DE1AA5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96E6F89115AB306E00DE1AA5 /* Foundation.framework */; };
-		96E6F89715AB306E00DE1AA5 /* STRABO_MultiRecorder.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 96E6F89615AB306E00DE1AA5 /* STRABO_MultiRecorder.h */; };
-		96E6F89915AB306E00DE1AA5 /* STRABO_MultiRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E6F89815AB306E00DE1AA5 /* STRABO_MultiRecorder.m */; };
 		96E6F8A115AB306E00DE1AA5 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96E6F8A015AB306E00DE1AA5 /* SenTestingKit.framework */; };
 		96E6F8A415AB306E00DE1AA5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96E6F89115AB306E00DE1AA5 /* Foundation.framework */; };
 		96E6F8A715AB306E00DE1AA5 /* libSTRABO-MultiRecorder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 96E6F88E15AB306E00DE1AA5 /* libSTRABO-MultiRecorder.a */; };
@@ -41,7 +39,6 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
-				96E6F89715AB306E00DE1AA5 /* STRABO_MultiRecorder.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,8 +62,6 @@
 		96E6F88E15AB306E00DE1AA5 /* libSTRABO-MultiRecorder.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libSTRABO-MultiRecorder.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		96E6F89115AB306E00DE1AA5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		96E6F89515AB306E00DE1AA5 /* STRABO-MultiRecorder-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "STRABO-MultiRecorder-Prefix.pch"; sourceTree = "<group>"; };
-		96E6F89615AB306E00DE1AA5 /* STRABO_MultiRecorder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STRABO_MultiRecorder.h; sourceTree = "<group>"; };
-		96E6F89815AB306E00DE1AA5 /* STRABO_MultiRecorder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STRABO_MultiRecorder.m; sourceTree = "<group>"; };
 		96E6F89F15AB306E00DE1AA5 /* STRABO-MultiRecorderTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "STRABO-MultiRecorderTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		96E6F8A015AB306E00DE1AA5 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		96E6F8AA15AB306E00DE1AA5 /* STRABO-MultiRecorderTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "STRABO-MultiRecorderTests-Info.plist"; sourceTree = "<group>"; };
@@ -163,8 +158,6 @@
 			children = (
 				9629AC0715AB7BF6004FB443 /* AppledocSettings.plist */,
 				969A743F15AC799400160FD2 /* multi-recorder-sdk.h */,
-				96E6F89615AB306E00DE1AA5 /* STRABO_MultiRecorder.h */,
-				96E6F89815AB306E00DE1AA5 /* STRABO_MultiRecorder.m */,
 				96085DBC15AB7F7900E96DE2 /* View Controllers */,
 				96085DBD15AB7F8900E96DE2 /* Capture Support */,
 				96085DBE15AB7F9700E96DE2 /* File Management */,
@@ -300,7 +293,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96E6F89915AB306E00DE1AA5 /* STRABO_MultiRecorder.m in Sources */,
 				96B1C8B415AB39870041F8AC /* STRCaptureDataCollector.m in Sources */,
 				96B1C8B515AB39870041F8AC /* STRCaptureViewController.m in Sources */,
 				96B1C8B615AB39870041F8AC /* STRGeoLocationData.m in Sources */,

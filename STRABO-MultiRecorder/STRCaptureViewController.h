@@ -52,15 +52,12 @@
  This view controller should be instantiated with the captureManager class method and then presented modally.
  */
 @interface STRCaptureViewController : UIViewController {
-    // Storyboard outlets
-    IBOutlet UIView * videoPreviewLayer;
-    IBOutlet UISwitch * captureSelector;
     
     id delegate;
     BOOL isRecording;
     
     // Preferences
-    //STRUserPreferencesManager * preferencesManager;
+    // STRUserPreferencesManager * preferencesManager;
     
     // Location support
     CLLocationManager * locationManager;
@@ -69,6 +66,7 @@
     // Camera capture support
     STRCaptureDataCollector * captureDataCollector;
     AVCaptureVideoPreviewLayer * capturePreviewLayer;
+    IBOutlet UIView * videoPreviewLayer;
     
     // General capture support
     double mediaStartTime;
