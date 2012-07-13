@@ -8,6 +8,36 @@
 
 #import "STRCapture.h"
 
+@interface STRCapture (InternalMethods)
+
+-(NSString *)straboCaptureDirectoryPath;
+
+@end
+
 @implementation STRCapture
+
+#pragma mark - Class Methods
+
++(STRCapture *)createCaptureFromFilesAtDirectory:(NSString *)captureDirectory {
+    STRCapture * newCapture = [[STRCapture alloc] init];
+    
+    NSFileManager * fileManager = [NSFileManager defaultManager];
+
+    #warning Incomplete implementation
+    
+    return newCapture;
+}
+
+-(void)save {
+    
+}
+
+@end
+
+@implementation STRCapture (InternalMethods)
+
+-(NSString *)straboCaptureDirectoryPath {
+    return [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/StraboCaptures"];
+}
 
 @end

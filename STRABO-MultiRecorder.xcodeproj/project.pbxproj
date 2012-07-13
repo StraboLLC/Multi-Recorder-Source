@@ -21,6 +21,8 @@
 		96E6F8A715AB306E00DE1AA5 /* libSTRABO-MultiRecorder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 96E6F88E15AB306E00DE1AA5 /* libSTRABO-MultiRecorder.a */; };
 		96E6F8AD15AB306E00DE1AA5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 96E6F8AB15AB306E00DE1AA5 /* InfoPlist.strings */; };
 		96E6F8B015AB306E00DE1AA5 /* STRABO_MultiRecorderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E6F8AF15AB306E00DE1AA5 /* STRABO_MultiRecorderTests.m */; };
+		96EDE7FC15B0742E00A4940B /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EDE7FB15B0742E00A4940B /* NSString+MD5.m */; };
+		96EDE7FF15B0946800A4940B /* NSDate+Unix_Timestamp_Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EDE7FE15B0946800A4940B /* NSDate+Unix_Timestamp_Tools.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +73,10 @@
 		96E6F8AC15AB306E00DE1AA5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		96E6F8AE15AB306E00DE1AA5 /* STRABO_MultiRecorderTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STRABO_MultiRecorderTests.h; sourceTree = "<group>"; };
 		96E6F8AF15AB306E00DE1AA5 /* STRABO_MultiRecorderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STRABO_MultiRecorderTests.m; sourceTree = "<group>"; };
+		96EDE7FA15B0742E00A4940B /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
+		96EDE7FB15B0742E00A4940B /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
+		96EDE7FD15B0946800A4940B /* NSDate+Unix_Timestamp_Tools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Unix_Timestamp_Tools.h"; sourceTree = "<group>"; };
+		96EDE7FE15B0946800A4940B /* NSDate+Unix_Timestamp_Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Unix_Timestamp_Tools.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,11 +167,14 @@
 			children = (
 				9629AC0715AB7BF6004FB443 /* AppledocSettings.plist */,
 				969A743F15AC799400160FD2 /* multi-recorder-sdk.h */,
+				96EDE7FA15B0742E00A4940B /* NSString+MD5.h */,
+				96EDE7FB15B0742E00A4940B /* NSString+MD5.m */,
+				96EDE7FD15B0946800A4940B /* NSDate+Unix_Timestamp_Tools.h */,
+				96EDE7FE15B0946800A4940B /* NSDate+Unix_Timestamp_Tools.m */,
 				96085DBC15AB7F7900E96DE2 /* View Controllers */,
 				96085DBD15AB7F8900E96DE2 /* Capture Support */,
 				96085DBE15AB7F9700E96DE2 /* File Management */,
-				968D3BD515AF6040000CB5D9 /* STRCapture.h */,
-				968D3BD615AF6040000CB5D9 /* STRCapture.m */,
+				96EDE7F815B0741700A4940B /* Objects */,
 				9629ABD715AB5B44004FB443 /* STRMultiRecorderStoryboard.storyboard */,
 				96E6F89415AB306E00DE1AA5 /* Supporting Files */,
 			);
@@ -197,6 +206,15 @@
 				96E6F8AB15AB306E00DE1AA5 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		96EDE7F815B0741700A4940B /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				968D3BD515AF6040000CB5D9 /* STRCapture.h */,
+				968D3BD615AF6040000CB5D9 /* STRCapture.m */,
+			);
+			name = Objects;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -304,6 +322,8 @@
 				96085DBA15AB7F6800E96DE2 /* STRCaptureFileManager.m in Sources */,
 				9634F5F615ADBEED005E1C21 /* STRCaptureFileOrganizer.m in Sources */,
 				968D3BD715AF6040000CB5D9 /* STRCapture.m in Sources */,
+				96EDE7FC15B0742E00A4940B /* NSString+MD5.m in Sources */,
+				96EDE7FF15B0946800A4940B /* NSDate+Unix_Timestamp_Tools.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

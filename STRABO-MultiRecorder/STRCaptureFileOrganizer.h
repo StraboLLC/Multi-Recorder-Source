@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NSDate+Unix_Timestamp_Tools.h"
 
 /**
  See [STRCaptureFileManager] instead.

@@ -50,8 +50,28 @@
     NSString * mediaTempPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"output.mov"];
     NSString * geoDataTempPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"output.json"];
     // New paths
-    NSString * mediaNewPath = [newDirectoryPath stringByAppendingPathComponent:[[self randomFileName] stringByAppendingPathExtension:@"mov"]];
-    NSString * geoDataNewPath = [newDirectoryPath stringByAppendingPathComponent:[[self randomFileName] stringByAppendingPathExtension:@"json"]];
+    NSString * randomFilename = [self randomFileName];
+    NSString * mediaNewPath = [newDirectoryPath stringByAppendingPathComponent:[randomFilename stringByAppendingPathExtension:@"mov"]];
+    NSString * geoDataNewPath = [newDirectoryPath stringByAppendingPathComponent:[randomFilename stringByAppendingPathExtension:@"json"]];
+    NSString * captureInfoPath = [newDirectoryPath stringByAppendingPathComponent:@"capture-info.json"];
+    
+    // Save the capture info file
+    //NSString * dateString = [[NSDate date] timeIntervalSince1970];
+    NSDictionary * trackInfo = @{
+    @"created_at" : [NSDate currentUnixTimestampString],
+    @"geodata_file" : [randomFilename stringByAppendingPathExtension:@"json"],
+    @"coords" : @[ @"latitude", @"longitude" ],
+    @"media_file" : [randomFilename stringByAppendingPathExtension:@"mov"],
+    @"thumbnail_file" : @"",
+    @"title" : @"Untitled Track",
+    @"token" : @"",
+    @"media_type" : @"video",
+    @"uploaded_at" : @""
+    };
+    NSOutputStream * output = [NSOutputStream outputStreamToFileAtPath:captureInfoPath append:NO];
+    [output open];
+    [NSJSONSerialization writeJSONObject:trackInfo toStream:output options:0 error:nil];
+    [output close];
     
     // Copy the files from temp to new
     [fileManager copyItemAtPath:mediaTempPath toPath:mediaNewPath error:nil];
@@ -71,7 +91,7 @@
     NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
     // Generate a new identifier if one does not already exist
     if (![userDefaults objectForKey:kSTRUniqueIdentifierKey]) {
-
+        
         [userDefaults setObject:[[NSUUID UUID] UUIDString] forKey:kSTRUniqueIdentifierKey];
         [userDefaults synchronize];
     }
