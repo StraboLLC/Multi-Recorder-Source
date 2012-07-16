@@ -54,9 +54,10 @@
     NSString * mediaNewPath = [newDirectoryPath stringByAppendingPathComponent:[randomFilename stringByAppendingPathExtension:@"mov"]];
     NSString * geoDataNewPath = [newDirectoryPath stringByAppendingPathComponent:[randomFilename stringByAppendingPathExtension:@"json"]];
     NSString * captureInfoPath = [newDirectoryPath stringByAppendingPathComponent:@"capture-info.json"];
+    [fileManager createFileAtPath:captureInfoPath contents:nil attributes:nil];
     
     // Save the capture info file
-    //NSString * dateString = [[NSDate date] timeIntervalSince1970];
+    // NSString * dateString = [[NSDate date] timeIntervalSince1970];
     NSDictionary * trackInfo = @{
     @"created_at" : [NSDate currentUnixTimestampString],
     @"geodata_file" : [randomFilename stringByAppendingPathExtension:@"json"],
@@ -64,9 +65,9 @@
     @"media_file" : [randomFilename stringByAppendingPathExtension:@"mov"],
     @"thumbnail_file" : @"",
     @"title" : @"Untitled Track",
-    @"token" : @"",
+    @"token" : randomFilename,
     @"media_type" : @"video",
-    @"uploaded_at" : @""
+    @"uploaded_at" : [NSDate currentUnixTimestampNumber]
     };
     NSOutputStream * output = [NSOutputStream outputStreamToFileAtPath:captureInfoPath append:NO];
     [output open];
@@ -96,8 +97,8 @@
         [userDefaults synchronize];
     }
     uniqueIdentifier = [userDefaults objectForKey:kSTRUniqueIdentifierKey];
-    
-    return [NSString stringWithFormat:@"%@-%d", uniqueIdentifier, (int)[[NSDate date] timeIntervalSince1970]];
+    NSString * fileName = [NSString stringWithFormat:@"%@-%d", uniqueIdentifier, (int)[[NSDate date] timeIntervalSince1970]];
+    return [fileName MD5];
 }
 
 -(NSString *)docsDirectoryPath {

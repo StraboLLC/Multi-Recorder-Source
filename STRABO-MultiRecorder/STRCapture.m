@@ -23,7 +23,7 @@
     
     NSFileManager * fileManager = [NSFileManager defaultManager];
 
-    #warning Incomplete implementation
+    
     
     return newCapture;
 }

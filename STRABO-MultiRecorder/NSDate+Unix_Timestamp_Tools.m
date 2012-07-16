@@ -10,12 +10,12 @@
 
 @implementation NSDate (Unix_Timestamp_Tools)
 
-+(NSString *)curentUnixTimestampString {
++(NSString *)currentUnixTimestampString {
     return [NSString stringWithFormat:@"%d", (int)[[NSDate date] timeIntervalSince1970]];
 }
 
 +(NSNumber *)currentUnixTimestampNumber {
-    return @([[NSDate date] timeIntervalSince1970]);
+    return @((int)[[NSDate date] timeIntervalSince1970]);
 }
 
 @end
