@@ -39,12 +39,29 @@ The complete documentation for the project comes packaged with the SDK. To insta
 Integrating With a Project
 ---
 
-You should already have created your Xcode iOS application project. If not, do so now.
+You should already have created your Xcode iOS application project. If not, do so now. Complete the following steps to add the library to your current project.
+
+###Add The Files
 
 The "src" folder contains everything that you need. Find the folder in your cloned repo and drag it into your project. The following prompt will appear:
 
-<img src="xcode-dialog.png" width="450px" />
+<img src="xcode-dialog.png" style="width: 600px; margin: 0px auto;" />
 
 You can choose whether or not to select the dialog box to copy the files into your project. If you choose to leave it deselected, you can pull the most recent changes from the remote git repository and your files will automatically be kept in sync with the most recent bugfixes, etc. Otherwise, you will need to re-copy the src folder anytime you wish to update to the most recent build.
+
+###Fix Xcode Linking
+
+There is a [known Xcode bug](https://developer.apple.com/library/mac/#qa/qa2006/qa1490.html) which causes an object category linking error. Because this application extends some subclasses of NSObject in the SDK, you will need a quick hack to force those object categories to be linked.
+
+1. In Xcode, click the target's name under "Targets" in the Project window.
+2. Choose the Build pane from the ensuing Info window.
+3. Scroll down to the Other Linker Flags build setting under the Linking collection and set its value to -ObjC.
+4. Add another value to the Other Linker Flags build setting and set its value to -all_load.
+
+<img src="xcode-linking.png" style="width: 600px; margin: 0px auto;" />
+
+When performing these steps, be sure that you add these tags to all builds (both debug, release, and any others that you may create). This can be easily done by changing the tag values on the top level instead of setting the tags for each build individually.
+
+###Have a Beer
 
 Congratulations! You should have successfully added the Strabo MultiRecorder SDK to your project. You are ready to start building with Strabo. Check out the [guide](WorkingWithTheSDK) for more information about how to present the capture view controller and browse and upload captures.
