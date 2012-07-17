@@ -150,7 +150,6 @@
 }
 
 -(void)deviceDidRotate {
-    NSLog(@"STRCaptureViewController: Orientation change requested.");
     
     UIDeviceOrientation newOrientation = [[UIDevice currentDevice] orientation];
     
@@ -263,14 +262,14 @@
 -(void)resaveTemporaryFilesOfType:(NSString *)captureType {
     
     // Start the activity spinner
-    #warning Incomplete implementation
+    [activityIndicator startAnimating];
     
     // Perform saving actions
     STRCaptureFileOrganizer * fileOrganizer = [[STRCaptureFileOrganizer alloc] init];
     
     if ([captureType isEqualToString:@"video"]) {
         // Move video files
-        [fileOrganizer saveTempVideoFiles];
+        [fileOrganizer saveTempVideoFilesWithInitialLocation:locationManager.location];
     } else if ([captureType isEqualToString:@"image"]) {
         // Move image files
         [fileOrganizer saveTempImageFiles];
@@ -279,7 +278,7 @@
     }
     
     // Stop the activity spinner
-    #warning Incomplete implementation
+    [activityIndicator stopAnimating];
     
 }
 
@@ -346,8 +345,7 @@
     [geoLocationData writeDataPointsToTempFile];
     
     // Write files to a more permanent location
-    STRCaptureFileOrganizer * fileOrganizer = [[STRCaptureFileOrganizer alloc] init];
-    [fileOrganizer saveTempVideoFiles];
+    [self resaveTemporaryFilesOfType:@"video"];
     
     // Add video to the user's album
     

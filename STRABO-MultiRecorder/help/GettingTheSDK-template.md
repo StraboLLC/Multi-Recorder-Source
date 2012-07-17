@@ -1,10 +1,10 @@
 Getting the SDK
-===
+===============
 
 Downloading and installing the SDK is a piece of cake. The steps outlined below will show you how to easily download and include the proper files to work with the Strabo capture code used in the Toast and Ramble products.
 
 Cloning the Git Repo
----
+--------------------
 
 The code that you will need is hosted on [GitHub](http://github.com). Request access by emailing Nate at: nate@strabogis.com. If you already have access to the repository, you can browse it [online](https://github.com/StraboLLC/Strabo-Multi-Recorder). Otherwise, clone the repository:
 
@@ -29,7 +29,7 @@ The contents of this repo should be as follows:
 			libStrabo-Multi-Recorder.a
 
 Installing the Documentation
----
+----------------------------
 
 The complete documentation for the project comes packaged with the SDK. To install the docs to the Xcode library, open a new terminal window and run the installDocs script.
 
@@ -37,7 +37,7 @@ The complete documentation for the project comes packaged with the SDK. To insta
 	$ ./installDocs
 
 Integrating With a Project
----
+--------------------------
 
 You should already have created your Xcode iOS application project. If not, do so now. Complete the following steps to add the library to your current project.
 
@@ -64,4 +64,4 @@ When performing these steps, be sure that you add these tags to all builds (both
 
 ###Have a Beer
 
-Congratulations! You should have successfully added the Strabo MultiRecorder SDK to your project. You are ready to start building with Strabo. Check out the [guide](WorkingWithTheSDK) for more information about how to present the capture view controller and browse and upload captures.
+Congratulations! You should have successfully added the Strabo MultiRecorder SDK to your project. You are ready to start building with Strabo. Check out the [guide](WorkingWithTheSDK) for more information about how to present the capture view controller and browse and upload captures. Treat yourself to a beer and then get to work coding up the rest of your app.

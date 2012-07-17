@@ -56,8 +56,7 @@
     id delegate;
     BOOL isRecording;
     
-    // Preferences
-    // STRUserPreferencesManager * preferencesManager;
+    IBOutlet UIActivityIndicatorView * activityIndicator;
     
     // Location support
     CLLocationManager * locationManager;

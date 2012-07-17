@@ -62,10 +62,15 @@
                                     <action selector="tempImgButtonPressed:" destination="9kr-d9-qDi" eventType="touchUpInside" id="T8k-0c-xYB"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="gray" id="fk6-EN-MsP">
+                                <rect key="frame" x="150" y="408" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="fk6-EN-MsP" id="ln6-sM-Onq"/>
                         <outlet property="videoPreviewLayer" destination="idY-sG-q88" id="IMY-Ol-iCJ"/>
                     </connections>
                 </viewController>
@@ -81,6 +86,7 @@
                 <relationship kind="action" name="doneButtonWasPressed:"/>
                 <relationship kind="action" name="recordButtonWasPressed:"/>
                 <relationship kind="action" name="tempImgButtonPressed:"/>
+                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="videoPreviewLayer" candidateClass="UIView"/>
             </relationships>
         </class>
