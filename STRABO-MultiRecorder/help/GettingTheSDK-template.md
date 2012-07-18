@@ -62,6 +62,20 @@ There is a [known Xcode bug](https://developer.apple.com/library/mac/#qa/qa2006/
 
 When performing these steps, be sure that you add these tags to all builds (both debug, release, and any others that you may create). This can be easily done by changing the tag values on the top level instead of setting the tags for each build individually.
 
+###Including Necessary Frameworks
+
+This SDK uses a couple of Apple iOS frameworks which you must include in your project. Be sure to add the following:
+
+* CoreMedia
+* QuartzCore
+* CoreLocation
+* AVFoundation
+* UIKit
+* Foundation
+* CoreGraphics
+
+*** STUB ***
+
 ###Have a Beer
 
 Congratulations! You should have successfully added the Strabo MultiRecorder SDK to your project. You are ready to start building with Strabo. Check out the [guide](WorkingWithTheSDK) for more information about how to present the capture view controller and browse and upload captures. Treat yourself to a beer and then get to work coding up the rest of your app.

@@ -6,12 +6,17 @@
 //  Copyright (c) 2012 Strabo, LLC. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
+#import <CoreMedia/CoreMedia.h>
+#import <AVFoundation/AVFoundation.h>
 #import <CoreLocation/CLLocation.h>
 
 // Tools
 #import "NSDate+Date_Utilities.h"
 #import "NSString+MD5.h"
+
+// The size of the thumbnail output
 
 /**
  See [STRCaptureFileManager] instead.
