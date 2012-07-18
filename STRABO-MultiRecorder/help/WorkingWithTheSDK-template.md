@@ -5,6 +5,12 @@ If you have not downloaded the SDK yet, see "[Getting the SDK](GettingTheSDK)".
 
 If you have downloaded and implemented the SDK, at some point in your application you will undoubtedly want to display the view to capture a video or image using the Strabo capture geo-tagging technique. This guide will walk you through the steps to present the capture view, dismiss the capture view, and then access the files that may have been captured.
 
+Contents of this guide:
+
+1. [Presenting the Capture View Controller](#section1)
+2. [Accessing Local Captures](#section2)
+
+<a name="section1"></a>
 Presenting the Capture View Controller
 ---
 
@@ -48,3 +54,27 @@ In total, your .h file might look similar to the following:
 
 	@end
 
+In your .m file, you should include the code to initialize a new STRCaptureViewController and present it modally when necessary. In this case, we will put this code in the method that is called when the camera button is pressed. The method cameraButtonWasPressed should look like this:
+
+	-(IBAction)cameraButtonWasPressed {
+		// Create a new instance of a STRCaptureViewController
+		STRCaptureViewController * captureVC = [STRCaptureViewController captureManager];
+		// Assign the delegate to be self
+		captureVC.delegate = self;
+		// Present modally
+		[self presentViewController:cameraVC animated:YES completion:nil];
+	}
+
+As discussed above, we will need a complete implementation of the delegate method, [parentShouldDismissCaptureViewController:](STRCaptureViewControllerDelegate parentShouldDismissCaptureViewController:). This method should look something like this:
+
+	-(void)parentShouldDismissCaptureViewController:(UIViewController *)sender {
+    	[sender dismissViewControllerAnimated:YES completion:nil];
+	}
+
+<a name="section2"></a>
+Accessing Local Captures
+---
+
+Local captures are accessed using a [STRCaptureFileManger](STRCaptureFileManager).
+
+*** STUB ***

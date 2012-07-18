@@ -55,7 +55,18 @@
 }
 
 -(NSArray *)recentCapturesWithLimit:(NSNumber *)limit {
-    #warning Incomplete implementation
+    // Get all local directories
+    NSArray * sortedCaptures = [self allCapturesSorted:YES];
+    
+    if (@(sortedCaptures.count) > limit) {
+        NSRange theRange;
+        theRange.location = 0;
+        theRange.length = limit.integerValue;
+        NSArray * subArray = [sortedCaptures subarrayWithRange:theRange];
+        return subArray;
+    }
+    
+    return sortedCaptures;
 }
 
 -(NSArray *)capturesOnDate:(NSDate *)date {
