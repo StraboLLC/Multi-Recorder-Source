@@ -33,7 +33,7 @@
 
 // Utility Methods
 -(NSURL *)videoTempFileURL;
--(NSURL *)imageTempFileURL;
+-(NSString *)imageTempFilePath;
 
 @end
 
@@ -72,7 +72,7 @@
 
 - (void)captureStillImage {
     #warning Incomplete implementation
-    NSLog(@"Capturung a still image..");
+    NSLog(@"Capturing a still image...");
 	AVCaptureConnection *videoConnection = nil;
 	for (AVCaptureConnection *connection in [_imageFileOutput connections]) {
 		for (AVCaptureInputPort *port in [connection inputPorts]) {
@@ -86,14 +86,13 @@
         }
 	}
     
-	NSLog(@"about to request a capture from: %@", _imageFileOutput);
-    
 	[_imageFileOutput captureStillImageAsynchronouslyFromConnection:videoConnection
                                                          completionHandler:^(CMSampleBufferRef imageSampleBuffer, NSError *error) {
                                                              
                                                              NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
                                                              UIImage * image = [[UIImage alloc] initWithData:imageData];
-                                                             [UIImageJPEGRepresentation(image, 1.0) writeToFile:[NSString stringWithFormat:@"%@", [self imageTempFileURL]] atomically:YES];
+                                                             NSLog(@"Saving image: %@", image);
+                                                             [UIImageJPEGRepresentation(image, 1.0) writeToFile:[self imageTempFilePath] atomically:YES];
                                                          }];
 }
 
@@ -174,14 +173,13 @@
     return outputURL;
 }
 
--(NSURL *)imageTempFileURL {
+-(NSString *)imageTempFilePath {
     NSString * outputPath = [[NSString alloc] initWithFormat:@"%@%@", NSTemporaryDirectory(), @"output.jpg"];
-    NSURL * outputURL = [[NSURL alloc] initFileURLWithPath:outputPath];
     NSFileManager * fileManager = [NSFileManager defaultManager];
     if ([fileManager fileExistsAtPath:outputPath]) {
         [fileManager removeItemAtPath:outputPath error:nil];
     }
-    return outputURL;
+    return outputPath;
 }
 
 @end
