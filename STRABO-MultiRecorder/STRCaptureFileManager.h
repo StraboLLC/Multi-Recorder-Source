@@ -46,15 +46,51 @@
  */
 -(NSArray *)allCapturesSorted:(BOOL)sorted;
 
+/**
+ Searches for and returns the most recent captures by date.
+ 
+ @param limit The number of recent captures to return.
+ 
+ @return NSArray An array of STRCapture objects which represent existing local captures. The array is sorted by date with most recent first.
+ */
 -(NSArray *)recentCapturesWithLimit:(NSNumber *)limit;
+
+/**
+ Searches for and returns captures taken on a given date.
+ 
+ @param date The date to match with the capture dates of the captures.
+ 
+ @return NSArray An array of STRCapture objects taken on the same day of the date specified.
+ */
 -(NSArray *)capturesOnDate:(NSDate *)date;
+
+/**
+ Counts the number of local captures.
+ 
+ @return NSNumber The number of captures stored locally.
+ */
 -(NSNumber *)localCaptureCount;
 
 ///---------------------------------------------------------------------------------------
 /// @name Deleting Captures
 ///---------------------------------------------------------------------------------------
 
+/**
+ Deletes the passed capture object from the filesystem.
+ 
+ @param capture The STRCapture object to delete from the filesystem.
+ 
+ @return BOOL YES if successful and NO if deletion failed.
+ */
 -(BOOL)deleteCapture:(STRCapture *)capture;
--(BOOL)deleteCaptureWithToken:(NSString *)capture;
+
+/**
+ Deletes the capture object from the filesystem specified by the passed token.
+ 
+ @param token The STRCapture [token](STRCapture token) associated with the track to delete.
+ 
+ @return BOOL YES if successful and NO if deletion failed.
+ */
+-(BOOL)deleteCaptureWithToken:(NSString *)token;
 
 @end
