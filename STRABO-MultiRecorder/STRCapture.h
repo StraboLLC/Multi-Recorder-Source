@@ -18,6 +18,7 @@
  ------------------------
  */
 @interface STRCapture : NSObject {
+    NSString * captureInfoPath;
     NSDate * creationDate;
     NSString * geoDataPath;
     NSNumber * latitude;

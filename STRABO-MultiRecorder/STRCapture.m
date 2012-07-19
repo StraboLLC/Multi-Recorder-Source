@@ -43,12 +43,26 @@
     if (error) return nil;
     
     // Build up the newCapture object
+    // Track Info
+    newCapture.title = [captureDictionary objectForKey:@"title"];
+    newCapture.uploadDate = [captureDictionary objectForKey:@"uploaded_at"];
+    newCapture.token = [captureDictionary objectForKey:@"token"];
+    newCapture.type = [captureDictionary objectForKey:@"type"];
+    // Geo Data
+    newCapture.creationDate = [NSDate dateWithTimeIntervalSince1970:[[captureDictionary objectForKey:@"created_at"] doubleValue]];
+    newCapture.latitude = [[captureDictionary objectForKey:@"coords"] objectAtIndex:0];
+    newCapture.longitude = [[captureDictionary objectForKey:@"coords"] objectAtIndex:1];
+    // File Paths
+    newCapture.geoDataPath = [captureDictionary objectForKey:@"geodata_file"];
+    newCapture.mediaPath = [captureDictionary objectForKey:@"media_file"];
+    newCapture.thumbnailPath = [captureDictionary objectForKey:@"thumbnail_file"];
+    newCapture.captureInfoPath = [newCapture.token stringByAppendingPathComponent:@"capture-info.json"];
     
     return newCapture;
 }
 
 -(void)save {
-    
+    #warning Incomplete implementation
 }
 
 @end
