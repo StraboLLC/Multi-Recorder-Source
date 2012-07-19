@@ -204,7 +204,6 @@
     // Set up the location support
     locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
-    //locationManager.purpose = @"Geotagging your Toast video captures.";
     //locationManager.desiredAccuracy = preferencesManager.desiredLocationAccuracy;
     [locationManager startUpdatingHeading];
     [locationManager startUpdatingLocation];
@@ -253,6 +252,8 @@
 -(void)captureStillImage {
     // Write a new geoLocationData file
     geoLocationData = [[STRGeoLocationData alloc] init];
+    initialLocation = locationManager.location;
+    initialHeading = locationManager.heading;
     [geoLocationData addDataPointWithLatitude:locationManager.location.coordinate.latitude
                                     longitude:locationManager.location.coordinate.longitude
                                       heading:locationManager.heading.trueHeading
@@ -280,10 +281,10 @@
     
     if ([captureType isEqualToString:@"video"]) {
         // Move video files
-        [fileOrganizer saveTempVideoFilesWithInitialLocation:locationManager.location];
+        [fileOrganizer saveTempVideoFilesWithInitialLocation:initialLocation heading:initialHeading];
     } else if ([captureType isEqualToString:@"image"]) {
         // Move image files
-        [fileOrganizer saveTempImageFilesWithInitialLocation:locationManager.location];
+        [fileOrganizer saveTempImageFilesWithInitialLocation:initialLocation heading:initialHeading];
     } else {
         NSLog(@"Method resaveTemporaryFilesOfType: called with improper parameters. Please see documentation.");
     }
@@ -341,6 +342,8 @@
     // Force record the first geodata point
     mediaStartTime = CACurrentMediaTime();
     // Write an initial point to the data
+    initialLocation = locationManager.location;
+    initialHeading = locationManager.heading;
     [geoLocationData addDataPointWithLatitude:locationManager.location.coordinate.latitude
                                     longitude:locationManager.location.coordinate.longitude
                                       heading:locationManager.heading.trueHeading

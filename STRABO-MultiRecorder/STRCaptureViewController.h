@@ -61,6 +61,8 @@
     // Location support
     CLLocationManager * locationManager;
     STRGeoLocationData * geoLocationData;
+    CLLocation * initialLocation;
+    CLHeading * initialHeading;
     
     // Camera capture support
     STRCaptureDataCollector * captureDataCollector;

@@ -22,7 +22,7 @@
 
 @implementation STRCaptureFileOrganizer
 
--(void)saveTempImageFilesWithInitialLocation:(CLLocation *)location {
+-(void)saveTempImageFilesWithInitialLocation:(CLLocation *)location heading:(CLHeading *)heading {
     NSFileManager * fileManager = [NSFileManager defaultManager];
     NSString * randomFilename = [self randomFileName];
     NSString * newDirectoryPath = [[self capturesDirectoryPath] stringByAppendingPathComponent:randomFilename];
@@ -48,6 +48,7 @@
     @"created_at" : [NSDate currentUnixTimestampNumber],
     @"geodata_file" : [randomFilename stringByAppendingPathExtension:@"json"],
     @"coords" : @[ @(location.coordinate.latitude), @(location.coordinate.longitude) ],
+    @"heading" : @(heading.trueHeading),
     @"media_file" : [randomFilename stringByAppendingPathExtension:@"jpg"],
     @"thumbnail_file" : [randomFilename stringByAppendingPathExtension:@"png"],
     @"title" : @"Untitled Capture",
@@ -66,7 +67,7 @@
     
 }
 
--(void)saveTempVideoFilesWithInitialLocation:(CLLocation *)location {
+-(void)saveTempVideoFilesWithInitialLocation:(CLLocation *)location heading:(CLHeading *)heading {
     NSFileManager * fileManager = [NSFileManager defaultManager];
     NSString * randomFilename = [self randomFileName];
     NSString * newDirectoryPath = [[self capturesDirectoryPath] stringByAppendingPathComponent:randomFilename];
@@ -92,6 +93,7 @@
     @"created_at" : [NSDate currentUnixTimestampNumber],
     @"geodata_file" : [randomFilename stringByAppendingPathExtension:@"json"],
     @"coords" : @[ @(location.coordinate.latitude), @(location.coordinate.longitude) ],
+    @"heading" : @(heading.trueHeading),
     @"media_file" : [randomFilename stringByAppendingPathExtension:@"mov"],
     @"thumbnail_file" : [randomFilename stringByAppendingPathExtension:@"png"],
     @"title" : @"Untitled Capture",

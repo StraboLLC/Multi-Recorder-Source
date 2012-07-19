@@ -10,7 +10,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreMedia/CoreMedia.h>
 #import <AVFoundation/AVFoundation.h>
-#import <CoreLocation/CLLocation.h>
+#import <CoreLocation/CoreLocation.h>
 
 // Tools
 #import "NSDate+Date_Utilities.h"
@@ -36,13 +36,13 @@
  
  @param location The location for the track.
  */
--(void)saveTempVideoFilesWithInitialLocation:(CLLocation *)location;
+-(void)saveTempVideoFilesWithInitialLocation:(CLLocation *)location heading:(CLHeading *)heading;
 
 /**
  Relocates the most recently captured image files from the temp folder to the documents directory.
  
  @param location The location to record in the capture info file for the track.
  */
--(void)saveTempImageFilesWithInitialLocation:(CLLocation *)location;
+-(void)saveTempImageFilesWithInitialLocation:(CLLocation *)location heading:(CLHeading *)heading;
 
 @end
