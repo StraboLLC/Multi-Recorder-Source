@@ -71,7 +71,6 @@
 }
 
 - (void)captureStillImage {
-    #warning Incomplete implementation
     NSLog(@"Capturing a still image...");
 	AVCaptureConnection *videoConnection = nil;
 	for (AVCaptureConnection *connection in [_imageFileOutput connections]) {

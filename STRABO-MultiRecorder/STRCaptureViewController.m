@@ -184,11 +184,8 @@
 
 -(IBAction)recordButtonWasPressed:(id)sender {
     if (isRecording) {
-        NSLog(@"STRCaptureViewController: Rec button pressed - stopping capture session.");
         [self stopCapturingVideo];
     } else {
-        NSLog(@"STRCaptureViewController: Rec button pressed - starting capture session.");
-        
         [self startCapturingVideo];
     }
 }
@@ -254,7 +251,21 @@
 }
 
 -(void)captureStillImage {
+    // Write a new geoLocationData file
+    geoLocationData = [[STRGeoLocationData alloc] init];
+    [geoLocationData addDataPointWithLatitude:locationManager.location.coordinate.latitude
+                                    longitude:locationManager.location.coordinate.longitude
+                                      heading:locationManager.heading.trueHeading
+                                    timestamp:0.00
+                                     accuracy:locationManager.location.horizontalAccuracy];
+    [geoLocationData writeDataPointsToTempFile];
+    
+    // Capture the image
     [captureDataCollector captureStillImage];
+    
+    // Save the temp files
+    [self resaveTemporaryFilesOfType:@"image"];
+    
 }
 
 #pragma mark - File Handling
@@ -272,7 +283,7 @@
         [fileOrganizer saveTempVideoFilesWithInitialLocation:locationManager.location];
     } else if ([captureType isEqualToString:@"image"]) {
         // Move image files
-        [fileOrganizer saveTempImageFiles];
+        [fileOrganizer saveTempImageFilesWithInitialLocation:locationManager.location];
     } else {
         NSLog(@"Method resaveTemporaryFilesOfType: called with improper parameters. Please see documentation.");
     }
@@ -346,9 +357,6 @@
     
     // Write files to a more permanent location
     [self resaveTemporaryFilesOfType:@"video"];
-    
-    // Add video to the user's album
-    
 }
 
 -(void)videoRecordingDidFailWithError:(NSError *)error {

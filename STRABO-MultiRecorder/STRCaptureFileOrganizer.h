@@ -19,7 +19,7 @@
 // The size of the thumbnail output
 
 /**
- See [STRCaptureFileManager] instead.
+ See also [STRCaptureFileManager].
  
  Contains the logic for saving temporary capture files to the application documents directory.
  
@@ -40,7 +40,9 @@
 
 /**
  Relocates the most recently captured image files from the temp folder to the documents directory.
+ 
+ @param location The location to record in the capture info file for the track.
  */
--(void)saveTempImageFiles;
+-(void)saveTempImageFilesWithInitialLocation:(CLLocation *)location;
 
 @end
