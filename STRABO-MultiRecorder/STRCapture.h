@@ -19,11 +19,11 @@
  */
 @interface STRCapture : NSObject {
     NSDate * creationDate;
-    NSURL * geoDataURL;
+    NSString * geoDataPath;
     NSNumber * latitude;
     NSNumber * longitude;
-    NSURL * mediaURL;
-    NSURL * thumbnailURL;
+    NSString * mediaPath;
+    NSString * thumbnailPath;
     NSString * title;
     NSString * token;
     NSString * type;
@@ -58,23 +58,30 @@
 ///---------------------------------------------------------------------------------------
 
 /**
- URL of the geo data file associated with this capture.
+ Path of the geo data file associated with this capture relative to the strabo captures directory.
  */
-@property(readonly)NSURL * geoDataURL;
+@property(readonly)NSString * geoDataPath;
 
 /**
- URL of the media file associated with this capture.
+ Path of the media file associated with this capture relative to the strabo captures directory.
  
  The media file could either be a video (mov) or an image (jpg) file.
  */
-@property(readonly)NSURL * mediaURL;
+@property(readonly)NSString * mediaPath;
 
 /**
- URL of the thumbnail image that represents this capture.
+ Path of the thumbnail image that represents this capture relative to the strabo captures directory.
  
  It is always a small JPG image file.
  */
-@property(readonly)NSURL * thumbnailURL;
+@property(readonly)NSString * thumbnailPath;
+
+/**
+ Path of the JSON file that holds the information about the capture.
+ 
+ The path is always relative to the strabo captures directory. The file type is JSON.
+ */
+@property(readonly)NSString * captureInfoPath;
 
 ///---------------------------------------------------------------------------------------
 /// @name Capture Info

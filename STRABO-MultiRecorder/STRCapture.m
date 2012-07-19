@@ -15,9 +15,10 @@
 @property(readwrite)NSNumber * latitude;
 @property(readwrite)NSNumber * longitude;
 
-@property(readwrite)NSURL * geoDataURL;
-@property(readwrite)NSURL * mediaURL;
-@property(readwrite)NSURL * thumbnailURL;
+@property(readwrite)NSString * geoDataPath;
+@property(readwrite)NSString * mediaPath;
+@property(readwrite)NSString * thumbnailPath;
+@property(readwrite)NSString * captureInfoPath;
 
 @property(readwrite)NSString * token;
 @property(readwrite)NSString * type;
