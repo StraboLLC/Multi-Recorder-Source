@@ -39,7 +39,7 @@
     
     // Read the appropriate file into a dictionary
     NSError * error;
-    NSDictionary * captureDictionary = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:[newCapture.straboCaptureDirectoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/capture-info.json", captureDirectory]]] options:nil error:&error];
+    NSDictionary * captureDictionary = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:[newCapture.straboCaptureDirectoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@/capture-info.json", captureDirectory]]] options:NSJSONReadingAllowFragments error:&error];
     if (error) return nil;
     
     // Build up the newCapture object
@@ -61,8 +61,29 @@
     return newCapture;
 }
 
--(void)save {
-    #warning Incomplete implementation
+-(BOOL)save {
+    // Write readonly properties to the file system
+    NSError * error;
+    // Read the mutable dictionary from the file
+    NSMutableDictionary * captureDictionary = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:[self.straboCaptureDirectoryPath stringByAppendingPathComponent:self.captureInfoPath]] options:NSJSONReadingMutableContainers error:&error];
+    if (error) {
+        NSLog(@"STRCapture: There was a problem saving your changes: %@", error.description);
+        return NO;
+    }
+    // Alter the writable entries in the dictionary
+    [captureDictionary setObject:self.title forKey:@"title"];
+    [captureDictionary setObject:@([self.uploadDate timeIntervalSince1970]) forKey:@"uploaded_at"];
+    // Save the changes by overwriting the dictionary
+    // to the capture info json file.
+    NSOutputStream * JSONOutput = [NSOutputStream outputStreamToFileAtPath:[self.straboCaptureDirectoryPath stringByAppendingPathComponent:self.captureInfoPath] append:NO];
+    [JSONOutput open];
+    [NSJSONSerialization writeJSONObject:captureDictionary toStream:JSONOutput options:0 error:&error];
+    [JSONOutput close];
+    if (error) {
+        NSLog(@"STRCapture: There was a problem saving your changes: %@", error.description);
+        return NO;
+    }
+    return YES;
 }
 
 @end

@@ -141,7 +141,9 @@
  Saves changes made to the capture object since it was created.
  
  If you want to make any changes to readwrite properties of an STRCapture object, set the values of those properties and then call this method to write those changes to the appropriate files. This will make changes to the properties persistent.
+ 
+ @return BOOL YES if successful and NO if unsuccessful.
  */
--(void)save;
+-(BOOL)save;
 
 @end
