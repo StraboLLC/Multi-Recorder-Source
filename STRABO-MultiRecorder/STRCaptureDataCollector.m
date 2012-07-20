@@ -86,13 +86,15 @@
 	}
     
 	[_imageFileOutput captureStillImageAsynchronouslyFromConnection:videoConnection
-                                                         completionHandler:^(CMSampleBufferRef imageSampleBuffer, NSError *error) {
-                                                             
-                                                             NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
-                                                             UIImage * image = [[UIImage alloc] initWithData:imageData];
-                                                             NSLog(@"Saving image: %@", image);
-                                                             [UIImageJPEGRepresentation(image, 1.0) writeToFile:[self imageTempFilePath] atomically:YES];
-                                                         }];
+                                                  completionHandler:^(CMSampleBufferRef imageSampleBuffer, NSError *error) {
+                                                      
+                                                      NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
+                                                      UIImage * image = [[UIImage alloc] initWithData:imageData];
+                                                      NSLog(@"Saving image: %@", image);
+                                                      if ([UIImageJPEGRepresentation(image, 1.0) writeToFile:[self imageTempFilePath] atomically:YES]) {
+                                                          [_delegate stillImageWasCaptured];
+                                                      }
+                                                  }];
 }
 
 @end

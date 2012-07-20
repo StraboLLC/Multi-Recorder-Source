@@ -125,7 +125,7 @@ static NSString * const kSTRServerURL = @"http://willpotter.local:3000/api/uploa
 }
 
 -(void)handleResponse:(NSData *)responseJSONdata {
-    
+    NSLog(@"Server Response: %@", [[NSString alloc] initWithData:responseJSONdata encoding:NSUTF8StringEncoding]);
 }
 
 #pragma mark - Utility Methods

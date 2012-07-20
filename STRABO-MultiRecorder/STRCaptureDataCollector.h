@@ -17,6 +17,7 @@
 -(void)videoRecordingDidBegin;
 -(void)videoRecordingDidEnd;
 -(void)videoRecordingDidFailWithError:(NSError *)error;
+-(void)stillImageWasCaptured;
 
 @end
 

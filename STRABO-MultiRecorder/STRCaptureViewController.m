@@ -263,10 +263,6 @@
     
     // Capture the image
     [captureDataCollector captureStillImage];
-    
-    // Save the temp files
-    [self resaveTemporaryFilesOfType:@"image"];
-    
 }
 
 #pragma mark - File Handling
@@ -364,6 +360,11 @@
 
 -(void)videoRecordingDidFailWithError:(NSError *)error {
     NSLog(@"STRCaptureViewController: !!!ERROR: Video recording failed: %@", error.description);
+}
+
+-(void)stillImageWasCaptured {
+    // Save the temp files
+    [self resaveTemporaryFilesOfType:@"image"];
 }
 
 @end
