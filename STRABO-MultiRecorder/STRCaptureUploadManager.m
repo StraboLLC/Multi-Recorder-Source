@@ -32,6 +32,14 @@ static NSString * const kSTRServerURL = @"http://willpotter.local:3000/upload";
 
 @implementation STRCaptureUploadManager
 
+#pragma mark - Class Methods
+
++(STRCaptureUploadManager *)defaultManager {
+    return [[STRCaptureUploadManager alloc] init];
+}
+
+#pragma mark - Instance Methods
+
 -(void)beginUploadForCapture:(STRCapture *)capture {
     if ([self generateUploadRequestForCapture:capture]) {
         [self startCurrentUpload];
@@ -43,7 +51,10 @@ static NSString * const kSTRServerURL = @"http://willpotter.local:3000/upload";
 }
 
 -(void)cancelCurrentUpload {
-    
+    if ([_delegate respondsToSelector:@selector(fileUploadDidStop)]) {
+        [_delegate fileUploadDidStop];
+    }
+    NSLog(@"STRCaptureUploadManager: File upload was cancelled.");
 }
 
 @end
@@ -138,7 +149,13 @@ static NSString * const kSTRServerURL = @"http://willpotter.local:3000/upload";
 }
 
 -(void)handleResponse:(NSData *)responseJSONdata {
-    NSLog(@"Server Response: %@", [[NSString alloc] initWithData:responseJSONdata encoding:NSUTF8StringEncoding]);
+    // Print out the server response for testing purposes
+    // qaz12NSLog(@"Server Response: %@", [[NSString alloc] initWithData:responseJSONdata encoding:NSUTF8StringEncoding]);
+    
+    // Check the server response to verify success
+    
+    // Respond by alerting the delgate if successful
+    
 }
 
 #pragma mark - Utility Methods
@@ -159,7 +176,6 @@ static NSString * const kSTRServerURL = @"http://willpotter.local:3000/upload";
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     // Append the new data to receivedData
     [receivedData appendData:data];
-    //NSLog(@"Upload connection received partial response: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
 }
 
 -(void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
@@ -167,12 +183,17 @@ static NSString * const kSTRServerURL = @"http://willpotter.local:3000/upload";
 }
 
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    // Notify the delegate of an error
-    
+    if ([_delegate respondsToSelector:@selector(fileUploadDidFailWithError:)]) {
+        [_delegate fileUploadDidFailWithError:error];
+    }
+    NSLog(@"STRCaptureUploadManager: File upload failed with error: %@", error.localizedDescription);
 }
 
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection {
     // Make sure that the delegate is informed of 100% progress
+    if ([_delegate respondsToSelector:@selector(fileUploadDidProgress:)]) {
+        [_delegate fileUploadDidProgress:@1.0];
+    }
     
     // Handle the data response internally
     // Check for errors from the server

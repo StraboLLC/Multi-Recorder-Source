@@ -9,6 +9,7 @@ Contents of this guide:
 
 1. [Presenting the Capture View Controller](#section1)
 2. [Accessing Local Captures](#section2)
+3. [Uploading a Capture](#section3)
 
 <a name="section1"></a>
 Presenting the Capture View Controller
@@ -76,5 +77,13 @@ Accessing Local Captures
 ---
 
 Local captures are accessed using a [STRCaptureFileManger](STRCaptureFileManager).
+
+*** STUB ***
+
+<a name="section3"></a>
+Uploading a Capture
+---
+
+This SDK provides an object to help you upload captures to the Strabo server for later playback. Strabo will handle the storage of the video and you are responsible for keeping track of how videos are associated with users.
 
 *** STUB ***
