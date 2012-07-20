@@ -43,15 +43,17 @@
     // Write the thumbnail image
     [UIImagePNGRepresentation([self thumbnailForImageAtPath:mediaTempPath]) writeToFile:thumbnailPath atomically:YES];
     
+    NSString * relativePath = [randomFilename stringByAppendingPathComponent:randomFilename];
+    
     // Save the capture info file
     NSDictionary * trackInfo = @{
     @"created_at" : [NSDate currentUnixTimestampNumber],
-    @"geodata_file" : [randomFilename stringByAppendingPathExtension:@"json"],
+    @"geodata_file" : [relativePath stringByAppendingPathExtension:@"json"],
     @"coords" : @[ @(location.coordinate.latitude), @(location.coordinate.longitude) ],
     @"heading" : @(heading.trueHeading),
-    @"media_file" : [randomFilename stringByAppendingPathExtension:@"jpg"],
+    @"media_file" : [relativePath stringByAppendingPathExtension:@"jpg"],
     @"orientation" : @"vertical",
-    @"thumbnail_file" : [randomFilename stringByAppendingPathExtension:@"png"],
+    @"thumbnail_file" : [relativePath stringByAppendingPathExtension:@"png"],
     @"title" : @"Untitled Capture",
     @"token" : randomFilename,
     @"media_type" : @"image",
@@ -89,15 +91,17 @@
     // Write the thumbnail image
     [UIImagePNGRepresentation([self thumbnailForVideoAtPath:mediaTempPath]) writeToFile:thumbnailPath atomically:YES];
     
+    NSString * relativePath = [randomFilename stringByAppendingPathComponent:randomFilename];
+    
     // Save the capture info file
     NSDictionary * trackInfo = @{
     @"created_at" : [NSDate currentUnixTimestampNumber],
-    @"geodata_file" : [randomFilename stringByAppendingPathExtension:@"json"],
+    @"geodata_file" : [relativePath stringByAppendingPathExtension:@"json"],
     @"coords" : @[ @(location.coordinate.latitude), @(location.coordinate.longitude) ],
     @"heading" : @(heading.trueHeading),
-    @"media_file" : [randomFilename stringByAppendingPathExtension:@"mov"],
+    @"media_file" : [relativePath stringByAppendingPathExtension:@"mov"],
     @"orientation" : @"vertical",
-    @"thumbnail_file" : [randomFilename stringByAppendingPathExtension:@"png"],
+    @"thumbnail_file" : [relativePath stringByAppendingPathExtension:@"png"],
     @"title" : @"Untitled Capture",
     @"token" : randomFilename,
     @"media_type" : @"video",

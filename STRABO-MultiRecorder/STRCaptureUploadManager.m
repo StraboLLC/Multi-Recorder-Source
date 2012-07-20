@@ -8,7 +8,7 @@
 
 #import "STRCaptureUploadManager.h"
 
-static NSString * const kSTRServerURL = @"http://willpotter.local:3000/api/upload";
+static NSString * const kSTRServerURL = @"http://willpotter.local:3000/upload";
 
 @interface STRCaptureUploadManager (NSURLConnectionDelegate) <NSURLConnectionDelegate>
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response;
@@ -56,7 +56,8 @@ static NSString * const kSTRServerURL = @"http://willpotter.local:3000/api/uploa
     NSString * mediaPath = [self.capturesDirectoryPath stringByAppendingPathComponent:capture.mediaPath];
     NSString * geoDataPath = [self.capturesDirectoryPath stringByAppendingPathComponent:capture.geoDataPath];
     NSString * captureInfoPath = [self.capturesDirectoryPath stringByAppendingPathComponent:capture.captureInfoPath];
-    
+    NSLog(@"Uploading: %@",thumbnailPath);
+    NSLog(@"Uploading: %@",mediaPath);
     // Make sure that all files to upload actually exist
     NSFileManager * fileManager = [NSFileManager defaultManager];
     if (![fileManager fileExistsAtPath:mediaPath] || ![fileManager fileExistsAtPath:geoDataPath] || ![fileManager fileExistsAtPath:thumbnailPath] || ![fileManager fileExistsAtPath:captureInfoPath]) {
@@ -74,24 +75,36 @@ static NSString * const kSTRServerURL = @"http://willpotter.local:3000/api/uploa
     
     // Build the request
     [postRequest addValue:contentType forHTTPHeaderField: @"Content-Type"];
+    // Create the request body
     NSMutableData *postBody = [NSMutableData data];
-    // Build the 
+    // Append all data to the mutable request body
     [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"media_file\"; filename=\"%@.%@\"\r\n", mediaPath, mediaPath.pathExtension] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    // Dynamically change the post request for video or image
+    if ([capture.type isEqualToString:@"video"]) {
+        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"media_file\"; filename=\"%@.mov\"\r\n", capture.token] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[@"Content-Type: video/quicktime\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    } else {
+        [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"media_file\"; filename=\"%@.jpg\"\r\n", capture.token] dataUsingEncoding:NSUTF8StringEncoding]];
+        [postBody appendData:[@"Content-Type: image/jpeg\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    }
     [postBody appendData:[NSData dataWithContentsOfFile:mediaPath]];
-    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"media_file\"; filename=\"%@.%@\"\r\n", mediaPath, mediaPath.pathExtension] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[NSData dataWithContentsOfFile:mediaPath]];
-    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"media_file\"; filename=\"%@.%@\"\r\n", mediaPath, mediaPath.pathExtension] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[NSData dataWithContentsOfFile:mediaPath]];
-    [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"media_file\"; filename=\"%@.%@\"\r\n", mediaPath, mediaPath.pathExtension] dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[@"Content-Type: application/octet-stream\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-    [postBody appendData:[NSData dataWithContentsOfFile:mediaPath]];
+    [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    // Add the thumbnail to the request body
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"thumbnail\"; filename=\"%@.png\"\r\n", capture.token] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[@"Content-Type: image/png\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[NSData dataWithContentsOfFile:thumbnailPath]];
+    [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    // Add the capture info to the request body
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"capture_info\"; filename=\"%@.json\"\r\n", @"capture-info"] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[@"Content-Type: application/json\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[NSData dataWithContentsOfFile:captureInfoPath]];
+    [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n",stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
+    // Add the geo data info to the request body
+    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"geo_data\"; filename=\"%@.json\"\r\n", capture.token] dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[@"Content-Type: application/json\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+    [postBody appendData:[NSData dataWithContentsOfFile:geoDataPath]];
+    // Close the request body with a boundary
+    [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
     
     // Add the post body to the request
     [postRequest setHTTPBody:postBody];
@@ -146,7 +159,7 @@ static NSString * const kSTRServerURL = @"http://willpotter.local:3000/api/uploa
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     // Append the new data to receivedData
     [receivedData appendData:data];
-    NSLog(@"Upload connection received partial response: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+    //NSLog(@"Upload connection received partial response: %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
 }
 
 -(void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {

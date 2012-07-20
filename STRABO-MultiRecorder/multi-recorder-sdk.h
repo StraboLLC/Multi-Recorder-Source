@@ -11,5 +11,6 @@
 
 #include "STRCaptureViewController.h"
 #include "STRCaptureFileManager.h"
+#include "STRCaptureUploadManager.h"
 
 #endif
