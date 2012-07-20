@@ -141,7 +141,7 @@ t1342107228
 s1905
 
 N/Users/tnbeatty/Documents/Developer/StraboGIS/Multi-Recorder/STRABO-MultiRecorder/build/Release-iphoneos/libSTRABO-MultiRecorder.a
-t1342811750
+t1342812249
 s337920
 
 N/Users/tnbeatty/Documents/Developer/StraboGIS/Multi-Recorder/STRABO-MultiRecorder/build/STRABO-MultiRecorder.build/Release-iphoneos/STRABO-MultiRecorder.build/Objects-normal/armv7/NSDate+Date_Utilities.o
@@ -178,7 +178,7 @@ t1342794217
 s40164
 
 N/Users/tnbeatty/Documents/Developer/StraboGIS/Multi-Recorder/STRABO-MultiRecorder/build/STRABO-MultiRecorder.build/Release-iphoneos/STRABO-MultiRecorder.build/Objects-normal/armv7/STRCaptureUploadManager.o
-t1342811750
+t1342812248
 s38160
 
 N/Users/tnbeatty/Documents/Developer/StraboGIS/Multi-Recorder/STRABO-MultiRecorder/build/STRABO-MultiRecorder.build/Release-iphoneos/STRABO-MultiRecorder.build/Objects-normal/armv7/STRCaptureViewController.o
@@ -195,7 +195,7 @@ s2877396
 
 CCheck dependencies
 r0
-lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependencies17f30bd8e7b9b541^cb8368d8e7b9b541^---0#1#0#--18"Check dependencies36"06C07449-623E-411B-A53B-312B445CB3E7-
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependenciesfb9629dcecb9b541^085956dcecb9b541^---0#1#0#--18"Check dependencies36"47A22DB9-76D2-47BB-ABFC-647F2FA09D45-
 
 CCompileC build/STRABO-MultiRecorder.build/Release-iphoneos/STRABO-MultiRecorder.build/Objects-normal/armv7/NSDate+Date_Utilities.o /Users/tnbeatty/Documents/Developer/StraboGIS/Multi-Recorder/STRABO-MultiRecorder/STRABO-MultiRecorder/NSDate+Date_Utilities.m normal armv7 objective-c com.apple.compilers.llvm.clang.1_0.compiler
 s364307330.468560

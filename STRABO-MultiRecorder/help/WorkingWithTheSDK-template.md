@@ -84,6 +84,26 @@ Local captures are accessed using a [STRCaptureFileManger](STRCaptureFileManager
 Uploading a Capture
 ---
 
-This SDK provides an object to help you upload captures to the Strabo server for later playback. Strabo will handle the storage of the video and you are responsible for keeping track of how videos are associated with users.
+This SDK provides an object to help you upload captures to the Strabo server for later playback and handling on the web. Strabo will handle the storage of the video and you are responsible for keeping track of how videos are associated with users, etc. The following section of the guide walks you through how to use a [STRCaptureFileManager](STRCaptureFileManager) to handle an upload and how to keep track of uploaded videos for later integration with the [web api](http://api.strabo.co/).
 
-*** STUB ***
+To upload a capture, you will need to do the following:
+
+1. [Create a STRCapture Object](#section3.1)
+2. [Instantiate a STRCaptureUploadManager](#section3.2)
+3. [Upload the Capture Object](#section3.3)
+4. [Handle the Upload Appropriately](#section3.4)
+
+<a name="section3.1"></a>
+###Create a STRCapture Object
+
+If you wish to upload a capture to the Strabo server, you will first need to create a STRCapture object for the relevant capture. Most practically, this should be done with a [STRCaptureFileManager](STRCaptureFileManager) object, as described in [Accessing Local Captures](#section2). This is the recommended method. 
+
+Alternatively, if you are programming at a lower level of abstraction and know the subdirectory path of the capture within the capture file system, you can instantiate a STRCapture object directly by using the [captureFromFilesAtDirectory:]([STRCapture captureFromFilesAtDirectory:]) class method. This is not recommended, particularly if you do not have access to the source files and are familiar with the file storage system and structures.
+
+<a name="section3.2"></a>
+###Instantiate a STRCaptureUploadManager
+
+
+
+
+
