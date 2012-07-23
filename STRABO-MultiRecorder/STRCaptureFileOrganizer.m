@@ -89,7 +89,9 @@
     [fileManager createFileAtPath:captureInfoPath contents:nil attributes:nil];
     
     // Write the thumbnail image
-    [UIImagePNGRepresentation([self thumbnailForVideoAtPath:mediaTempPath]) writeToFile:thumbnailPath atomically:YES];
+    UIImage * thumbnail = [self thumbnailForVideoAtPath:mediaTempPath];
+    NSLog(@"Image thumbnail generated: %@", thumbnail);
+    [UIImagePNGRepresentation(thumbnail) writeToFile:thumbnailPath atomically:YES];
     
     NSString * relativePath = [randomFilename stringByAppendingPathComponent:randomFilename];
     
@@ -176,11 +178,12 @@
     // Generate the image
     NSError * error;
     // Copy the first image at time (0.0s) in the video file
-    CMTime time = CMTimeMakeWithSeconds(0, 30);
+    CMTime time = CMTimeMakeWithSeconds(0,30);
     CGImageRef imgRef = [generator copyCGImageAtTime:time actualTime:NULL error:&error];
     if (error) return nil;
     
     UIImage * image = [UIImage imageWithCGImage:imgRef];
+    [UIImagePNGRepresentation(image) writeToFile:[NSTemporaryDirectory() stringByAppendingPathComponent:@"thumbnail.png"] atomically:YES];
     return image;
 }
 
