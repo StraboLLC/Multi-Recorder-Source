@@ -103,7 +103,33 @@ Alternatively, if you are programming at a lower level of abstraction and know t
 <a name="section3.2"></a>
 ###Instantiate a STRCaptureUploadManager
 
+Instead of sending a POST request to a server yourself, you can use the [STRCaptureUploadManager](STRCaptureFileManager) class to do the work for you. Create a new STRCaptureUploadManager by using the [defaultManager]([STRCaptureUploadManager defaultManager]) class method.
 
+<a name="section3.3"></a>
+###Upload the Capture Object
 
+Next, you can pass your previously created STRCapture object to the manager using the [beginUploadForCapture](STRCaptureUploadManager beginUploadForCapture:]) method. This will start an asynchronous upload to the Strabo servers and will store your capture in the cloud.
 
+Your code will look something like the following:
+	
+	// Create the capture object
+	STRCapture * capture = // Create capture object using a STRCaptureFileManager
 
+	// Upload the capture
+	STRCaptureUploadManager * uploadManager = [STRCaptureUploadManager defaultManager];
+	[uploadManager beginUploadForCapture:capture];
+
+If at any point you need to cancel the upload, call the [cancelCurrentUpload]([STRCaptureUploadManager cancelCurrentUpload]) method.
+
+To monitor the upload, you should implement the [STRCaptureUploadManagerDelegate](STRCaptureUploadManagerDelegate). Although all of the methods in this protocol are optional, they will be useful to determine the progress and status of the upload. Implementing the protocol is fairly straightforward - see the protocol documentation for more information.
+
+<a name="section3.4"></a>
+###Handle the Upload Appropriately
+
+Because the captures are uploaded to the Strabo servers, you will need to get a reference to the uploaded capture in order to access it via the web API. The [STRCaptureUploadManagerDelegate](STRCaptureUploadManagerDelegate) provides a means for you to easily obtain the unique token for a capture upon successful upload. You will need to figure out a way to save this token for later use with the web API. One possible solution is outlined below:
+
+*** STUB ***
+
+- save token
+- upload token to server with associated user ID
+- access database of tokens

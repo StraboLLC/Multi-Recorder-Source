@@ -150,7 +150,7 @@ static NSString * const kSTRServerURL = @"http://willpotter.local:3000/upload";
 
 -(void)handleResponse:(NSData *)responseJSONdata {
     // Print out the server response for testing purposes
-    // qaz12NSLog(@"Server Response: %@", [[NSString alloc] initWithData:responseJSONdata encoding:NSUTF8StringEncoding]);
+    // NSLog(@"Server Response: %@", [[NSString alloc] initWithData:responseJSONdata encoding:NSUTF8StringEncoding]);
     
     // Check the server response to verify success
     

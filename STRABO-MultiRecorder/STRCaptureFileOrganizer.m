@@ -90,7 +90,6 @@
     
     // Write the thumbnail image
     UIImage * thumbnail = [self thumbnailForVideoAtPath:mediaTempPath];
-    NSLog(@"Image thumbnail generated: %@", thumbnail);
     [UIImagePNGRepresentation(thumbnail) writeToFile:thumbnailPath atomically:YES];
     
     NSString * relativePath = [randomFilename stringByAppendingPathComponent:randomFilename];
@@ -183,7 +182,6 @@
     if (error) return nil;
     
     UIImage * image = [UIImage imageWithCGImage:imgRef];
-    [UIImagePNGRepresentation(image) writeToFile:[NSTemporaryDirectory() stringByAppendingPathComponent:@"thumbnail.png"] atomically:YES];
     return image;
 }
 
