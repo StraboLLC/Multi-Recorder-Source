@@ -58,9 +58,13 @@
 #pragma mark - Recording Audio and Video
 
 -(void)startCapturingVideoWithOrientation:(AVCaptureVideoOrientation)deviceOrientation {
-    
+    // Set the video orientation
+    if ([_videoConnection isVideoOrientationSupported]) {
+        [_videoConnection setVideoOrientation:deviceOrientation];
+    }
+    // Remove the old temp file
     [[NSFileManager defaultManager] removeItemAtURL:[self videoTempFileURL] error:nil];
-    
+    // Start recording to the movie file output
     [[self movieFileOutput] startRecordingToOutputFileURL:[self videoTempFileURL] recordingDelegate:self];
     [_delegate videoRecordingDidBegin];
 }
@@ -70,27 +74,19 @@
     [_delegate videoRecordingDidEnd];
 }
 
-- (void)captureStillImage {
-    NSLog(@"Capturing a still image...");
-	AVCaptureConnection *videoConnection = nil;
-	for (AVCaptureConnection *connection in [_imageFileOutput connections]) {
-		for (AVCaptureInputPort *port in [connection inputPorts]) {
-			if ([[port mediaType] isEqual:AVMediaTypeVideo]) {
-				videoConnection = connection;
-				break;
-			}
-		}
-		if (videoConnection) {
-            break;
-        }
-	}
-    
-	[_imageFileOutput captureStillImageAsynchronouslyFromConnection:videoConnection
+-(void)captureStillImageWithOrientation:(UIDeviceOrientation)deviceOrientation {
+    // Set the orientation
+    if ([_videoConnection isVideoOrientationSupported]) {
+        [_videoConnection setVideoOrientation:deviceOrientation];
+    }
+    // Capture the image
+	[_imageFileOutput captureStillImageAsynchronouslyFromConnection:_videoConnection
                                                   completionHandler:^(CMSampleBufferRef imageSampleBuffer, NSError *error) {
                                                       
                                                       NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
                                                       UIImage * image = [[UIImage alloc] initWithData:imageData];
-                                                      NSLog(@"Saving image: %@", image);
+                                                      // Rotate the image here if appropriate
+                                                      
                                                       if ([UIImageJPEGRepresentation(image, 1.0) writeToFile:[self imageTempFilePath] atomically:YES]) {
                                                           [_delegate stillImageWasCaptured];
                                                       }
@@ -132,6 +128,20 @@
     if (![_session isRunning]) {
         [_session startRunning];
     }
+    
+    // Find and set the video connection
+	for (AVCaptureConnection *connection in [_imageFileOutput connections]) {
+		for (AVCaptureInputPort *port in [connection inputPorts]) {
+			if ([[port mediaType] isEqual:AVMediaTypeVideo]) {
+				_videoConnection = connection;
+				break;
+			}
+		}
+		if (_videoConnection) {
+            break;
+        }
+	}
+    
 }
 
 #pragma mark - Capture Devices

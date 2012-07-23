@@ -262,7 +262,7 @@
     [geoLocationData writeDataPointsToTempFile];
     
     // Capture the image
-    [captureDataCollector captureStillImage];
+    [captureDataCollector captureStillImageWithOrientation:currentOrientation];
 }
 
 #pragma mark - File Handling

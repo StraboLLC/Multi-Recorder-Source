@@ -34,6 +34,7 @@
     AVCaptureDeviceInput * audioInput;
     AVCaptureMovieFileOutput * movieFileOutput;
     AVCaptureStillImageOutput * imageFileOutput;
+    AVCaptureConnection * videoConnection;
 }
 
 @property(strong)id delegate;
@@ -43,6 +44,7 @@
 @property(readonly)AVCaptureDeviceInput * audioInput;
 @property(readonly)AVCaptureMovieFileOutput * movieFileOutput;
 @property(readonly)AVCaptureStillImageOutput * imageFileOutput;
+@property(readonly)AVCaptureConnection * videoConnection;
 
 ///---------------------------------------------------------------------------------------
 /// @name Settng Capture Options
@@ -64,6 +66,6 @@
  */
 -(void)startCapturingVideoWithOrientation:(AVCaptureVideoOrientation)deviceOrientation;
 -(void)stopCapturingVideo;
--(void)captureStillImage;
+-(void)captureStillImageWithOrientation:(UIDeviceOrientation)deviceOrientation;
 
 @end
