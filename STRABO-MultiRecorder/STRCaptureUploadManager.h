@@ -80,7 +80,7 @@
  Although all of the [STRCaptureUploadManagerDelegate] methods are optional, it is HIGHLY RECOMMENDED that the object that implements a STRCaptureUploadManager also conform to the [STRCaptureUploadManagerDelegate]. The the associated documentation or the [Working with the SDK](WorkingWithTheSDK) guide for more information.
  */
 @interface STRCaptureUploadManager : NSObject {
-    id delegate;
+    id _delegate;
     
     NSURLConnection * currentConnection;
     NSURLRequest * currentRequest;

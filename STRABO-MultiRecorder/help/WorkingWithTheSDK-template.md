@@ -108,7 +108,7 @@ Instead of sending a POST request to a server yourself, you can use the [STRCapt
 <a name="section3.3"></a>
 ###Upload the Capture Object
 
-Next, you can pass your previously created STRCapture object to the manager using the [beginUploadForCapture](STRCaptureUploadManager beginUploadForCapture:]) method. This will start an asynchronous upload to the Strabo servers and will store your capture in the cloud.
+Next, you can pass your previously created STRCapture object to the manager using the [STRCaptureUploadManager beginUploadForCapture:] method. This will start an asynchronous upload to the Strabo servers and will store your capture in the cloud.
 
 Your code will look something like the following:
 	

@@ -27,14 +27,14 @@
  Upon initialization, this object sets up a recording session with some default values. Values like the recording quality can be altered by calling methods like setCaptureQuality.
  */
 @interface STRCaptureDataCollector : NSObject {
-    id delegate;
+    id _delegate;
     
-    AVCaptureSession * session;
-    AVCaptureDeviceInput * videoInput;
-    AVCaptureDeviceInput * audioInput;
-    AVCaptureMovieFileOutput * movieFileOutput;
-    AVCaptureStillImageOutput * imageFileOutput;
-    AVCaptureConnection * videoConnection;
+    AVCaptureSession * _session;
+    AVCaptureDeviceInput * _videoInput;
+    AVCaptureDeviceInput * _audioInput;
+    AVCaptureMovieFileOutput * _movieFileOutput;
+    AVCaptureStillImageOutput * _imageFileOutput;
+    AVCaptureConnection * _videoConnection;
 }
 
 @property(strong)id delegate;

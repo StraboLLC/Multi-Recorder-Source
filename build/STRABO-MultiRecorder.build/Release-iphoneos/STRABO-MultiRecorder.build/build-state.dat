@@ -141,8 +141,8 @@ t1342107228
 s1905
 
 N/Users/tnbeatty/Documents/Developer/StraboGIS/Multi-Recorder/STRABO-MultiRecorder/build/Release-iphoneos/libSTRABO-MultiRecorder.a
-t1343052320
-s337984
+t1343055984
+s340408
 
 N/Users/tnbeatty/Documents/Developer/StraboGIS/Multi-Recorder/STRABO-MultiRecorder/build/STRABO-MultiRecorder.build/Release-iphoneos/STRABO-MultiRecorder.build/Objects-normal/armv7/NSDate+Date_Utilities.o
 t1342614530
@@ -166,8 +166,8 @@ t1342790968
 s32116
 
 N/Users/tnbeatty/Documents/Developer/StraboGIS/Multi-Recorder/STRABO-MultiRecorder/build/STRABO-MultiRecorder.build/Release-iphoneos/STRABO-MultiRecorder.build/Objects-normal/armv7/STRCaptureDataCollector.o
-t1342792072
-s47912
+t1343055983
+s50044
 
 N/Users/tnbeatty/Documents/Developer/StraboGIS/Multi-Recorder/STRABO-MultiRecorder/build/STRABO-MultiRecorder.build/Release-iphoneos/STRABO-MultiRecorder.build/Objects-normal/armv7/STRCaptureFileManager.o
 t1342790968
@@ -182,8 +182,8 @@ t1343052319
 s38160
 
 N/Users/tnbeatty/Documents/Developer/StraboGIS/Multi-Recorder/STRABO-MultiRecorder/build/STRABO-MultiRecorder.build/Release-iphoneos/STRABO-MultiRecorder.build/Objects-normal/armv7/STRCaptureViewController.o
-t1342791714
-s120228
+t1343055983
+s120388
 
 N/Users/tnbeatty/Documents/Developer/StraboGIS/Multi-Recorder/STRABO-MultiRecorder/build/STRABO-MultiRecorder.build/Release-iphoneos/STRABO-MultiRecorder.build/Objects-normal/armv7/STRGeoLocationData.o
 t1342446807
@@ -195,7 +195,7 @@ s2877396
 
 CCheck dependencies
 r0
-lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependenciesb93551ea9fbdb541^11ff14eb9fbdb541^---0#1#0#--18"Check dependencies36"480EE7F6-A0A1-4AA3-8AE9-95FCD200AFA8-
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependencies75b046aba7bdb541^452a6caba7bdb541^---0#1#0#--18"Check dependencies36"FB22F830-8525-4593-8DBD-D45919E2A074-
 
 CCompileC build/STRABO-MultiRecorder.build/Release-iphoneos/STRABO-MultiRecorder.build/Objects-normal/armv7/NSDate+Date_Utilities.o /Users/tnbeatty/Documents/Developer/StraboGIS/Multi-Recorder/STRABO-MultiRecorder/STRABO-MultiRecorder/NSDate+Date_Utilities.m normal armv7 objective-c com.apple.compilers.llvm.clang.1_0.compiler
 s364307330.468560

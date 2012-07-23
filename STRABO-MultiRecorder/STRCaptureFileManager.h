@@ -19,7 +19,7 @@
  Create a new STRCaptureFileManager by using the class method defaultManager to ensure the proper default setup of the object.
  */
 @interface STRCaptureFileManager : NSObject {
-    NSFileManager * fileManager;
+    NSFileManager * _fileManager;
 }
 
 ///---------------------------------------------------------------------------------------

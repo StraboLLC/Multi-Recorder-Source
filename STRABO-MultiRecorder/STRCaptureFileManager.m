@@ -104,7 +104,7 @@
 -(BOOL)deleteCapture:(STRCapture *)capture {
     NSError * error;
     NSString * capturePath = [self.capturesDirectoryPath stringByAppendingPathComponent:capture.token];
-    [fileManager removeItemAtPath:capturePath error:&error];
+    [_fileManager removeItemAtPath:capturePath error:&error];
 
     if (error) return NO;
     return YES;
@@ -113,7 +113,7 @@
 -(BOOL)deleteCaptureWithToken:(NSString *)token {
     NSError * error;
     NSString * capturePath = [self.capturesDirectoryPath stringByAppendingPathComponent:token];
-    [fileManager removeItemAtPath:capturePath error:&error];
+    [_fileManager removeItemAtPath:capturePath error:&error];
     
     if (error) return NO;
     return YES;

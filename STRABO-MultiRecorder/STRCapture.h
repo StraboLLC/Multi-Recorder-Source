@@ -18,17 +18,17 @@
  ------------------------
  */
 @interface STRCapture : NSObject {
-    NSString * captureInfoPath;
-    NSDate * creationDate;
-    NSString * geoDataPath;
-    NSNumber * latitude;
-    NSNumber * longitude;
-    NSString * mediaPath;
-    NSString * thumbnailPath;
-    NSString * title;
-    NSString * token;
-    NSString * type;
-    NSDate * uploadDate;
+    NSString * _captureInfoPath;
+    NSDate * _creationDate;
+    NSString * _geoDataPath;
+    NSNumber * _latitude;
+    NSNumber * _longitude;
+    NSString * _mediaPath;
+    NSString * _thumbnailPath;
+    NSString * _title;
+    NSString * _token;
+    NSString * _type;
+    NSDate * _uploadDate;
 }
 
 ///---------------------------------------------------------------------------------------

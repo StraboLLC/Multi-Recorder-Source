@@ -53,7 +53,7 @@
  */
 @interface STRCaptureViewController : UIViewController {
     
-    id delegate;
+    id _delegate;
     BOOL isRecording;
     
     IBOutlet UIActivityIndicatorView * activityIndicator;
