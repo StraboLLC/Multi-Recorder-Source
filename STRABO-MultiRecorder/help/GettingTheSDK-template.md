@@ -33,7 +33,7 @@ Installing the Documentation
 
 The complete documentation for the project comes packaged with the SDK. To install the docs to the Xcode library, open a new terminal window and run the installDocs script.
 
-	$ cd ...Multi-Recorder/scripts/installDocs
+	$ cd ...Multi-Recorder/scripts
 	$ ./installDocs
 
 Integrating With a Project
