@@ -11,6 +11,8 @@
 @interface STRCapture ()
 
 // Make readonly properties writable internally
+@property(readwrite)UIImage * thumbnailImage;
+
 @property(readwrite)NSDate * creationDate;
 @property(readwrite)NSNumber * latitude;
 @property(readwrite)NSNumber * longitude;
@@ -57,6 +59,8 @@
     newCapture.mediaPath = [captureDictionary objectForKey:@"media_file"];
     newCapture.thumbnailPath = [captureDictionary objectForKey:@"thumbnail_file"];
     newCapture.captureInfoPath = [newCapture.token stringByAppendingPathComponent:@"capture-info.json"];
+    // Images
+    newCapture.thumbnailImage = [UIImage imageWithContentsOfFile:[newCapture.straboCaptureDirectoryPath stringByAppendingPathComponent:newCapture.thumbnailPath]];
     
     return newCapture;
 }

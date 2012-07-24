@@ -79,3 +79,5 @@ This SDK uses a couple of Apple iOS frameworks which you must include in your pr
 ###Have a Beer
 
 Congratulations! You should have successfully added the Strabo MultiRecorder SDK to your project. You are ready to start building with Strabo. Check out the [guide](WorkingWithTheSDK) for more information about how to present the capture view controller and browse and upload captures. Treat yourself to a beer and then get to work coding up the rest of your app.
+
+@warning You should be careful when building your project with this library because the architecture of the library is ARMV7 and NOT i386. This means that the library will not run on the iOS simulator and can only be tested on an iPhone or iOS device.

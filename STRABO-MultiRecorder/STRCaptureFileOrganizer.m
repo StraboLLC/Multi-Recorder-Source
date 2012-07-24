@@ -215,6 +215,8 @@
 	CGImageRef rotatedImage = CGBitmapContextCreateImage(bmContext);
 	CFRelease(bmContext);
     
+    //UIImage * newImage = [UIImage imageWithCGImage:rotatedImage];
+    
 	return rotatedImage;
 }
 
