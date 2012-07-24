@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0450"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +13,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "96E6F88D15AB306E00DE1AA5"
-               BuildableName = "libSTRABO-MultiRecorder-iPhoneOS.a"
-               BlueprintName = "STRABO-MultiRecorder-iPhoneOS"
+               BlueprintIdentifier = "96FCEB7315BEDDF200CC6ABA"
+               BuildableName = "libSTRABO-MultiRecorder-iPhoneSimulator.a"
+               BlueprintName = "STRABO-MultiRecorder-iPhoneSimulator"
                ReferencedContainer = "container:STRABO-MultiRecorder.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,16 +27,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "96E6F89E15AB306E00DE1AA5"
-               BuildableName = "STRABO-MultiRecorderTests.octest"
-               BlueprintName = "STRABO-MultiRecorderTests"
-               ReferencedContainer = "container:STRABO-MultiRecorder.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

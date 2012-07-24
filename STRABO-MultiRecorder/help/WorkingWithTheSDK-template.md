@@ -41,7 +41,7 @@ In total, your .h file might look similar to the following:
 	#import <UIKit/UIKit.h>
 	#import "multi-recorder-sdk.h"
 
-	@interface FirstViewController : UIViewController &lt;STRCaptureViewControllerDelegate&gt; {
+	@interface FirstViewController : UIViewController <STRCaptureViewControllerDelegate> {
 
 	}
 

@@ -20,10 +20,13 @@
 		96E6F89215AB306E00DE1AA5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96E6F89115AB306E00DE1AA5 /* Foundation.framework */; };
 		96E6F8A115AB306E00DE1AA5 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96E6F8A015AB306E00DE1AA5 /* SenTestingKit.framework */; };
 		96E6F8A415AB306E00DE1AA5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96E6F89115AB306E00DE1AA5 /* Foundation.framework */; };
-		96E6F8A715AB306E00DE1AA5 /* libSTRABO-MultiRecorder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 96E6F88E15AB306E00DE1AA5 /* libSTRABO-MultiRecorder.a */; };
+		96E6F8A715AB306E00DE1AA5 /* libSTRABO-MultiRecorder-iPhoneOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 96E6F88E15AB306E00DE1AA5 /* libSTRABO-MultiRecorder-iPhoneOS.a */; };
 		96E6F8AD15AB306E00DE1AA5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 96E6F8AB15AB306E00DE1AA5 /* InfoPlist.strings */; };
 		96E6F8B015AB306E00DE1AA5 /* STRABO_MultiRecorderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 96E6F8AF15AB306E00DE1AA5 /* STRABO_MultiRecorderTests.m */; };
 		96EDE7FF15B0946800A4940B /* NSDate+Date_Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 96EDE7FE15B0946800A4940B /* NSDate+Date_Utilities.m */; };
+		96FCEB7515BEDDF200CC6ABA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96E6F89115AB306E00DE1AA5 /* Foundation.framework */; };
+		96FCEB7A15BEDDF200CC6ABA /* STRABO_MultiRecorder_iPhoneSimulator.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 96FCEB7915BEDDF200CC6ABA /* STRABO_MultiRecorder_iPhoneSimulator.h */; };
+		96FCEB7C15BEDDF200CC6ABA /* STRABO_MultiRecorder_iPhoneSimulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 96FCEB7B15BEDDF200CC6ABA /* STRABO_MultiRecorder_iPhoneSimulator.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +46,16 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		96FCEB7215BEDDF200CC6ABA /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+				96FCEB7A15BEDDF200CC6ABA /* STRABO_MultiRecorder_iPhoneSimulator.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,7 +82,7 @@
 		96B1C8B115AB39870041F8AC /* STRCaptureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRCaptureViewController.m; sourceTree = "<group>"; };
 		96B1C8B215AB39870041F8AC /* STRGeoLocationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRGeoLocationData.h; sourceTree = "<group>"; };
 		96B1C8B315AB39870041F8AC /* STRGeoLocationData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRGeoLocationData.m; sourceTree = "<group>"; };
-		96E6F88E15AB306E00DE1AA5 /* libSTRABO-MultiRecorder.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libSTRABO-MultiRecorder.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		96E6F88E15AB306E00DE1AA5 /* libSTRABO-MultiRecorder-iPhoneOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libSTRABO-MultiRecorder-iPhoneOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		96E6F89115AB306E00DE1AA5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		96E6F89515AB306E00DE1AA5 /* STRABO-MultiRecorder-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "STRABO-MultiRecorder-Prefix.pch"; sourceTree = "<group>"; };
 		96E6F89F15AB306E00DE1AA5 /* STRABO-MultiRecorderTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "STRABO-MultiRecorderTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,6 +93,10 @@
 		96E6F8AF15AB306E00DE1AA5 /* STRABO_MultiRecorderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STRABO_MultiRecorderTests.m; sourceTree = "<group>"; };
 		96EDE7FD15B0946800A4940B /* NSDate+Date_Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Date_Utilities.h"; sourceTree = "<group>"; };
 		96EDE7FE15B0946800A4940B /* NSDate+Date_Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Date_Utilities.m"; sourceTree = "<group>"; };
+		96FCEB7415BEDDF200CC6ABA /* libSTRABO-MultiRecorder-iPhoneSimulator.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libSTRABO-MultiRecorder-iPhoneSimulator.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		96FCEB7815BEDDF200CC6ABA /* STRABO-MultiRecorder-iPhoneSimulator-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "STRABO-MultiRecorder-iPhoneSimulator-Prefix.pch"; sourceTree = "<group>"; };
+		96FCEB7915BEDDF200CC6ABA /* STRABO_MultiRecorder_iPhoneSimulator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STRABO_MultiRecorder_iPhoneSimulator.h; sourceTree = "<group>"; };
+		96FCEB7B15BEDDF200CC6ABA /* STRABO_MultiRecorder_iPhoneSimulator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STRABO_MultiRecorder_iPhoneSimulator.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,7 +115,15 @@
 			files = (
 				96E6F8A115AB306E00DE1AA5 /* SenTestingKit.framework in Frameworks */,
 				96E6F8A415AB306E00DE1AA5 /* Foundation.framework in Frameworks */,
-				96E6F8A715AB306E00DE1AA5 /* libSTRABO-MultiRecorder.a in Frameworks */,
+				96E6F8A715AB306E00DE1AA5 /* libSTRABO-MultiRecorder-iPhoneOS.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		96FCEB7115BEDDF200CC6ABA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				96FCEB7515BEDDF200CC6ABA /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +168,7 @@
 			children = (
 				96E6F89315AB306E00DE1AA5 /* STRABO-MultiRecorder */,
 				96E6F8A815AB306E00DE1AA5 /* STRABO-MultiRecorderTests */,
+				96FCEB7615BEDDF200CC6ABA /* STRABO-MultiRecorder-iPhoneSimulator */,
 				96E6F89015AB306E00DE1AA5 /* Frameworks */,
 				96E6F88F15AB306E00DE1AA5 /* Products */,
 			);
@@ -151,8 +177,9 @@
 		96E6F88F15AB306E00DE1AA5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				96E6F88E15AB306E00DE1AA5 /* libSTRABO-MultiRecorder.a */,
+				96E6F88E15AB306E00DE1AA5 /* libSTRABO-MultiRecorder-iPhoneOS.a */,
 				96E6F89F15AB306E00DE1AA5 /* STRABO-MultiRecorderTests.octest */,
+				96FCEB7415BEDDF200CC6ABA /* libSTRABO-MultiRecorder-iPhoneSimulator.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -222,12 +249,30 @@
 			name = Objects;
 			sourceTree = "<group>";
 		};
+		96FCEB7615BEDDF200CC6ABA /* STRABO-MultiRecorder-iPhoneSimulator */ = {
+			isa = PBXGroup;
+			children = (
+				96FCEB7915BEDDF200CC6ABA /* STRABO_MultiRecorder_iPhoneSimulator.h */,
+				96FCEB7B15BEDDF200CC6ABA /* STRABO_MultiRecorder_iPhoneSimulator.m */,
+				96FCEB7715BEDDF200CC6ABA /* Supporting Files */,
+			);
+			path = "STRABO-MultiRecorder-iPhoneSimulator";
+			sourceTree = "<group>";
+		};
+		96FCEB7715BEDDF200CC6ABA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				96FCEB7815BEDDF200CC6ABA /* STRABO-MultiRecorder-iPhoneSimulator-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		96E6F88D15AB306E00DE1AA5 /* STRABO-MultiRecorder */ = {
+		96E6F88D15AB306E00DE1AA5 /* STRABO-MultiRecorder-iPhoneOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 96E6F8B315AB306E00DE1AA5 /* Build configuration list for PBXNativeTarget "STRABO-MultiRecorder" */;
+			buildConfigurationList = 96E6F8B315AB306E00DE1AA5 /* Build configuration list for PBXNativeTarget "STRABO-MultiRecorder-iPhoneOS" */;
 			buildPhases = (
 				96E6F88A15AB306E00DE1AA5 /* Sources */,
 				96E6F88B15AB306E00DE1AA5 /* Frameworks */,
@@ -237,9 +282,9 @@
 			);
 			dependencies = (
 			);
-			name = "STRABO-MultiRecorder";
+			name = "STRABO-MultiRecorder-iPhoneOS";
 			productName = "STRABO-MultiRecorder";
-			productReference = 96E6F88E15AB306E00DE1AA5 /* libSTRABO-MultiRecorder.a */;
+			productReference = 96E6F88E15AB306E00DE1AA5 /* libSTRABO-MultiRecorder-iPhoneOS.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		96E6F89E15AB306E00DE1AA5 /* STRABO-MultiRecorderTests */ = {
@@ -260,6 +305,23 @@
 			productName = "STRABO-MultiRecorderTests";
 			productReference = 96E6F89F15AB306E00DE1AA5 /* STRABO-MultiRecorderTests.octest */;
 			productType = "com.apple.product-type.bundle";
+		};
+		96FCEB7315BEDDF200CC6ABA /* STRABO-MultiRecorder-iPhoneSimulator */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 96FCEB7D15BEDDF200CC6ABA /* Build configuration list for PBXNativeTarget "STRABO-MultiRecorder-iPhoneSimulator" */;
+			buildPhases = (
+				96FCEB7015BEDDF200CC6ABA /* Sources */,
+				96FCEB7115BEDDF200CC6ABA /* Frameworks */,
+				96FCEB7215BEDDF200CC6ABA /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "STRABO-MultiRecorder-iPhoneSimulator";
+			productName = "STRABO-MultiRecorder-iPhoneSimulator";
+			productReference = 96FCEB7415BEDDF200CC6ABA /* libSTRABO-MultiRecorder-iPhoneSimulator.a */;
+			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
@@ -282,7 +344,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				96E6F88D15AB306E00DE1AA5 /* STRABO-MultiRecorder */,
+				96E6F88D15AB306E00DE1AA5 /* STRABO-MultiRecorder-iPhoneOS */,
+				96FCEB7315BEDDF200CC6ABA /* STRABO-MultiRecorder-iPhoneSimulator */,
 				96E6F89E15AB306E00DE1AA5 /* STRABO-MultiRecorderTests */,
 			);
 		};
@@ -341,12 +404,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		96FCEB7015BEDDF200CC6ABA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				96FCEB7C15BEDDF200CC6ABA /* STRABO_MultiRecorder_iPhoneSimulator.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
 		96E6F8A615AB306E00DE1AA5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 96E6F88D15AB306E00DE1AA5 /* STRABO-MultiRecorder */;
+			target = 96E6F88D15AB306E00DE1AA5 /* STRABO-MultiRecorder-iPhoneOS */;
 			targetProxy = 96E6F8A515AB306E00DE1AA5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -367,6 +438,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -385,6 +457,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_LDFLAGS = "";
 				SDKROOT = iphoneos;
+				VALID_ARCHS = armv7;
 			};
 			name = Debug;
 		};
@@ -392,6 +465,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -404,6 +478,7 @@
 				OTHER_LDFLAGS = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = armv7;
 			};
 			name = Release;
 		};
@@ -461,6 +536,36 @@
 			};
 			name = Release;
 		};
+		96FCEB7E15BEDDF200CC6ABA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/Debug-iPhoneSimulator";
+				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)/Debug-iPhoneSimulator";
+				DSTROOT = /tmp/STRABO_MultiRecorder_iPhoneSimulator.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "STRABO-MultiRecorder-iPhoneSimulator/STRABO-MultiRecorder-iPhoneSimulator-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		96FCEB7F15BEDDF200CC6ABA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/Release-iPhoneSimulator";
+				CONFIGURATION_TEMP_DIR = "$(PROJECT_TEMP_DIR)/Release-iPhoneSimulator";
+				DSTROOT = /tmp/STRABO_MultiRecorder_iPhoneSimulator.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "STRABO-MultiRecorder-iPhoneSimulator/STRABO-MultiRecorder-iPhoneSimulator-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -473,7 +578,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		96E6F8B315AB306E00DE1AA5 /* Build configuration list for PBXNativeTarget "STRABO-MultiRecorder" */ = {
+		96E6F8B315AB306E00DE1AA5 /* Build configuration list for PBXNativeTarget "STRABO-MultiRecorder-iPhoneOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				96E6F8B415AB306E00DE1AA5 /* Debug */,
@@ -490,6 +595,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		96FCEB7D15BEDDF200CC6ABA /* Build configuration list for PBXNativeTarget "STRABO-MultiRecorder-iPhoneSimulator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				96FCEB7E15BEDDF200CC6ABA /* Debug */,
+				96FCEB7F15BEDDF200CC6ABA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
