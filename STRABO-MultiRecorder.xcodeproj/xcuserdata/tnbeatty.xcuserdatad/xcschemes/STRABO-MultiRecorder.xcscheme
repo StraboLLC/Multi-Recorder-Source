@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "96E6F88D15AB306E00DE1AA5"
-               BuildableName = "libSTRABO-MultiRecorder-iPhoneOS.a"
-               BlueprintName = "STRABO-MultiRecorder-iPhoneOS"
+               BuildableName = "libSTRABO-MultiRecorder.a"
+               BlueprintName = "STRABO-MultiRecorder"
                ReferencedContainer = "container:STRABO-MultiRecorder.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,10 +45,9 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
-      enableOpenGLFrameCaptureMode = "0"
       allowLocationSimulation = "YES">
       <AdditionalOptions>
       </AdditionalOptions>

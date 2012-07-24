@@ -4,16 +4,6 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>STRABO-MultiRecorder-iOS copy.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>2</integer>
-		</dict>
-		<key>STRABO-MultiRecorder-iPhoneSimulator.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>1</integer>
-		</dict>
 		<key>STRABO-MultiRecorder.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -28,21 +18,6 @@
 			<true/>
 		</dict>
 		<key>96E6F89E15AB306E00DE1AA5</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>96FCEB4015BED62A00CC6ABA</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>96FCEB5815BEDC5F00CC6ABA</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>96FCEB7315BEDDF200CC6ABA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
