@@ -9,6 +9,10 @@
 #import "STRCaptureDataCollector.h"
 
 @interface STRCaptureDataCollector (AVCaptureFileOutputRecordingDelegate) <AVCaptureFileOutputRecordingDelegate>
+
+-(void)captureOutput:(AVCaptureFileOutput *)captureOutput didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL fromConnections:(NSArray *)connections error:(NSError *)error;
+-(void)captureOutput:(AVCaptureFileOutput *)captureOutput didStartRecordingToOutputFileAtURL:(NSURL *)fileURL fromConnections:(NSArray *)connections;
+
 @end
 
 @interface STRCaptureDataCollector ()
@@ -66,12 +70,10 @@
     [[NSFileManager defaultManager] removeItemAtURL:[self videoTempFileURL] error:nil];
     // Start recording to the movie file output
     [[self movieFileOutput] startRecordingToOutputFileURL:[self videoTempFileURL] recordingDelegate:self];
-    [_delegate videoRecordingDidBegin];
 }
 
 -(void)stopCapturingVideo {
     [[self movieFileOutput] stopRecording];
-    [_delegate videoRecordingDidEnd];
 }
 
 -(void)captureStillImageWithOrientation:(UIDeviceOrientation)deviceOrientation {
@@ -191,6 +193,22 @@
         [fileManager removeItemAtPath:outputPath error:nil];
     }
     return outputPath;
+}
+
+@end
+
+@implementation STRCaptureDataCollector (AVCaptureFileOutputRecordingDelegate)
+
+-(void)captureOutput:(AVCaptureFileOutput *)captureOutput didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL fromConnections:(NSArray *)connections error:(NSError *)error {
+    if (error) {
+        NSLog(@"STRCaptureDataCollector: An error occurred while ending the video recording: %@", error);
+    } else {
+        [_delegate videoRecordingDidEnd];
+    }
+}
+
+-(void)captureOutput:(AVCaptureFileOutput *)captureOutput didStartRecordingToOutputFileAtURL:(NSURL *)fileURL fromConnections:(NSArray *)connections {
+    [_delegate videoRecordingDidBegin];
 }
 
 @end

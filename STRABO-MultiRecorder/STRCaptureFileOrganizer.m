@@ -179,7 +179,9 @@
     // Copy the first image at time (0.0s) in the video file
     CMTime time = CMTimeMakeWithSeconds(0,30);
     CGImageRef imgRef = [generator copyCGImageAtTime:time actualTime:NULL error:&error];
-    if (error) return nil;
+    if (error) {
+        NSLog(@"STRCaptureFileOrganizer: Error generating video thumbnail: %@", error);
+    }
     
     UIImage * image = [UIImage imageWithCGImage:imgRef];
     return image;
