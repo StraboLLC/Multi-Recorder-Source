@@ -14,7 +14,7 @@
 
 // Tools
 #import "NSDate+Date_Utilities.h"
-#import "NSString+MD5.h"
+#import "NSString+Hash.h"
 
 // The size of the thumbnail output
 

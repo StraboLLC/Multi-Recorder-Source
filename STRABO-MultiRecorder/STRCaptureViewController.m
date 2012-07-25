@@ -130,6 +130,9 @@
     capturePreviewLayer.frame = videoPreviewLayer.bounds;
     capturePreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
     [videoPreviewLayer.layer addSublayer:capturePreviewLayer];
+    
+    // Set up the current orientation
+    currentOrientation = [[UIDevice currentDevice] orientation];
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -150,9 +153,8 @@
 }
 
 -(void)deviceDidRotate {
-    
     UIDeviceOrientation newOrientation = [[UIDevice currentDevice] orientation];
-    
+    NSLog(@"Device did rotate to orientation: %d", newOrientation);
     if (currentOrientation
         && newOrientation
         && (currentOrientation != newOrientation)

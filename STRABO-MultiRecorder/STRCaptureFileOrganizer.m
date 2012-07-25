@@ -137,7 +137,7 @@
     }
     uniqueIdentifier = [userDefaults objectForKey:kSTRUniqueIdentifierKey];
     NSString * fileName = [NSString stringWithFormat:@"%@-%d", uniqueIdentifier, (int)[[NSDate date] timeIntervalSince1970]];
-    return [fileName MD5];
+    return [fileName SHA2];
 }
 
 -(NSString *)capturesDirectoryPath {

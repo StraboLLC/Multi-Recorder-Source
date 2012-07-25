@@ -38,6 +38,7 @@
 // Utility Methods
 -(NSURL *)videoTempFileURL;
 -(NSString *)imageTempFilePath;
+-(AVCaptureConnection *)videoConnection;
 
 @end
 
@@ -63,9 +64,7 @@
 
 -(void)startCapturingVideoWithOrientation:(AVCaptureVideoOrientation)deviceOrientation {
     // Set the video orientation
-    if ([_videoConnection isVideoOrientationSupported]) {
-        [_videoConnection setVideoOrientation:deviceOrientation];
-    }
+    [self.videoConnection setVideoOrientation:4];
     // Remove the old temp file
     [[NSFileManager defaultManager] removeItemAtURL:[self videoTempFileURL] error:nil];
     // Start recording to the movie file output
@@ -78,11 +77,10 @@
 
 -(void)captureStillImageWithOrientation:(UIDeviceOrientation)deviceOrientation {
     // Set the orientation
-    if ([_videoConnection isVideoOrientationSupported]) {
-        [_videoConnection setVideoOrientation:deviceOrientation];
-    }
+    [self.videoConnection setVideoOrientation:deviceOrientation];
+    
     // Capture the image
-	[_imageFileOutput captureStillImageAsynchronouslyFromConnection:_videoConnection
+	[_imageFileOutput captureStillImageAsynchronouslyFromConnection:self.videoConnection
                                                   completionHandler:^(CMSampleBufferRef imageSampleBuffer, NSError *error) {
                                                       
                                                       NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
@@ -130,20 +128,6 @@
     if (![_session isRunning]) {
         [_session startRunning];
     }
-    
-    // Find and set the video connection
-	for (AVCaptureConnection *connection in [_imageFileOutput connections]) {
-		for (AVCaptureInputPort *port in [connection inputPorts]) {
-			if ([[port mediaType] isEqual:AVMediaTypeVideo]) {
-				_videoConnection = connection;
-				break;
-			}
-		}
-		if (_videoConnection) {
-            break;
-        }
-	}
-    
 }
 
 #pragma mark - Capture Devices
@@ -193,6 +177,23 @@
         [fileManager removeItemAtPath:outputPath error:nil];
     }
     return outputPath;
+}
+
+-(AVCaptureConnection *)videoConnection {
+    // Find and set the video connection
+    AVCaptureConnection * videoConnection;
+	for (AVCaptureConnection *connection in [_imageFileOutput connections]) {
+		for (AVCaptureInputPort *port in [connection inputPorts]) {
+			if ([[port mediaType] isEqual:AVMediaTypeVideo]) {
+				videoConnection = connection;
+				break;
+			}
+		}
+		if (videoConnection) {
+            break;
+        }
+	}
+    return videoConnection;
 }
 
 @end

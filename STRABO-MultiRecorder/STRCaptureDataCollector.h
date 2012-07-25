@@ -34,7 +34,6 @@
     AVCaptureDeviceInput * _audioInput;
     AVCaptureMovieFileOutput * _movieFileOutput;
     AVCaptureStillImageOutput * _imageFileOutput;
-    AVCaptureConnection * _videoConnection;
 }
 
 @property(strong)id delegate;
@@ -44,7 +43,6 @@
 @property(readonly)AVCaptureDeviceInput * audioInput;
 @property(readonly)AVCaptureMovieFileOutput * movieFileOutput;
 @property(readonly)AVCaptureStillImageOutput * imageFileOutput;
-@property(readonly)AVCaptureConnection * videoConnection;
 
 ///---------------------------------------------------------------------------------------
 /// @name Settng Capture Options

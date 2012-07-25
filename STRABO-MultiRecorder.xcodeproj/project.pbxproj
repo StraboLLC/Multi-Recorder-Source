@@ -12,7 +12,7 @@
 		9634F5F615ADBEED005E1C21 /* STRCaptureFileOrganizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9634F5F515ADBEED005E1C21 /* STRCaptureFileOrganizer.m */; };
 		9643233615B8955E00937DDA /* STRCaptureUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9643233515B8955E00937DDA /* STRCaptureUploadManager.m */; };
 		968D3BD715AF6040000CB5D9 /* STRCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = 968D3BD615AF6040000CB5D9 /* STRCapture.m */; };
-		96A5E47415B446C70011B26C /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A5E47315B446C70011B26C /* NSString+MD5.m */; };
+		96A5E47415B446C70011B26C /* NSString+Hash.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A5E47315B446C70011B26C /* NSString+Hash.m */; };
 		96B1C8A915AB39110041F8AC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B1C8A815AB39110041F8AC /* UIKit.framework */; };
 		96B1C8B415AB39870041F8AC /* STRCaptureDataCollector.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B1C8AF15AB39870041F8AC /* STRCaptureDataCollector.m */; };
 		96B1C8B515AB39870041F8AC /* STRCaptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B1C8B115AB39870041F8AC /* STRCaptureViewController.m */; };
@@ -60,8 +60,8 @@
 		968D3BD515AF6040000CB5D9 /* STRCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRCapture.h; sourceTree = "<group>"; };
 		968D3BD615AF6040000CB5D9 /* STRCapture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRCapture.m; sourceTree = "<group>"; };
 		969A743F15AC799400160FD2 /* multi-recorder-sdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "multi-recorder-sdk.h"; sourceTree = "<group>"; };
-		96A5E47215B446C70011B26C /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
-		96A5E47315B446C70011B26C /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
+		96A5E47215B446C70011B26C /* NSString+Hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Hash.h"; sourceTree = "<group>"; };
+		96A5E47315B446C70011B26C /* NSString+Hash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Hash.m"; sourceTree = "<group>"; };
 		96B1C8A815AB39110041F8AC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		96B1C8AE15AB39870041F8AC /* STRCaptureDataCollector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRCaptureDataCollector.h; sourceTree = "<group>"; };
 		96B1C8AF15AB39870041F8AC /* STRCaptureDataCollector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRCaptureDataCollector.m; sourceTree = "<group>"; };
@@ -172,8 +172,8 @@
 			children = (
 				9629AC0715AB7BF6004FB443 /* AppledocSettings.plist */,
 				969A743F15AC799400160FD2 /* multi-recorder-sdk.h */,
-				96A5E47215B446C70011B26C /* NSString+MD5.h */,
-				96A5E47315B446C70011B26C /* NSString+MD5.m */,
+				96A5E47215B446C70011B26C /* NSString+Hash.h */,
+				96A5E47315B446C70011B26C /* NSString+Hash.m */,
 				96EDE7FD15B0946800A4940B /* NSDate+Date_Utilities.h */,
 				96EDE7FE15B0946800A4940B /* NSDate+Date_Utilities.m */,
 				96085DBC15AB7F7900E96DE2 /* View Controllers */,
@@ -328,7 +328,7 @@
 				9634F5F615ADBEED005E1C21 /* STRCaptureFileOrganizer.m in Sources */,
 				968D3BD715AF6040000CB5D9 /* STRCapture.m in Sources */,
 				96EDE7FF15B0946800A4940B /* NSDate+Date_Utilities.m in Sources */,
-				96A5E47415B446C70011B26C /* NSString+MD5.m in Sources */,
+				96A5E47415B446C70011B26C /* NSString+Hash.m in Sources */,
 				9643233615B8955E00937DDA /* STRCaptureUploadManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
