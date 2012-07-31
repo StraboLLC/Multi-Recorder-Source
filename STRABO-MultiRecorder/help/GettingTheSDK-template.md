@@ -16,7 +16,11 @@ Run the following code in terminal:
 	$ cd ~/new/directory/strabo-multi-recorder
 	$ git clone https://github.com/StraboLLC/Strabo-Multi-Recorder
 
-The contents of this repo should be as follows:
+NOTE: Alternatively, you can clone the repository using SSH rather than HTTPS with the following:
+
+	git@github.com:StraboLLC/Strabo-Multi-Recorder.git
+
+The contents of the cloned repo should be as follows:
 
 	/Multi-Recorder/
 		sample/

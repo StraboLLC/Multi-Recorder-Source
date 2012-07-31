@@ -14,9 +14,10 @@
 -(NSString *)capturesDirectoryPath;
 
 // Thumbnail Generation Support
++(UIInterfaceOrientation)orientationForVideo:(AVAsset *)asset;
 -(UIImage *)thumbnailForImageAtPath:(NSString *)imagePath;
 -(UIImage *)thumbnailForVideoAtPath:(NSString *)videoPath;
--(CGImageRef)CGImageRotatedByAngle:(CGImageRef)imgRef angle:(CGFloat)angle;
++(CGImageRef)CGImage:(CGImageRef)imgRef rotatedByAngle:(CGFloat)angle;
 
 @end
 
@@ -152,17 +153,45 @@
     
 }
 
++(UIInterfaceOrientation)orientationForVideo:(AVAsset *)asset {
+    AVAssetTrack *videoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+    CGSize size = [videoTrack naturalSize];
+    CGAffineTransform txf = [videoTrack preferredTransform];
+    
+    if (size.width == txf.tx && size.height == txf.ty)
+        return UIInterfaceOrientationLandscapeRight;
+    else if (txf.tx == 0 && txf.ty == 0)
+        return UIInterfaceOrientationLandscapeLeft;
+    else if (txf.tx == 0 && txf.ty == size.width)
+        return UIInterfaceOrientationPortraitUpsideDown;
+    else
+        return UIInterfaceOrientationPortrait;
+}
+
 -(UIImage *)thumbnailForImageAtPath:(NSString *)imagePath {
     // Get a handle on the image at the path specified
     UIImage * image = [UIImage imageWithContentsOfFile:imagePath];
-    CGImageRef imgRef = [image CGImage];
     
     // Determine the proper scale to fit into 300 X 300
     int longImageSideSize = (image.size.height > image.size.width) ? image.size.height : image.size.width;
     CGFloat scale = (float)(300 / longImageSideSize);
     
+    CGImageRef imgRef = [image CGImage];
+    
+    // This is a bit of a hack - Rotate the images
+    if (image.imageOrientation == UIImageOrientationRight) {
+        imgRef = [STRCaptureFileOrganizer CGImage:imgRef rotatedByAngle:-90];
+    } else if (image.imageOrientation == UIImageOrientationUp) {
+        // Do nothing
+    } else if (image.imageOrientation == UIImageOrientationLeft) {
+        imgRef = [STRCaptureFileOrganizer CGImage:imgRef rotatedByAngle:90];
+    } else if (image.imageOrientation == UIImageOrientationDown) {
+        imgRef = [STRCaptureFileOrganizer CGImage:imgRef rotatedByAngle:180];
+    }
+    
     // Return a new scaled image
-    UIImage * newImage = [UIImage imageWithCGImage:imgRef scale:scale orientation:UIImageOrientationUp];
+    UIImage * newImage = [UIImage imageWithCGImage:imgRef scale:scale orientation:image.imageOrientation];
+    
     return newImage;
 }
 
@@ -170,6 +199,7 @@
     
     // Set up the generator
     AVURLAsset * videoFileAsset = [AVURLAsset URLAssetWithURL:[NSURL fileURLWithPath:videoPath] options:nil];
+    
     AVAssetImageGenerator * generator = [[AVAssetImageGenerator alloc] initWithAsset:videoFileAsset];
     // Set the maximum size of the image, constrained, of course, to its original aspect ratio.
     generator.maximumSize = CGSizeMake(300, 300);
@@ -183,11 +213,19 @@
         NSLog(@"STRCaptureFileOrganizer: Error generating video thumbnail: %@", error);
     }
     
+    // Rotate the image if necessary
+    UIInterfaceOrientation videoOrientation = [STRCaptureFileOrganizer orientationForVideo:videoFileAsset];
+
+    if (@(videoOrientation) == @3) {
+
+    }
+    
     UIImage * image = [UIImage imageWithCGImage:imgRef];
+    CGImageRelease(imgRef);
     return image;
 }
 
--(CGImageRef)CGImageRotatedByAngle:(CGImageRef)imgRef angle:(CGFloat)angle {
++(CGImageRef)CGImage:(CGImageRef)imgRef rotatedByAngle:(CGFloat)angle {
 	CGFloat angleInRadians = angle * (M_PI / 180);
 	CGFloat width = CGImageGetWidth(imgRef);
 	CGFloat height = CGImageGetHeight(imgRef);
@@ -215,9 +253,6 @@
 					   imgRef);
     
 	CGImageRef rotatedImage = CGBitmapContextCreateImage(bmContext);
-	CFRelease(bmContext);
-    
-    //UIImage * newImage = [UIImage imageWithCGImage:rotatedImage];
     
 	return rotatedImage;
 }

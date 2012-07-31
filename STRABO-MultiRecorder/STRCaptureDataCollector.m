@@ -39,6 +39,7 @@
 -(NSURL *)videoTempFileURL;
 -(NSString *)imageTempFilePath;
 -(AVCaptureConnection *)videoConnection;
++(AVCaptureConnection *)connectionWithMediaType:(NSString *)mediaType fromConnections:(NSArray *)connections;
 
 @end
 
@@ -64,7 +65,7 @@
 
 -(void)startCapturingVideoWithOrientation:(AVCaptureVideoOrientation)deviceOrientation {
     // Set the video orientation
-    [self.videoConnection setVideoOrientation:4];
+    [[self videoConnection] setVideoOrientation:deviceOrientation];
     // Remove the old temp file
     [[NSFileManager defaultManager] removeItemAtURL:[self videoTempFileURL] error:nil];
     // Start recording to the movie file output
@@ -76,11 +77,27 @@
 }
 
 -(void)captureStillImageWithOrientation:(UIDeviceOrientation)deviceOrientation {
+
+    // Get the video connection
+    // An active connection must be returned for still image capture
+    AVCaptureConnection * videoConnection;
+	for (AVCaptureConnection *connection in [_imageFileOutput connections]) {
+		for (AVCaptureInputPort *port in [connection inputPorts]) {
+			if ([[port mediaType] isEqual:AVMediaTypeVideo]) {
+				videoConnection = connection;
+				break;
+			}
+		}
+		if (videoConnection) {
+            break;
+        }
+	}
+    
     // Set the orientation
-    [self.videoConnection setVideoOrientation:deviceOrientation];
+    [videoConnection setVideoOrientation:deviceOrientation];
     
     // Capture the image
-	[_imageFileOutput captureStillImageAsynchronouslyFromConnection:self.videoConnection
+	[_imageFileOutput captureStillImageAsynchronouslyFromConnection:videoConnection
                                                   completionHandler:^(CMSampleBufferRef imageSampleBuffer, NSError *error) {
                                                       
                                                       NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
@@ -181,19 +198,19 @@
 
 -(AVCaptureConnection *)videoConnection {
     // Find and set the video connection
-    AVCaptureConnection * videoConnection;
-	for (AVCaptureConnection *connection in [_imageFileOutput connections]) {
-		for (AVCaptureInputPort *port in [connection inputPorts]) {
-			if ([[port mediaType] isEqual:AVMediaTypeVideo]) {
-				videoConnection = connection;
-				break;
+    AVCaptureConnection * newConnection = [STRCaptureDataCollector connectionWithMediaType:AVMediaTypeVideo fromConnections:[_movieFileOutput connections]];
+    return newConnection;
+}
+
++(AVCaptureConnection *)connectionWithMediaType:(NSString *)mediaType fromConnections:(NSArray *)connections {
+	for ( AVCaptureConnection *connection in connections ) {
+		for ( AVCaptureInputPort *port in [connection inputPorts] ) {
+			if ( [[port mediaType] isEqual:mediaType] ) {
+				return connection;
 			}
 		}
-		if (videoConnection) {
-            break;
-        }
 	}
-    return videoConnection;
+	return nil;
 }
 
 @end

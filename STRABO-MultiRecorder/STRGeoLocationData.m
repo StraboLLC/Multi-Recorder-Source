@@ -17,6 +17,7 @@
 @implementation STRGeoLocationData
 
 -(id)init {
+    self = [super init];
     if (self) {
         dataPoints = [[NSMutableArray alloc] init];
     }

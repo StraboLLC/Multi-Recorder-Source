@@ -115,6 +115,7 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated {
+
     // Listen for orientation change events
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceDidRotate) name:UIDeviceOrientationDidChangeNotification object:nil];
@@ -154,7 +155,6 @@
 
 -(void)deviceDidRotate {
     UIDeviceOrientation newOrientation = [[UIDevice currentDevice] orientation];
-    NSLog(@"Device did rotate to orientation: %d", newOrientation);
     if (currentOrientation
         && newOrientation
         && (currentOrientation != newOrientation)
@@ -167,6 +167,8 @@
         
         // Update the Location Manager with the new orientation setting.
         locationManager.headingOrientation = currentOrientation;
+        
+        NSLog(@"Orientation changed to: %i", currentOrientation);
         
     }
 }
