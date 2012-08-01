@@ -234,9 +234,7 @@
     
     // Rotate the image if necessary
     UIInterfaceOrientation videoOrientation = [STRCaptureFileOrganizer orientationForVideo:videoFileAsset];
-    
     CGImageRef rotatedImgRef;
-    NSLog(@"Video Orientation: %i", videoOrientation);
     if (videoOrientation == 1) {
         rotatedImgRef = [STRCaptureFileOrganizer CGImage:imgRef rotatedByAngle:-90];
     } else if (videoOrientation == 2) {

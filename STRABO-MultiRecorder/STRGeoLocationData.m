@@ -41,8 +41,6 @@
 
 -(void)writeDataPointsToTempFile {
     
-    NSLog(@"STRGeoLocationData: Writing data points to JSON file.");
-    
     NSDictionary * points = [NSDictionary dictionaryWithObject:dataPoints forKey:@"points"];
     
     NSOutputStream * output = [NSOutputStream outputStreamToFileAtPath:[self tempFilePath] append:NO];

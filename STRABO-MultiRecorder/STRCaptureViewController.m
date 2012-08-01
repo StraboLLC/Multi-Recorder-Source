@@ -273,9 +273,6 @@
 
 -(void)resaveTemporaryFilesOfType:(NSString *)captureType {
     
-    // Start the activity spinner
-    [activityIndicator startAnimating];
-    
     // Perform saving actions
     STRCaptureFileOrganizer * fileOrganizer = [[STRCaptureFileOrganizer alloc] init];
     
@@ -357,6 +354,9 @@
     
     // Write the JSON geo-data
     [geoLocationData writeDataPointsToTempFile];
+    
+    // Start the activity spinner
+    [activityIndicator startAnimating];
     
     // Write files to a more permanent location
     [self resaveTemporaryFilesOfType:@"video"];
