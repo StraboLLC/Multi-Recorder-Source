@@ -134,6 +134,11 @@
     
     // Set up the current orientation
     currentOrientation = [[UIDevice currentDevice] orientation];
+    
+    // By default, make sure the activity indicator is off
+    if (!isRecording) {
+        [activityIndicator stopAnimating];
+    }
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -188,7 +193,12 @@
 
 -(IBAction)recordButtonWasPressed:(id)sender {
     if (isRecording) {
+        // Stop capturing
         [self stopCapturingVideo];
+        
+        // Start the activity spinner
+        [activityIndicator startAnimating];
+        
     } else {
         [self startCapturingVideo];
     }
@@ -354,9 +364,6 @@
     
     // Write the JSON geo-data
     [geoLocationData writeDataPointsToTempFile];
-    
-    // Start the activity spinner
-    [activityIndicator startAnimating];
     
     // Write files to a more permanent location
     [self resaveTemporaryFilesOfType:@"video"];
