@@ -46,6 +46,15 @@
     
     NSString * relativePath = [randomFilename stringByAppendingPathComponent:randomFilename];
     
+    // Determine the orientation dynamically
+    NSString * orientationString;
+    UIImageOrientation imageOrientation = [[UIImage imageWithContentsOfFile:thumbnailPath] imageOrientation];
+    if (imageOrientation == UIImageOrientationUp || imageOrientation == UIImageOrientationDown) {
+        orientationString = @"vertical";
+    } else {
+        orientationString = @"horizontal";
+    }
+    
     // Save the capture info file
     NSDictionary * trackInfo = @{
     @"created_at" : [NSDate currentUnixTimestampNumber],
@@ -53,7 +62,7 @@
     @"coords" : @[ @(location.coordinate.latitude), @(location.coordinate.longitude) ],
     @"heading" : @(heading.trueHeading),
     @"media_file" : [relativePath stringByAppendingPathExtension:@"jpg"],
-    @"orientation" : @"vertical",
+    @"orientation" : orientationString,
     @"thumbnail_file" : [relativePath stringByAppendingPathExtension:@"png"],
     @"title" : @"Untitled Capture",
     @"token" : randomFilename,
@@ -95,6 +104,16 @@
     
     NSString * relativePath = [randomFilename stringByAppendingPathComponent:randomFilename];
     
+    // Determine the orientation to dynamically generate capture info file
+    NSString * orientationString;
+    AVURLAsset * videoFileAsset = [AVURLAsset URLAssetWithURL:[NSURL fileURLWithPath:mediaTempPath] options:nil];
+    UIInterfaceOrientation videoOrientation = [STRCaptureFileOrganizer orientationForVideo:videoFileAsset];
+    if (videoOrientation == UIInterfaceOrientationLandscapeRight || videoOrientation == UIInterfaceOrientationLandscapeLeft) {
+        orientationString = @"horizontal";
+    } else {
+        orientationString = @"vertical";
+    }
+    
     // Save the capture info file
     NSDictionary * trackInfo = @{
     @"created_at" : [NSDate currentUnixTimestampNumber],
@@ -102,7 +121,7 @@
     @"coords" : @[ @(location.coordinate.latitude), @(location.coordinate.longitude) ],
     @"heading" : @(heading.trueHeading),
     @"media_file" : [relativePath stringByAppendingPathExtension:@"mov"],
-    @"orientation" : @"vertical",
+    @"orientation" : orientationString,
     @"thumbnail_file" : [relativePath stringByAppendingPathExtension:@"png"],
     @"title" : @"Untitled Capture",
     @"token" : randomFilename,
@@ -215,13 +234,25 @@
     
     // Rotate the image if necessary
     UIInterfaceOrientation videoOrientation = [STRCaptureFileOrganizer orientationForVideo:videoFileAsset];
-
-    if (@(videoOrientation) == @3) {
-
-    }
     
-    UIImage * image = [UIImage imageWithCGImage:imgRef];
+    CGImageRef rotatedImgRef;
+    NSLog(@"Video Orientation: %i", videoOrientation);
+    if (videoOrientation == 1) {
+        rotatedImgRef = [STRCaptureFileOrganizer CGImage:imgRef rotatedByAngle:-90];
+    } else if (videoOrientation == 2) {
+        rotatedImgRef = [STRCaptureFileOrganizer CGImage:imgRef rotatedByAngle:90];
+    } else if (videoOrientation == 3) {
+        rotatedImgRef = [STRCaptureFileOrganizer CGImage:imgRef rotatedByAngle:180];
+    } else if (videoOrientation == 4) {
+        // No rotation necessary
+        rotatedImgRef = [STRCaptureFileOrganizer CGImage:imgRef rotatedByAngle:0];
+    } else {
+        NSLog(@"STRCaptureFileOrganizer: Video file orientation not recognized.");
+    }
     CGImageRelease(imgRef);
+    
+    UIImage * image = [UIImage imageWithCGImage:rotatedImgRef];
+    CGImageRelease(rotatedImgRef);
     return image;
 }
 
