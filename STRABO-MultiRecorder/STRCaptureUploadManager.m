@@ -155,7 +155,10 @@ static NSString * const kSTRServerURL = @"http://toastit.heroku.com/mobile/api/u
     // Check the server response to verify success
     
     // Respond by alerting the delgate if successful
-    
+    if ([_delegate respondsToSelector:@selector(fileUploadedSuccessfullyWithToken:)]) {
+        #warning Incomplete implementation - Token should be retrieved dynamically from server response
+        [_delegate fileUploadedSuccessfullyWithToken:@""];
+    }
 }
 
 #pragma mark - Utility Methods
