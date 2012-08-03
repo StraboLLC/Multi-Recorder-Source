@@ -47,10 +47,16 @@
     // Build up the newCapture object
     // Track Info
     newCapture.title = [captureDictionary objectForKey:@"title"];
-    newCapture.uploadDate = [captureDictionary objectForKey:@"uploaded_at"];
+//    newCapture.uploadDate = [captureDictionary objectForKey:@"uploaded_at"];
     newCapture.token = [captureDictionary objectForKey:@"token"];
     newCapture.type = [captureDictionary objectForKey:@"type"];
     // Geo Data
+    NSDate * uploadDate = [NSDate dateWithTimeIntervalSince1970:[[captureDictionary objectForKey:@"uploaded_at"] doubleValue]];
+    if ([uploadDate compare:[NSDate dateWithTimeIntervalSince1970:500]] == NSOrderedAscending) {
+        newCapture.uploadDate = nil;
+    } else {
+        newCapture.uploadDate = uploadDate;
+    }
     newCapture.creationDate = [NSDate dateWithTimeIntervalSince1970:[[captureDictionary objectForKey:@"created_at"] doubleValue]];
     newCapture.latitude = [[captureDictionary objectForKey:@"coords"] objectAtIndex:0];
     newCapture.longitude = [[captureDictionary objectForKey:@"coords"] objectAtIndex:1];

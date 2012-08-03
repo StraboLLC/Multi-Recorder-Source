@@ -59,8 +59,8 @@ There is a [known Xcode bug](https://developer.apple.com/library/mac/#qa/qa2006/
 
 1. In Xcode, click the target's name under "Targets" in the Project window.
 2. Choose the Build pane from the ensuing Info window.
-3. Scroll down to the Other Linker Flags build setting under the Linking collection and set its value to -ObjC.
-4. Add another value to the Other Linker Flags build setting and set its value to -all_load.
+3. Scroll down to the Other Linker Flags build setting under the Linking collection and set its value to `-ObjC`.
+4. Add another value to the Other Linker Flags build setting and set its value to `-all_load`.
 
 <img src="xcode-linking.png" style="width: 600px; margin: 0px auto;" />
 

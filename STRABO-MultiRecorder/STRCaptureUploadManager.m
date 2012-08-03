@@ -8,7 +8,7 @@
 
 #import "STRCaptureUploadManager.h"
 
-static NSString * const kSTRServerURL = @"http://willpotter.local:3000/upload";
+static NSString * const kSTRServerURL = @"http://toastit.heroku.com/mobile/api/upload";
 
 @interface STRCaptureUploadManager (NSURLConnectionDelegate) <NSURLConnectionDelegate>
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response;
