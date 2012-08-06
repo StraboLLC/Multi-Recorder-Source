@@ -57,6 +57,7 @@
 		9634F5F515ADBEED005E1C21 /* STRCaptureFileOrganizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRCaptureFileOrganizer.m; sourceTree = "<group>"; };
 		9643233415B8955E00937DDA /* STRCaptureUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRCaptureUploadManager.h; sourceTree = "<group>"; };
 		9643233515B8955E00937DDA /* STRCaptureUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRCaptureUploadManager.m; sourceTree = "<group>"; };
+		9645003815D011DC004D423A /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		968D3BD515AF6040000CB5D9 /* STRCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRCapture.h; sourceTree = "<group>"; };
 		968D3BD615AF6040000CB5D9 /* STRCapture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRCapture.m; sourceTree = "<group>"; };
 		969A743F15AC799400160FD2 /* multi-recorder-sdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "multi-recorder-sdk.h"; sourceTree = "<group>"; };
@@ -172,6 +173,7 @@
 			children = (
 				9629AC0715AB7BF6004FB443 /* AppledocSettings.plist */,
 				969A743F15AC799400160FD2 /* multi-recorder-sdk.h */,
+				9645003815D011DC004D423A /* Constants.h */,
 				96A5E47215B446C70011B26C /* NSString+Hash.h */,
 				96A5E47315B446C70011B26C /* NSString+Hash.m */,
 				96EDE7FD15B0946800A4940B /* NSDate+Date_Utilities.h */,

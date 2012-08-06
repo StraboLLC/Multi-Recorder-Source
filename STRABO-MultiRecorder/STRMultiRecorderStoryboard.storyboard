@@ -62,7 +62,7 @@
                                     <action selector="tempImgButtonPressed:" destination="9kr-d9-qDi" eventType="touchUpInside" id="T8k-0c-xYB"/>
                                 </connections>
                             </button>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="gray" id="fk6-EN-MsP">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="gray" id="fk6-EN-MsP">
                                 <rect key="frame" x="150" y="408" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="color" red="1" green="0.0" blue="0.09400915720261338" alpha="1" colorSpace="calibratedRGB"/>

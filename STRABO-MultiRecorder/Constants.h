@@ -9,6 +9,7 @@
 #ifndef STRABO_MultiRecorder_constants_h
 #define STRABO_MultiRecorder_constants_h
 
+#define KSTRDebugLogging (BOOL)YES
 
 
 #endif

@@ -75,9 +75,22 @@
     [output close];
     
     // Copy the files from temp to new
-    [fileManager copyItemAtPath:mediaTempPath toPath:mediaNewPath error:nil];
+    //[fileManager copyItemAtPath:mediaTempPath toPath:mediaNewPath error:nil];
     [fileManager copyItemAtPath:geoDataTempPath toPath:geoDataNewPath error:nil];
     
+    UIImage * image = [UIImage imageWithContentsOfFile:mediaTempPath];
+    CGImageRef imgRef = image.CGImage;
+    if (image.imageOrientation == UIImageOrientationRight) {
+        imgRef = [STRCaptureFileOrganizer CGImage:imgRef rotatedByAngle:-90];
+    } else if (image.imageOrientation == UIImageOrientationUp) {
+        // Do nothing
+    } else if (image.imageOrientation == UIImageOrientationLeft) {
+        imgRef = [STRCaptureFileOrganizer CGImage:imgRef rotatedByAngle:90];
+    } else if (image.imageOrientation == UIImageOrientationDown) {
+        imgRef = [STRCaptureFileOrganizer CGImage:imgRef rotatedByAngle:180];
+    }
+    UIImage * newImage = [UIImage imageWithCGImage:imgRef scale:1.0 orientation:UIImageOrientationUp];
+    [UIImageJPEGRepresentation(newImage, 1.0) writeToFile:mediaNewPath atomically:YES];
 }
 
 -(void)saveTempVideoFilesWithInitialLocation:(CLLocation *)location heading:(CLHeading *)heading {
@@ -197,7 +210,7 @@
     
     CGImageRef imgRef = [image CGImage];
     
-    // This is a bit of a hack - Rotate the images
+    // Rotate the images
     if (image.imageOrientation == UIImageOrientationRight) {
         imgRef = [STRCaptureFileOrganizer CGImage:imgRef rotatedByAngle:-90];
     } else if (image.imageOrientation == UIImageOrientationUp) {
