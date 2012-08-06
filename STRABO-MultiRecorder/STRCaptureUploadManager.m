@@ -160,11 +160,31 @@ static NSString * const kSTRServerURL = @"http://ns-api.herokuapp.com/upload";
     }
     
     // Check the server response to verify success
+    NSError * error;
+    NSDictionary * responseDict = [NSJSONSerialization JSONObjectWithData:responseJSONdata options:nil error:&error];
+    if (error) {
+        // The response is invalid, so notify the delegate
+        if ([_delegate respondsToSelector:@selector(fileUploadDidFailWithError:)]) {
+            [_delegate fileUploadDidFailWithError:error];
+        }
+        NSLog(@"STRCaptureUploadManager: Error - The server returned an unknown response and the JSON data could not be processed: %@", error);
+        return;
+    }
+    // If the server returned an error, notify the delegate
+    if (!(BOOL)[responseDict objectForKey:@"error"]) {
+        NSDictionary * userInfo = @{ NSLocalizedDescriptionKey : [responseDict objectForKey:@"message"] };
+        NSError * newError = [NSError errorWithDomain:nil code:nil userInfo:userInfo];
+        if ([_delegate respondsToSelector:@selector(fileUploadDidFailWithError:)]) {
+            [_delegate fileUploadDidFailWithError:newError];
+        }
+        return;
+    }
     
+    // At this point, everything should have gone through ok
+    // Declare the file upload a success!
     // Respond by alerting the delgate if successful
     if ([_delegate respondsToSelector:@selector(fileUploadedSuccessfullyWithToken:)]) {
-        #warning Incomplete implementation - Token should be retrieved dynamically from server response
-        [_delegate fileUploadedSuccessfullyWithToken:@""];
+        [_delegate fileUploadedSuccessfullyWithToken:[responseDict objectForKey:@"token"]];
     }
 }
 
