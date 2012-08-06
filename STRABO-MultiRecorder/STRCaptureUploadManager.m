@@ -8,7 +8,9 @@
 
 #import "STRCaptureUploadManager.h"
 
-static NSString * const kSTRServerURL = @"http://toastit.heroku.com/mobile/api/upload";
+#import "Constants.h"
+
+static NSString * const kSTRServerURL = @"http://ns-api.herokuapp.com/upload";
 
 @interface STRCaptureUploadManager (NSURLConnectionDelegate) <NSURLConnectionDelegate>
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response;
@@ -67,8 +69,10 @@ static NSString * const kSTRServerURL = @"http://toastit.heroku.com/mobile/api/u
     NSString * mediaPath = [self.capturesDirectoryPath stringByAppendingPathComponent:capture.mediaPath];
     NSString * geoDataPath = [self.capturesDirectoryPath stringByAppendingPathComponent:capture.geoDataPath];
     NSString * captureInfoPath = [self.capturesDirectoryPath stringByAppendingPathComponent:capture.captureInfoPath];
-    NSLog(@"Uploading: %@",thumbnailPath);
-    NSLog(@"Uploading: %@",mediaPath);
+    if (KSTRDebugLogging) {
+        NSLog(@"Uploading file: %@", thumbnailPath);
+        NSLog(@"Uploading file: %@", mediaPath);
+    }
     // Make sure that all files to upload actually exist
     NSFileManager * fileManager = [NSFileManager defaultManager];
     if (![fileManager fileExistsAtPath:mediaPath] || ![fileManager fileExistsAtPath:geoDataPath] || ![fileManager fileExistsAtPath:thumbnailPath] || ![fileManager fileExistsAtPath:captureInfoPath]) {
@@ -91,6 +95,7 @@ static NSString * const kSTRServerURL = @"http://toastit.heroku.com/mobile/api/u
     // Append all data to the mutable request body
     [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
     // Dynamically change the post request for video or image
+    if (KSTRDebugLogging) NSLog(@"Uploading capture of type: %@", capture.type);
     if ([capture.type isEqualToString:@"video"]) {
         [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"media_file\"; filename=\"%@.mov\"\r\n", capture.token] dataUsingEncoding:NSUTF8StringEncoding]];
         [postBody appendData:[@"Content-Type: video/quicktime\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
@@ -150,7 +155,9 @@ static NSString * const kSTRServerURL = @"http://toastit.heroku.com/mobile/api/u
 
 -(void)handleResponse:(NSData *)responseJSONdata {
     // Print out the server response for testing purposes
-    // NSLog(@"Server Response: %@", [[NSString alloc] initWithData:responseJSONdata encoding:NSUTF8StringEncoding]);
+    if (KSTRDebugLogging) {
+        NSLog(@"Server Response: %@", [[NSString alloc] initWithData:responseJSONdata encoding:NSUTF8StringEncoding]);
+    }
     
     // Check the server response to verify success
     

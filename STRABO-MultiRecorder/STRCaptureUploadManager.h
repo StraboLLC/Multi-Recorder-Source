@@ -10,9 +10,6 @@
 #import "STRCapture.h"
 #import "STRCaptureFileManager.h"
 
-// Define your server URL here.
-//#define kSTRServerURL @"http://willpotter.local:3000/upload"
-
 /**
  You should implement the STRCaptureUploadManagerDelegate to receive notifications when important things happen before, during, and after file uploading. The methods in this protocol will help you handle an upload and alert the user about upload progress, failure, or success.
  

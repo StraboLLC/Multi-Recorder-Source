@@ -49,7 +49,7 @@
     newCapture.title = [captureDictionary objectForKey:@"title"];
 //    newCapture.uploadDate = [captureDictionary objectForKey:@"uploaded_at"];
     newCapture.token = [captureDictionary objectForKey:@"token"];
-    newCapture.type = [captureDictionary objectForKey:@"type"];
+    newCapture.type = [captureDictionary objectForKey:@"media_type"];
     // Geo Data
     NSDate * uploadDate = [NSDate dateWithTimeIntervalSince1970:[[captureDictionary objectForKey:@"uploaded_at"] doubleValue]];
     if ([uploadDate compare:[NSDate dateWithTimeIntervalSince1970:500]] == NSOrderedAscending) {
