@@ -165,7 +165,9 @@
     // Generate a new identifier if one does not already exist
     if (![userDefaults objectForKey:kSTRUniqueIdentifierKey]) {
         
-        [userDefaults setObject:[[NSUUID UUID] UUIDString] forKey:kSTRUniqueIdentifierKey];
+        NSString * newID = (__bridge id)(CFUUIDCreateString(kCFAllocatorDefault, CFUUIDCreate(kCFAllocatorDefault)));
+        
+        [userDefaults setObject:newID forKey:kSTRUniqueIdentifierKey];
         [userDefaults synchronize];
     }
     uniqueIdentifier = [userDefaults objectForKey:kSTRUniqueIdentifierKey];

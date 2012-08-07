@@ -63,7 +63,7 @@ In your .m file, you should include the code to initialize a new STRCaptureViewC
 		// Assign the delegate to be self
 		captureVC.delegate = self;
 		// Present modally
-		[self presentViewController:cameraVC animated:YES completion:nil];
+		[self presentViewController:captureVC animated:YES completion:nil];
 	}
 
 As discussed above, we will need a complete implementation of the delegate method, [parentShouldDismissCaptureViewController:](STRCaptureViewControllerDelegate parentShouldDismissCaptureViewController:). This method should look something like this:
