@@ -68,6 +68,7 @@ When performing these steps, be sure that you add these tags to all builds (both
 
 ###Including Necessary Frameworks
 
+<a name="frameworks"></a>
 This SDK uses a couple of Apple iOS frameworks which you must include in your project. Be sure to add the following:
 
 * CoreMedia
@@ -78,7 +79,30 @@ This SDK uses a couple of Apple iOS frameworks which you must include in your pr
 * Foundation
 * CoreGraphics
 
-*** STUB ***
+To add these frameworks to your project in two different ways:
+
+#####Recommended:
+
+* Select your project in the project navigator
+* Select your target from the targets list (your target may look a little different from the one pictured below)
+* Select the "build phases" tab
+* Reveal the "Link Binary with Libraries" list by clicking on the drop-down arrow to the left
+
+<img src="xcode-framework1.png" style="width: 600px; margin: 0px auto;" />
+
+* Click on the "+" sign at the bottom of the "Link Binary with Libraries" list
+* From the window that appears, select the frameworks that you are missing from your project as listed [above](#frameworks)
+* Click "Add" when you are done selecting the frameworks
+
+<img src="xcode-framework2.png" style="width: 600px; margin: 0px auto;" />
+
+#####Alternative:
+
+* Control-Click on one of the existing frameworks in the Xcode Project Navigator
+* Click "Reveal in Finder" from the popup menu
+* Find the frameworks that do not already exist in your Project and drag them from the open finder window to the "frameworks" folder in your project navigator.
+* In the dialog box that appears, make sure that the "Copy items into destination..." checkbox is *_unchecked_*. Also, make sure that your project target is *_checked_*.
+* Click "Finish"
 
 ###Have a Beer
 

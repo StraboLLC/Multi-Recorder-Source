@@ -11,6 +11,7 @@
 		9629AC0815AB7BF6004FB443 /* AppledocSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9629AC0715AB7BF6004FB443 /* AppledocSettings.plist */; };
 		9634F5F615ADBEED005E1C21 /* STRCaptureFileOrganizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9634F5F515ADBEED005E1C21 /* STRCaptureFileOrganizer.m */; };
 		9643233615B8955E00937DDA /* STRCaptureUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9643233515B8955E00937DDA /* STRCaptureUploadManager.m */; };
+		965BB21815D1BE7600F13D73 /* STRSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 965BB21715D1BE7600F13D73 /* STRSettings.m */; };
 		968D3BD715AF6040000CB5D9 /* STRCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = 968D3BD615AF6040000CB5D9 /* STRCapture.m */; };
 		96A5E47415B446C70011B26C /* NSString+Hash.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A5E47315B446C70011B26C /* NSString+Hash.m */; };
 		96B1C8A915AB39110041F8AC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96B1C8A815AB39110041F8AC /* UIKit.framework */; };
@@ -58,6 +59,9 @@
 		9643233415B8955E00937DDA /* STRCaptureUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRCaptureUploadManager.h; sourceTree = "<group>"; };
 		9643233515B8955E00937DDA /* STRCaptureUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRCaptureUploadManager.m; sourceTree = "<group>"; };
 		9645003815D011DC004D423A /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		965BB21415D1B7B300F13D73 /* STRSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = STRSettings.plist; sourceTree = "<group>"; };
+		965BB21615D1BE7600F13D73 /* STRSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRSettings.h; sourceTree = "<group>"; };
+		965BB21715D1BE7600F13D73 /* STRSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRSettings.m; sourceTree = "<group>"; };
 		968D3BD515AF6040000CB5D9 /* STRCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRCapture.h; sourceTree = "<group>"; };
 		968D3BD615AF6040000CB5D9 /* STRCapture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRCapture.m; sourceTree = "<group>"; };
 		969A743F15AC799400160FD2 /* multi-recorder-sdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "multi-recorder-sdk.h"; sourceTree = "<group>"; };
@@ -172,6 +176,9 @@
 			isa = PBXGroup;
 			children = (
 				9629AC0715AB7BF6004FB443 /* AppledocSettings.plist */,
+				965BB21415D1B7B300F13D73 /* STRSettings.plist */,
+				965BB21615D1BE7600F13D73 /* STRSettings.h */,
+				965BB21715D1BE7600F13D73 /* STRSettings.m */,
 				969A743F15AC799400160FD2 /* multi-recorder-sdk.h */,
 				9645003815D011DC004D423A /* Constants.h */,
 				96A5E47215B446C70011B26C /* NSString+Hash.h */,
@@ -332,6 +339,7 @@
 				96EDE7FF15B0946800A4940B /* NSDate+Date_Utilities.m in Sources */,
 				96A5E47415B446C70011B26C /* NSString+Hash.m in Sources */,
 				9643233615B8955E00937DDA /* STRCaptureUploadManager.m in Sources */,
+				965BB21815D1BE7600F13D73 /* STRSettings.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

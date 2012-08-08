@@ -15,9 +15,33 @@
  */
 @interface NSDate (Date_Utilities)
 
+/**
+ Generates the current unix time and returns a string value.
+ 
+ @return NSString A string representation of the current unix time.
+ */
 +(NSString *)currentUnixTimestampString;
+
+/**
+ Generates the curent unix time and returns a numerical value.
+ 
+ @return NSNumber A numerical representation of the current unix time.
+ */
 +(NSNumber *)currentUnixTimestampNumber;
 
+/**
+ Compares two dates to determine if they fall on the same day.
+ 
+ For example:
+ 
+    NSDate * oldDate = [NSDate dateWithTimeIntervalSince1970:1];
+    NSDate * dateRightNow = [NSDate Date];
+    
+    // Compare the two dates to see if they are on the same day
+    [oldDate isSameDayAsDate:dateRightNow]; // Returns NO
+ 
+ @param date A date for comparison.
+ */
 -(BOOL)isSameDayAsDate:(NSDate*)date;
 
 @end

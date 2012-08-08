@@ -60,10 +60,28 @@
 ///---------------------------------------------------------------------------------------
 
 /**
+ Begin recording video to a temp video file with a specified orientation.
  
+ @param deviceOrientation The current orientation of the device when recording commences. This determines the orientation of both the final video file as well as the thumbnail.
+ 
+ @warning The orientation can only be an AVCaptureVideoOrientation. Device orientations like UIDeviceOrientationFaceDown are not accepted.
  */
 -(void)startCapturingVideoWithOrientation:(AVCaptureVideoOrientation)deviceOrientation;
+
+/**
+ Stop recording video to the temporary output file.
+ 
+ Should be called after startCapturingVideoWithOrientation: is called, although nothing bad will happen if you call it inadvertantly while a capture is not currently recording - no worries.
+ */
 -(void)stopCapturingVideo;
+
+/**
+ Take a picture and save it to an output file in the temporary directory.
+ 
+ @param deviceOrientation The current orientation of the device when recording commences. This determines the orientation of both the final image file as well as the thumbnail.
+ 
+ @warning The orientation can only be an AVCaptureVideoOrientation. Device orientations like UIDeviceOrientationFaceDown are not accepted.
+ */
 -(void)captureStillImageWithOrientation:(UIDeviceOrientation)deviceOrientation;
 
 @end

@@ -47,7 +47,7 @@
         [captures sortUsingComparator:^NSComparisonResult(id a, id b) {
             NSDate *first = [(STRCapture *)a creationDate];
             NSDate *second = [(STRCapture *)b creationDate];
-            return [first compare:second];
+            return [second compare:first];
         }];
     }
     

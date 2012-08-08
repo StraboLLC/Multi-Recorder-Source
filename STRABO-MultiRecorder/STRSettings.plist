@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Upload_URL</key>
+	<dict>
+		<key>Base_URL</key>
+		<string></string>
+		<key>API_URL</key>
+		<string></string>
+	</dict>
+	<key>Advanced_Logging</key>
+	<false/>
+</dict>
+</plist>

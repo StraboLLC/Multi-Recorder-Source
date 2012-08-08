@@ -76,9 +76,12 @@ As discussed above, we will need a complete implementation of the delegate metho
 Accessing Local Captures
 ---
 
-Local captures are accessed using a [STRCaptureFileManger](STRCaptureFileManager).
+Local captures are accessed using a [STRCaptureFileManger](STRCaptureFileManager). Alternatively, you could access the local file directory directory and use a NSFileManager or similar to access the StraboCapture file system, but this is highly discouraged.
 
-*** STUB ***
+The STRCaptureFileManager class provides a number of different methods for retreiving lists of local capture objects and is the best way to access the local captures. The most common methods will be discussed here; for a more detailed listing of all possible methods, please see the class [documentation](STRCaptureFileManager).
+
+For gallery views and list views that show local captures to the user, you will most likely want to use the allCapturesSorted: method. This method returns an array of all of the local captures, sorted by date and with the most recent at array index 0.
+
 
 <a name="section3"></a>
 Uploading a Capture
