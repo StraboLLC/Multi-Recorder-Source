@@ -5,8 +5,10 @@
 //  Created by Thomas Beatty on 6/28/12.
 //  Copyright (c) 2012 Strabo. All rights reserved.
 //
+#import "STRSettings.h"
 
 #import "STRCaptureViewController.h"
+
 
 @interface STRCaptureViewController (InternalMathods)
 
@@ -173,8 +175,9 @@
         // Update the Location Manager with the new orientation setting.
         locationManager.headingOrientation = currentOrientation;
         
-        NSLog(@"Orientation changed to: %i", currentOrientation);
-        
+        if ([[STRSettings sharedSettings] advancedLogging]) {
+            NSLog(@"STRCaptureViewController: Orientation changed to: %i", currentOrientation);
+        }
     }
 }
 

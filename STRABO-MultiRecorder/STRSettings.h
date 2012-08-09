@@ -8,10 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-@interface STRSettings : NSObject
+@interface STRSettings : NSObject {
+    NSDictionary * settingsDict;
+}
+
+@property(nonatomic, strong)NSDictionary * settingsDict;
 
 +(STRSettings *)sharedSettings;
 
 -(NSString *)uploadPath;
+-(BOOL)advancedLogging;
 
 @end

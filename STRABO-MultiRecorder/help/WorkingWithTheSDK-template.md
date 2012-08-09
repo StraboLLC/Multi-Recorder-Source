@@ -80,8 +80,45 @@ Local captures are accessed using a [STRCaptureFileManger](STRCaptureFileManager
 
 The STRCaptureFileManager class provides a number of different methods for retreiving lists of local capture objects and is the best way to access the local captures. The most common methods will be discussed here; for a more detailed listing of all possible methods, please see the class [documentation](STRCaptureFileManager).
 
-For gallery views and list views that show local captures to the user, you will most likely want to use the allCapturesSorted: method. This method returns an array of all of the local captures, sorted by date and with the most recent at array index 0.
+For gallery views and table views that show local captures to the user, you will most likely want to use the allCapturesSorted: method. This method returns an array of all of the local captures, sorted by date and with the most recent at array index 0 if `sorted == YES`. 
 
+For example, you could make a table view with custom UITableViewCell cells, each of which displays a thumbnail, a title, and a capture date.
+
+When the view loads, maybe in `-(void)viewDidLoad;`, you could set an instance variable to be an array of captures:
+
+	STRCaptureFileManager * captureFileManager = [STRCaptureFileManager defaultManager];
+	_captureArray = [captureFileManager allCapturesSorted:YES];
+
+In the standard protocol method [UITableView tableView:cellForRowAtIndexPath:], you could implement some code similar to the following. It is assumed that you have created a custom subclass of UITableViewCell in the example below.
+
+	- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+	{
+	    static NSString *CellIdentifier = @"customCell";
+	    MyCustomCell *cell = (MyCustomCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+
+	    /******************************************************************************************
+	    *
+	    *	For the purposes of this example, assume that MyCustomCell has the following properties:
+	   	*		- (UILabel *) titleLabel
+	   	*		- (UILabel *) dateLabel
+	   	*		- (UIImageView *) thumbnailImageView
+	   	*
+	   	*******************************************************************************************/
+	    
+	    // Configure the cell...
+	    // Get the index of the cell - corresponds to the index of the capture in the capture array
+	    NSNumber * index = @([indexPath indexAtPosition:1]);
+	    // Get a handle on the cell
+	    STRCapture * capture = [_captureArray objectAtIndex:index];
+	    // Set the title
+	    cell.titleLabel.text = capture.title;
+	    // Set an image 
+	    cell.thumbnailImageView.image = capture.image;
+	    // Set the date
+	    cell.dateLabel.text = capture.creationDate.description;
+	    
+	    return cell;
+	}
 
 <a name="section3"></a>
 Uploading a Capture

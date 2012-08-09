@@ -8,13 +8,7 @@
 
 #import "STRSettings.h"
 
-@interface STRSettings () {
-    
-    @private
-    NSDictionary * settingsDict;
-}
-
-@property(nonatomic, strong)NSDictionary * settingsDict;
+@interface STRSettings ()
 
 @end
 
@@ -22,16 +16,20 @@
 
 +(STRSettings *)sharedSettings {
     STRSettings * settings = [[STRSettings alloc] init];
-    settings.settingsDict = [[[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"STRSettings" ofType:@"plist"]] objectForKey:@"Root"];
+    settings.settingsDict = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"STRSettings" ofType:@"plist"]];
     return settings;
 }
 
 -(NSString *)uploadPath {
     NSDictionary * URLs = [_settingsDict objectForKey:@"Upload_URL"];
-    NSString * basePath = [URLs objectForKey:@"Base_Path"];
-//    NSString *
-//    return
-    return nil;
+    NSString * basePath = [URLs objectForKey:@"Base_URL"];
+    NSString * apiPath = [URLs objectForKey:@"API_URL"];
+    NSString * fullPath = [basePath stringByAppendingPathComponent:apiPath];
+    return fullPath;
+}
+
+-(BOOL)advancedLogging {
+    return [[_settingsDict objectForKey:@"Advanced_Logging"] boolValue];
 }
 
 

@@ -5,12 +5,9 @@
 //  Created by Thomas N Beatty on 7/19/12.
 //  Copyright (c) 2012 Strabo, LLC. All rights reserved.
 //
+#import "STRSettings.h"
 
 #import "STRCaptureUploadManager.h"
-
-#import "Constants.h"
-
-static NSString * const kSTRServerURL = @"http://ns-api.herokuapp.com/upload";
 
 @interface STRCaptureUploadManager (NSURLConnectionDelegate) <NSURLConnectionDelegate>
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response;
@@ -69,7 +66,7 @@ static NSString * const kSTRServerURL = @"http://ns-api.herokuapp.com/upload";
     NSString * mediaPath = [self.capturesDirectoryPath stringByAppendingPathComponent:capture.mediaPath];
     NSString * geoDataPath = [self.capturesDirectoryPath stringByAppendingPathComponent:capture.geoDataPath];
     NSString * captureInfoPath = [self.capturesDirectoryPath stringByAppendingPathComponent:capture.captureInfoPath];
-    if (KSTRDebugLogging) {
+    if ([[STRSettings sharedSettings] advancedLogging]) {
         NSLog(@"Uploading file: %@", thumbnailPath);
         NSLog(@"Uploading file: %@", mediaPath);
     }
@@ -81,7 +78,7 @@ static NSString * const kSTRServerURL = @"http://ns-api.herokuapp.com/upload";
     }
     
     // Create the request
-    NSMutableURLRequest * postRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:kSTRServerURL]];
+    NSMutableURLRequest * postRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[[STRSettings sharedSettings] uploadPath]]];
     [postRequest setHTTPMethod:@"POST"];
     
     // Set request constants
@@ -95,7 +92,7 @@ static NSString * const kSTRServerURL = @"http://ns-api.herokuapp.com/upload";
     // Append all data to the mutable request body
     [postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
     // Dynamically change the post request for video or image
-    if (KSTRDebugLogging) NSLog(@"Uploading capture of type: %@", capture.type);
+    if ([[STRSettings sharedSettings] advancedLogging]) NSLog(@"Uploading capture of type: %@", capture.type);
     if ([capture.type isEqualToString:@"video"]) {
         [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"media_file\"; filename=\"%@.mov\"\r\n", capture.token] dataUsingEncoding:NSUTF8StringEncoding]];
         [postBody appendData:[@"Content-Type: video/quicktime\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
@@ -155,7 +152,7 @@ static NSString * const kSTRServerURL = @"http://ns-api.herokuapp.com/upload";
 
 -(void)handleResponse:(NSData *)responseJSONdata {
     // Print out the server response for testing purposes
-    if (KSTRDebugLogging) {
+    if ([[STRSettings sharedSettings] advancedLogging]) {
         NSLog(@"Server Response: %@", [[NSString alloc] initWithData:responseJSONdata encoding:NSUTF8StringEncoding]);
     }
     

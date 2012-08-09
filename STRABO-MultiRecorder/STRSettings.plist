@@ -5,11 +5,11 @@
 	<key>Upload_URL</key>
 	<dict>
 		<key>Base_URL</key>
-		<string></string>
+		<string>http://ns-api.herokuapp.com</string>
 		<key>API_URL</key>
-		<string></string>
+		<string>/upload</string>
 	</dict>
 	<key>Advanced_Logging</key>
-	<false/>
+	<true/>
 </dict>
 </plist>
