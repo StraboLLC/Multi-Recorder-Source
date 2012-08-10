@@ -75,9 +75,10 @@
     [output close];
     
     // Copy the files from temp to new
-    //[fileManager copyItemAtPath:mediaTempPath toPath:mediaNewPath error:nil];
     [fileManager copyItemAtPath:geoDataTempPath toPath:geoDataNewPath error:nil];
     
+    // Image copying is screwy with orientations. Change the binary image orientation
+    // and save the new resulting image to the permanent file.
     UIImage * image = [UIImage imageWithContentsOfFile:mediaTempPath];
     CGImageRef imgRef = image.CGImage;
     if (image.imageOrientation == UIImageOrientationRight) {
