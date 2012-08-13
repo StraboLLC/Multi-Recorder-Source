@@ -47,7 +47,6 @@
     // Build up the newCapture object
     // Track Info
     newCapture.title = [captureDictionary objectForKey:@"title"];
-//    newCapture.uploadDate = [captureDictionary objectForKey:@"uploaded_at"];
     newCapture.token = [captureDictionary objectForKey:@"token"];
     newCapture.type = [captureDictionary objectForKey:@"media_type"];
     // Geo Data
@@ -70,6 +69,19 @@
     
     return newCapture;
 }
+
++(STRCapture *)captureWithToken:(NSString *)token {
+    // Because of the current directory naming scheme, we can just use the captureFromFilesAtDirectory method to handle this all for us.
+    return [self captureFromFilesAtDirectory:token];
+}
+
+#pragma mark - Capture Info
+
+-(BOOL)hasBeenUploaded {
+    return (self.uploadDate) ? NO : YES;
+}
+
+#pragma mark - Editing Methods
 
 -(BOOL)save {
     // Write readonly properties to the file system

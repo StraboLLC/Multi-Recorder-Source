@@ -172,4 +172,13 @@ After recording of both the media and geodata files is complete, an instance of 
 File Uploads
 ------------
 
-***STUB***
+Capture uploads can be done easily using a [STRCaptureUploadManager](STRCaptureUploadManager). You can pass any [STRCapture](STRCapture) instance which represents a locally stored capture to a method in the upload manager and it sends all of the capture files to the Strabo servers. See the [STRCaptureUploadManager](STRCaptureUploadManager) documentation for further details and a guide about how you should handle uploads.
+
+When you pass a capture to [STRCaptureUploadManager beginUploadForCapture:], a POST request is generated and prepared to be sent to the Strabo server. This request contains some specific information pertaining to the application, as well as all four files associated with the capture. These files are appended to the request as encoded data.
+
+Once the POST request has been generated, the STRCaptureUploadManager establishes a connection with the server and sends the POST request asynchronously. It is important that the request be sent asynchronously so that the main thread / the user interface is not tied up for the duration of the upload. This also allows you to respond to upload events like failures and upload progress.
+
+Once the upload has completed, the STRCaptureUploadManager waits for a response from the Strabo server. After the server has verified the request, it returns a JSON response that is handled by the STRCaptureUploadManager.
+
+Upon verfication of a successful response, the STRCaptureUploadManager notifies its delegate of a successful upload. Of course, it only notifies its delegate if the delegate implements the [STRCaptureUploadManagerDelegate](STRCaptureUploadManagerDelegate) protocol. This notification, a call to the `fileUploadedSuccessfullyWithToken:` protocol method, passes the unique token that identifies the capture in both the Mobile SDK and the Web API.
+

@@ -134,11 +134,33 @@
 /**
  Returns a new STRCapture object with the files at the directory specified.
  
- Notice that the capture directory is not the absolute path to the directory, but is rather the name of the directory containing the capture media files. For example, under the naming scheme as of July, 2012, the capture directory could be something like: @"1342193443".
+ Notice that the capture directory is not the absolute path to the directory, but is rather the name of the directory containing the capture media files relative to the "StraboCaptures" directory. ~~For example, under the naming scheme as of July, 2012, the capture directory could be something like: @"1342193443".~~ For example under the naming scheme as of August, 2012, the capture directory could be something like "
  
  @param captureDirectory The name of the directory containing the capture media files.
  */
 +(STRCapture *)captureFromFilesAtDirectory:(NSString *)captureDirectory;
+
+/**
+ Retrieves the locally stored capture with the specified token and returns a STRCapture object representing the capture.
+ 
+ @param token The token for the capture that you wish to retrieve.
+ 
+ @return STRCapture A new instance of a STRCapture object defined by the specified token.
+ */
++(STRCapture *)captureWithToken:(NSString *)token;
+
+///---------------------------------------------------------------------------------------
+/// @name Capture Info
+///---------------------------------------------------------------------------------------
+
+/**
+ An easy to check to see if a capture has been uploaded.
+ 
+ For more detailed information, check the uploadDate property. This property will return nil if the file has not been uploaded. It should also give you a more precise date about when the file was uploaded.
+ 
+ @return BOOL Returns YES if the capture has been previously uploaded and NO if it has not.
+ */
+-(BOOL)hasBeenUploaded;
 
 ///---------------------------------------------------------------------------------------
 /// @name Editing Methods
