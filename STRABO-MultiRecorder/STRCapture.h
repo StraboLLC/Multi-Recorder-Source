@@ -22,6 +22,7 @@
     NSString * _captureInfoPath;
     NSDate * _creationDate;
     NSString * _geoDataPath;
+    NSNumber * _heading;
     NSNumber * _latitude;
     NSNumber * _longitude;
     NSString * _mediaPath;
@@ -38,14 +39,21 @@
  */
 @property(readonly)UIImage * thumbnailImage;
 
+/**
+ Date when the capture was first taken.
+ */
+@property(readonly)NSDate * creationDate;
+
 ///---------------------------------------------------------------------------------------
 /// @name Geodata
 ///---------------------------------------------------------------------------------------
 
 /**
- Date when the capture was first taken.
+ Initial heading of the capture.
+ 
+ @warning This value might not equate exactly to the first point in the geo-data file.
  */
-@property(readonly)NSDate * creationDate;
+@property(readonly)NSNumber * heading;
 
 /**
  Initial latitude of the capture.
@@ -150,7 +158,7 @@
 +(STRCapture *)captureWithToken:(NSString *)token;
 
 ///---------------------------------------------------------------------------------------
-/// @name Capture Info
+/// @name Utilities
 ///---------------------------------------------------------------------------------------
 
 /**

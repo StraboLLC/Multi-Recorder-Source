@@ -12,8 +12,9 @@
 
 // Make readonly properties writable internally
 @property(readwrite)UIImage * thumbnailImage;
-
 @property(readwrite)NSDate * creationDate;
+
+@property(readwrite)NSNumber * heading;
 @property(readwrite)NSNumber * latitude;
 @property(readwrite)NSNumber * longitude;
 
@@ -49,7 +50,6 @@
     newCapture.title = [captureDictionary objectForKey:@"title"];
     newCapture.token = [captureDictionary objectForKey:@"token"];
     newCapture.type = [captureDictionary objectForKey:@"media_type"];
-    // Geo Data
     NSDate * uploadDate = [NSDate dateWithTimeIntervalSince1970:[[captureDictionary objectForKey:@"uploaded_at"] doubleValue]];
     if ([uploadDate compare:[NSDate dateWithTimeIntervalSince1970:500]] == NSOrderedAscending) {
         newCapture.uploadDate = nil;
@@ -57,6 +57,8 @@
         newCapture.uploadDate = uploadDate;
     }
     newCapture.creationDate = [NSDate dateWithTimeIntervalSince1970:[[captureDictionary objectForKey:@"created_at"] doubleValue]];
+    // Geo Data
+    newCapture.heading = [captureDictionary objectForKey:@"heading"];
     newCapture.latitude = [[captureDictionary objectForKey:@"coords"] objectAtIndex:0];
     newCapture.longitude = [[captureDictionary objectForKey:@"coords"] objectAtIndex:1];
     // File Paths
