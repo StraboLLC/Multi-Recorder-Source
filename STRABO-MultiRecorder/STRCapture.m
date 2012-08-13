@@ -7,6 +7,7 @@
 //
 
 #import "STRCapture.h"
+#import "STRSettings.h"
 
 @interface STRCapture ()
 
@@ -77,10 +78,54 @@
     return [self captureFromFilesAtDirectory:token];
 }
 
-#pragma mark - Capture Info
+#pragma mark - Utilities
 
 -(BOOL)hasBeenUploaded {
     return (self.uploadDate) ? NO : YES;
+}
+
+-(NSArray *)geoDataPointTimestamps {
+    NSString * filePath = [self.straboCaptureDirectoryPath stringByAppendingPathComponent:self.geoDataPath];
+    NSError * error;
+    NSArray * points = [[NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:filePath] options:NSJSONReadingAllowFragments error:&error] objectForKey:@"points"];
+    
+    if (error) {
+        if ([[STRSettings sharedSettings] advancedLogging]) {
+            NSLog(@"STRCapture: Error reading the geodata file. File may have been corrupted.");
+        }
+        // Return nil due to error
+        return nil;
+    }
+    
+    NSMutableArray * timestamps;
+    for (NSDictionary * point in points) {
+        [timestamps addObject:[point objectForKey:@"timestamp"]];
+    }
+    return timestamps;
+}
+
+-(NSDictionary *)geoDataPoints {
+    NSString * filePath = [self.straboCaptureDirectoryPath stringByAppendingPathComponent:self.geoDataPath];
+    NSError * error;
+    NSArray * points = [[NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:filePath] options:NSJSONReadingAllowFragments error:&error] objectForKey:@"points"];
+    
+    if (error) {
+        if ([[STRSettings sharedSettings] advancedLogging]) {
+            NSLog(@"STRCapture: Error reading the geodata file. File may have been corrupted.");
+        }
+        // Return nil due to error
+        return nil;
+    }
+    
+    NSMutableDictionary * timestamps = [[NSMutableDictionary alloc] initWithCapacity:points.count];
+    for (NSDictionary * point in points) {
+        CLLocation * location = [[CLLocation alloc] initWithLatitude:[[[point objectForKey:@"coords"] objectAtIndex:0] doubleValue] longitude:[[[point objectForKey:@"coords"] objectAtIndex:1] doubleValue]];
+        NSDictionary * tempDictionary = @{ [point objectForKey:@"timestamp"] : @[ location, [point objectForKey:@"heading"] ] };
+        // NSLog(@"Temp Dictionary: %@", tempDictionary);
+        [timestamps addEntriesFromDictionary:tempDictionary];
+    }
+    // NSLog(@"Timestamps: %@", timestamps);
+    return timestamps;
 }
 
 #pragma mark - Editing Methods

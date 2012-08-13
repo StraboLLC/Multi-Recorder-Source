@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 #import <UIKit/UIKit.h>
 
 /**
@@ -169,6 +170,26 @@
  @return BOOL Returns YES if the capture has been previously uploaded and NO if it has not.
  */
 -(BOOL)hasBeenUploaded;
+
+/**
+ Gets an array of the timestamps that correspond to the geodata points associated with this track.
+ 
+ Generates an array of timestamps from the geodata associated with the track. Each timestamp corresponds to a bundle of geodata information that was recorded at that time relative to the start of a capture's recording.
+ 
+ @return NSArray An array of NSNumbers, each of which represents a capture timestamp.
+ 
+ Returns nil in the event of an error.
+ */
+-(NSArray *)geoDataPointTimestamps;
+
+/**
+ Generates a dictionary of points information with timestamps as keys and geodata objects.
+ 
+ The returned dictionary contains keys of the same values as returned by geoDataPointTimestamps. These keys correspond to NSArray objects. The first element of the array object is a CLLocationCoordinate2D. The second array element is a heading, represented by an NSNumber. This method essentially builds an object from the [geodata file](UnderlyingMechanics) that you can handle easily.
+ 
+ @return NSDictionary A dictionary of key-value paris that correspond to geodata points collected during a capture. The keys correspond to timestamps and the values are arrays containing CLLocationCoordinate2D's at index 0 and NSNumber headings at index 1.
+ */
+-(NSDictionary *)geoDataPoints;
 
 ///---------------------------------------------------------------------------------------
 /// @name Editing Methods
