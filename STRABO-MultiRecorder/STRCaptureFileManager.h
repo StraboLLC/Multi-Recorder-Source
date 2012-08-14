@@ -60,9 +60,11 @@
  
  @param date The date to match with the capture dates of the captures.
  
+ @param sorted If you pass the value YES for this parameter, the captures are returned sorted by date captured with the most recent capture first. Passing nil or NO will result in possibly unsorted captures.
+ 
  @return NSArray An array of STRCapture objects taken on the same day of the date specified.
  */
--(NSArray *)capturesOnDate:(NSDate *)date;
+-(NSArray *)capturesOnDate:(NSDate *)date sorted:(BOOL)sorted;
 
 /**
  Counts the number of local captures.

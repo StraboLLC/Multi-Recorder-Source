@@ -7,6 +7,7 @@
 //
 
 #import "STRCaptureFileManager.h"
+#import "STRSettings.h"
 
 @interface STRCaptureFileManager ()
 @property(readwrite)NSFileManager * fileManager;
@@ -58,7 +59,7 @@
     // Get all local directories
     NSArray * sortedCaptures = [self allCapturesSorted:YES];
     
-    if (@(sortedCaptures.count) > limit) {
+    if (@(sortedCaptures.count).doubleValue > limit.doubleValue) {
         NSRange theRange;
         theRange.location = 0;
         theRange.length = limit.integerValue;
@@ -69,7 +70,7 @@
     return sortedCaptures;
 }
 
--(NSArray *)capturesOnDate:(NSDate *)date {
+-(NSArray *)capturesOnDate:(NSDate *)date sorted:(BOOL)sorted {
     // Get all local directories
     NSError * error;
     NSArray * localDirectories = [self.fileManager contentsOfDirectoryAtPath:self.capturesDirectoryPath error:&error];
@@ -79,12 +80,22 @@
     
     // Build an array of STRCapture objects
     // only including those with the right date
-    NSMutableArray * captures = [NSMutableArray arrayWithObject:nil];
+    NSMutableArray * captures = [[NSMutableArray alloc] init];
     for (NSString * subDirectory in localDirectories) {
-        STRCapture * capture = [STRCapture captureFromFilesAtDirectory: subDirectory];
+        STRCapture * capture = [STRCapture captureFromFilesAtDirectory:subDirectory];
         if ([capture.creationDate isSameDayAsDate:date]) {
+            NSLog(@"Adding object to the array");
             [captures addObject:capture];
         }
+    }
+    
+    // Sort the array if necessary
+    if (sorted) {
+        [captures sortUsingComparator:^NSComparisonResult(id a, id b) {
+            NSDate *first = [(STRCapture *)a creationDate];
+            NSDate *second = [(STRCapture *)b creationDate];
+            return [second compare:first];
+        }];
     }
     
     return [NSArray arrayWithArray:captures];
@@ -102,11 +113,14 @@
 #pragma mark - Deleting Captures
 
 -(BOOL)deleteCapture:(STRCapture *)capture {
-    NSError * error;
     NSString * capturePath = [self.capturesDirectoryPath stringByAppendingPathComponent:capture.token];
+    NSError * error;
     [_fileManager removeItemAtPath:capturePath error:&error];
 
-    if (error) return NO;
+    if (error) {
+        if ([[STRSettings sharedSettings] advancedLogging]) NSLog(@"STRCaptureFileManager: Error deleting the capture: %@", error.description);
+        return NO;
+    }
     return YES;
 }
 
@@ -115,7 +129,10 @@
     NSString * capturePath = [self.capturesDirectoryPath stringByAppendingPathComponent:token];
     [_fileManager removeItemAtPath:capturePath error:&error];
     
-    if (error) return NO;
+    if (error) {
+        if ([[STRSettings sharedSettings] advancedLogging]) NSLog(@"STRCaptureFileManager: Error deleting the capture: %@", error.description);
+        return NO;
+    }
     return YES;
 }
 
