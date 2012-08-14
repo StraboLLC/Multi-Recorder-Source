@@ -159,7 +159,7 @@
 +(STRCapture *)captureWithToken:(NSString *)token;
 
 ///---------------------------------------------------------------------------------------
-/// @name Utilities
+/// @name Utility Methods
 ///---------------------------------------------------------------------------------------
 
 /**
@@ -170,6 +170,19 @@
  @return BOOL Returns YES if the capture has been previously uploaded and NO if it has not.
  */
 -(BOOL)hasBeenUploaded;
+
+///---------------------------------------------------------------------------------------
+/// @name Geo Data Methods
+///---------------------------------------------------------------------------------------
+
+/**
+ Returns a CLLocation object containing the initial latitude and longtiude values of the capture.
+ 
+ This method is helpful when dealing with maps and other iOS SDK classes that deal directly with CLLocation objects. Instead of working with a capture's latitude and longitude properties, you can access the initial location of the capture via this initialLocation method. Note that the CLLocation object returned by this method has nil attributes `altitude`, `horizontalAccuracy`, `verticalAccuracy` and `timestamp`. You should use the value returned to determine a 2D position in space only.
+ 
+ @return CLLocaiton The initial location of the capture.
+ */
+-(CLLocation *)initialLocation;
 
 /**
  Gets an array of the timestamps that correspond to the geodata points associated with this track.
@@ -188,6 +201,8 @@
  The returned dictionary contains keys of the same values as returned by geoDataPointTimestamps. These keys correspond to NSArray objects. The first element of the array object is a CLLocationCoordinate2D. The second array element is a heading, represented by an NSNumber. This method essentially builds an object from the [geodata file](UnderlyingMechanics) that you can handle easily.
  
  @return NSDictionary A dictionary of key-value paris that correspond to geodata points collected during a capture. The keys correspond to timestamps and the values are arrays containing CLLocationCoordinate2D's at index 0 and NSNumber headings at index 1.
+ 
+ Returns nil in the event of an error.
  */
 -(NSDictionary *)geoDataPoints;
 

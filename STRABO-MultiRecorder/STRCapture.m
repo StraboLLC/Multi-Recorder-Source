@@ -9,21 +9,28 @@
 #import "STRCapture.h"
 #import "STRSettings.h"
 
-@interface STRCapture ()
+@interface STRCapture () {
+    BOOL _advancedLogging;
+}
+
+@property()BOOL advancedLogging;
 
 // Make readonly properties writable internally
 @property(readwrite)UIImage * thumbnailImage;
 @property(readwrite)NSDate * creationDate;
 
+#pragma mark Geodata
 @property(readwrite)NSNumber * heading;
 @property(readwrite)NSNumber * latitude;
 @property(readwrite)NSNumber * longitude;
 
+#pragma mark Associated Files
 @property(readwrite)NSString * geoDataPath;
 @property(readwrite)NSString * mediaPath;
 @property(readwrite)NSString * thumbnailPath;
 @property(readwrite)NSString * captureInfoPath;
 
+#pragma mark Capture Info
 @property(readwrite)NSString * token;
 @property(readwrite)NSString * type;
 
@@ -40,6 +47,9 @@
 +(STRCapture *)captureFromFilesAtDirectory:(NSString *)captureDirectory {
     
     STRCapture * newCapture = [[STRCapture alloc] init];
+    
+    // Set the private advanced logging BOOL value
+    newCapture.advancedLogging = ([[STRSettings sharedSettings] advancedLogging]) ? YES : NO;
     
     // Read the appropriate file into a dictionary
     NSError * error;
@@ -78,10 +88,17 @@
     return [self captureFromFilesAtDirectory:token];
 }
 
-#pragma mark - Utilities
+#pragma mark - Utility Methods
 
 -(BOOL)hasBeenUploaded {
     return (self.uploadDate) ? NO : YES;
+}
+
+#pragma mark - Geo Data Methods
+
+-(CLLocation *)initialLocation {
+    CLLocation * newLocation = [[CLLocation alloc] initWithLatitude:self.latitude.doubleValue longitude:self.longitude.doubleValue];
+    return newLocation;
 }
 
 -(NSArray *)geoDataPointTimestamps {
@@ -90,9 +107,7 @@
     NSArray * points = [[NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:filePath] options:NSJSONReadingAllowFragments error:&error] objectForKey:@"points"];
     
     if (error) {
-        if ([[STRSettings sharedSettings] advancedLogging]) {
-            NSLog(@"STRCapture: Error reading the geodata file. File may have been corrupted.");
-        }
+        if (_advancedLogging) NSLog(@"STRCapture: Error reading the geodata file. File may have been corrupted.");
         // Return nil due to error
         return nil;
     }
@@ -110,9 +125,7 @@
     NSArray * points = [[NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:filePath] options:NSJSONReadingAllowFragments error:&error] objectForKey:@"points"];
     
     if (error) {
-        if ([[STRSettings sharedSettings] advancedLogging]) {
-            NSLog(@"STRCapture: Error reading the geodata file. File may have been corrupted.");
-        }
+        if (_advancedLogging) NSLog(@"STRCapture: Error reading the geodata file. File may have been corrupted.");
         // Return nil due to error
         return nil;
     }
@@ -121,10 +134,8 @@
     for (NSDictionary * point in points) {
         CLLocation * location = [[CLLocation alloc] initWithLatitude:[[[point objectForKey:@"coords"] objectAtIndex:0] doubleValue] longitude:[[[point objectForKey:@"coords"] objectAtIndex:1] doubleValue]];
         NSDictionary * tempDictionary = @{ [point objectForKey:@"timestamp"] : @[ location, [point objectForKey:@"heading"] ] };
-        // NSLog(@"Temp Dictionary: %@", tempDictionary);
         [timestamps addEntriesFromDictionary:tempDictionary];
     }
-    // NSLog(@"Timestamps: %@", timestamps);
     return timestamps;
 }
 
@@ -136,7 +147,7 @@
     // Read the mutable dictionary from the file
     NSMutableDictionary * captureDictionary = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:[self.straboCaptureDirectoryPath stringByAppendingPathComponent:self.captureInfoPath]] options:NSJSONReadingMutableContainers error:&error];
     if (error) {
-        NSLog(@"STRCapture: There was a problem saving your changes: %@", error.description);
+        if (_advancedLogging) NSLog(@"STRCapture: There was a problem saving your changes: %@", error.description);
         return NO;
     }
     // Alter the writable entries in the dictionary
@@ -149,7 +160,7 @@
     [NSJSONSerialization writeJSONObject:captureDictionary toStream:JSONOutput options:0 error:&error];
     [JSONOutput close];
     if (error) {
-        NSLog(@"STRCapture: There was a problem saving your changes: %@", error.description);
+        if (_advancedLogging) NSLog(@"STRCapture: There was a problem saving your changes: %@", error.description);
         return NO;
     }
     return YES;
