@@ -11,6 +11,16 @@
 		9629AC0815AB7BF6004FB443 /* AppledocSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9629AC0715AB7BF6004FB443 /* AppledocSettings.plist */; };
 		9634F5F615ADBEED005E1C21 /* STRCaptureFileOrganizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9634F5F515ADBEED005E1C21 /* STRCaptureFileOrganizer.m */; };
 		9643233615B8955E00937DDA /* STRCaptureUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9643233515B8955E00937DDA /* STRCaptureUploadManager.m */; };
+		9654D6EF15DAB156003E17E8 /* STRSettings.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 965BB21615D1BE7600F13D73 /* STRSettings.h */; };
+		9654D6F015DAB156003E17E8 /* multi-recorder-sdk.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 969A743F15AC799400160FD2 /* multi-recorder-sdk.h */; };
+		9654D6F115DAB156003E17E8 /* STRCaptureViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 96B1C8B015AB39870041F8AC /* STRCaptureViewController.h */; };
+		9654D6F215DAB156003E17E8 /* STRCaptureDataCollector.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 96B1C8AE15AB39870041F8AC /* STRCaptureDataCollector.h */; };
+		9654D6F315DAB156003E17E8 /* STRGeoLocationData.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 96B1C8B215AB39870041F8AC /* STRGeoLocationData.h */; };
+		9654D6F415DAB156003E17E8 /* STRCaptureFileManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 96085DB815AB7F6800E96DE2 /* STRCaptureFileManager.h */; };
+		9654D6F515DAB156003E17E8 /* STRCaptureUploadManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9643233415B8955E00937DDA /* STRCaptureUploadManager.h */; };
+		9654D6F615DAB156003E17E8 /* STRCapture.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 968D3BD515AF6040000CB5D9 /* STRCapture.h */; };
+		9654D6FD15DACF38003E17E8 /* STRPlaybackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9654D6FC15DACF38003E17E8 /* STRPlaybackViewController.m */; };
+		9654D71915DAD75D003E17E8 /* STRPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9654D71815DAD75D003E17E8 /* STRPlayerView.m */; };
 		965BB21815D1BE7600F13D73 /* STRSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 965BB21715D1BE7600F13D73 /* STRSettings.m */; };
 		968D3BD715AF6040000CB5D9 /* STRCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = 968D3BD615AF6040000CB5D9 /* STRCapture.m */; };
 		96A5E47415B446C70011B26C /* NSString+Hash.m in Sources */ = {isa = PBXBuildFile; fileRef = 96A5E47315B446C70011B26C /* NSString+Hash.m */; };
@@ -44,6 +54,14 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				9654D6EF15DAB156003E17E8 /* STRSettings.h in CopyFiles */,
+				9654D6F015DAB156003E17E8 /* multi-recorder-sdk.h in CopyFiles */,
+				9654D6F115DAB156003E17E8 /* STRCaptureViewController.h in CopyFiles */,
+				9654D6F215DAB156003E17E8 /* STRCaptureDataCollector.h in CopyFiles */,
+				9654D6F315DAB156003E17E8 /* STRGeoLocationData.h in CopyFiles */,
+				9654D6F415DAB156003E17E8 /* STRCaptureFileManager.h in CopyFiles */,
+				9654D6F515DAB156003E17E8 /* STRCaptureUploadManager.h in CopyFiles */,
+				9654D6F615DAB156003E17E8 /* STRCapture.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,6 +76,10 @@
 		9634F5F515ADBEED005E1C21 /* STRCaptureFileOrganizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRCaptureFileOrganizer.m; sourceTree = "<group>"; };
 		9643233415B8955E00937DDA /* STRCaptureUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRCaptureUploadManager.h; sourceTree = "<group>"; };
 		9643233515B8955E00937DDA /* STRCaptureUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRCaptureUploadManager.m; sourceTree = "<group>"; };
+		9654D6FB15DACF38003E17E8 /* STRPlaybackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRPlaybackViewController.h; sourceTree = "<group>"; };
+		9654D6FC15DACF38003E17E8 /* STRPlaybackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRPlaybackViewController.m; sourceTree = "<group>"; };
+		9654D71715DAD75D003E17E8 /* STRPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRPlayerView.h; sourceTree = "<group>"; };
+		9654D71815DAD75D003E17E8 /* STRPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRPlayerView.m; sourceTree = "<group>"; };
 		965BB21415D1B7B300F13D73 /* STRSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = STRSettings.plist; sourceTree = "<group>"; };
 		965BB21615D1BE7600F13D73 /* STRSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRSettings.h; sourceTree = "<group>"; };
 		965BB21715D1BE7600F13D73 /* STRSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRSettings.m; sourceTree = "<group>"; };
@@ -142,6 +164,17 @@
 			name = "File Management";
 			sourceTree = "<group>";
 		};
+		9654D71615DAD6A6003E17E8 /* Experimental Player */ = {
+			isa = PBXGroup;
+			children = (
+				9654D6FB15DACF38003E17E8 /* STRPlaybackViewController.h */,
+				9654D6FC15DACF38003E17E8 /* STRPlaybackViewController.m */,
+				9654D71715DAD75D003E17E8 /* STRPlayerView.h */,
+				9654D71815DAD75D003E17E8 /* STRPlayerView.m */,
+			);
+			name = "Experimental Player";
+			sourceTree = "<group>";
+		};
 		96E6F88315AB306E00DE1AA5 = {
 			isa = PBXGroup;
 			children = (
@@ -188,6 +221,7 @@
 				96085DBE15AB7F9700E96DE2 /* File Management */,
 				96EDE7F815B0741700A4940B /* Objects */,
 				9629ABD715AB5B44004FB443 /* STRMultiRecorderStoryboard.storyboard */,
+				9654D71615DAD6A6003E17E8 /* Experimental Player */,
 				96E6F89415AB306E00DE1AA5 /* Supporting Files */,
 			);
 			path = "STRABO-MultiRecorder";
@@ -338,6 +372,8 @@
 				96A5E47415B446C70011B26C /* NSString+Hash.m in Sources */,
 				9643233615B8955E00937DDA /* STRCaptureUploadManager.m in Sources */,
 				965BB21815D1BE7600F13D73 /* STRSettings.m in Sources */,
+				9654D6FD15DACF38003E17E8 /* STRPlaybackViewController.m in Sources */,
+				9654D71915DAD75D003E17E8 /* STRPlayerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
