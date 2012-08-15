@@ -11,20 +11,27 @@
 
 @interface STRPlaybackViewController () {
     BOOL _advancedLogging;
+    
+    // A dictionary to store the dataPoints of the local track
+    // so that they are readily accessible
+    NSDictionary * dataPoints;
 }
 
 @property()BOOL advancedLogging;
+@property(nonatomic, strong)NSDictionary * dataPoints;
 
 @end
 
 @interface STRPlaybackViewController (InternalMethods)
-
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context;
+-(void)playerItemDidReachEnd:(NSNotification *)notification;
+-(void)addTimeObserverToPlayer:(AVPlayer *)readyPlayer;
 @end
+
+@implementation STRPlaybackViewController
 
 // Define this constant for the key-value observation context.
 static const NSString *ItemStatusContext;
-
-@implementation STRPlaybackViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -42,6 +49,9 @@ static const NSString *ItemStatusContext;
     [super viewDidLoad];
     // Retrieve Settings
     _advancedLogging = [[STRSettings sharedSettings] advancedLogging];
+    
+    // Populate the datapoints from the local capture
+    _dataPoints = [_localCapture geoDataPoints];
     
     // Add a tap recognizer to the main view
     UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showHideNavbar:)];
@@ -65,19 +75,24 @@ static const NSString *ItemStatusContext;
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
+    NSLog(@"View will disappear.");
+    
+    // Remove the observer so that it doesn't send invalid calls
+    // to pointers that are about to be released.
+    [self.playerItem removeObserver:self forKeyPath:@"status" context:&ItemStatusContext];
     // Reset the navigation and status bars to default
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
     
-    [_player pause];
+    [self.player pause];
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
+    NSLog(@"View did unload");
     // Release any retained subviews of the main view.
     self.playerView = nil;
-    
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -125,11 +140,19 @@ static const NSString *ItemStatusContext;
             
             // Observe changes so that we know when the player is ready to play
             [_playerItem addObserver:self forKeyPath:@"status"
-                                 options:0 context:&ItemStatusContext];
+                             options:0 context:&ItemStatusContext];
             
             _player = [AVPlayer playerWithPlayerItem:_playerItem];
             [_playerView setPlayer:_player];
             [self syncUI];
+            
+            // Register with the notification center after creating the player
+            [[NSNotificationCenter defaultCenter]
+             addObserver:self
+             selector:@selector(playerItemDidReachEnd:)
+             name:AVPlayerItemDidPlayToEndTimeNotification
+             object:[_player currentItem]];
+            
             if (_advancedLogging) NSLog(@"STRPlaybackViewController: Video successfully loaded.");
             
         } else {
@@ -142,8 +165,8 @@ static const NSString *ItemStatusContext;
 -(void)syncUI {
     
     // Set the button as enabled or disabled
-    if ((_player.currentItem != nil) &&
-        ([_player.currentItem status] == AVPlayerItemStatusReadyToPlay)) {
+    if ((self.player.currentItem != nil) &&
+        ([self.player.currentItem status] == AVPlayerItemStatusReadyToPlay)) {
         _playButton.enabled = YES;
         [_activityIndicator stopAnimating];
     }
@@ -170,12 +193,30 @@ static const NSString *ItemStatusContext;
 @implementation STRPlaybackViewController (InternalMethods)
 
 // Respond to the player's status change
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object
-                        change:(NSDictionary *)change context:(void *)context {
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object
+                       change:(NSDictionary *)change context:(void *)context {
     NSLog(@"Player status change detected");
     if (context == &ItemStatusContext) {
+        
+        [self addTimeObserverToPlayer:_player];
+        
         [self syncUI];
     }
+}
+
+// Reset the play head after it reaches the end
+-(void)playerItemDidReachEnd:(NSNotification *)notification {
+    [_player seekToTime:kCMTimeZero];
+    [self syncUI];
+}
+
+-(void)addTimeObserverToPlayer:(AVPlayer *)readyPlayer {
+    
+    NSArray * timesArray = [_dataPoints allKeys];
+    
+    [readyPlayer addBoundaryTimeObserverForTimes:timesArray queue:NULL usingBlock:^(){
+        if (_advancedLogging) NSLog(@"Timestamp notification in playback: %f", ((double)_player.currentTime.value/(double)_player.currentTime.timescale));
+    }];
 }
 
 @end
