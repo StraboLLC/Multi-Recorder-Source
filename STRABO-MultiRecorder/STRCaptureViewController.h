@@ -18,7 +18,9 @@
 #import "STRCaptureFileOrganizer.h"
 
 /**
- Capture delegate. Discussion goes here.
+ This is the protocol that the delegate object of the STRCaptureViewController should implement.
+ 
+ The only method that you need to implement is parentShouldDismissCaputreViewController:. Because you should have presented the STRCaptureViewController modally, as described in its documentation, 
  */
 @protocol STRCaptureViewControllerDelegate
 
@@ -55,8 +57,12 @@
     
     id _delegate;
     BOOL isRecording;
+    BOOL videoRecordingMode;
     
+    // UI Elements
     IBOutlet UIActivityIndicatorView * activityIndicator;
+    IBOutlet UISegmentedControl * mediaSelectorControl;
+    IBOutlet UIBarButtonItem * recordButton;
     
     // Location support
     CLLocationManager * locationManager;
@@ -111,11 +117,9 @@
 /**
  Called when the record button is pressed.
  
- You should never need to call this method. It is handled in the SDK Storyboard.
+ You should never need to call this method. It is handled in the SDK Storyboard. If the mediaSelectorSwitch is set to video, this button starts a video capture. If the mediaSelectorSwitch is set to image, this button captures an image.
  */
 -(IBAction)recordButtonWasPressed:(id)sender;
-
--(IBAction)tempImgButtonPressed:(id)sender;
     
 
 @end

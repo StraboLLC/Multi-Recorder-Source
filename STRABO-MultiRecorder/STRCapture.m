@@ -115,13 +115,13 @@
     NSMutableArray * timestamps = [[NSMutableArray alloc] initWithCapacity:points.count];
     for (NSDictionary * point in points) {
         
-        CMTime timestamp = CMTimeMake(([[point objectForKey:@"timestamp"] doubleValue] * 60), 60);
+        CMTime timestamp = CMTimeMake(([[point objectForKey:@"timestamp"] doubleValue] * 1000000000), 1000000000);
     
         [timestamps addObject:[NSValue valueWithCMTime:timestamp]];
     }
     
     // Test code
-    NSLog(@"Timestamps produced: %@", timestamps);
+    NSLog(@"Timestamps array produced: %@", timestamps);
     
     return timestamps;
 }
@@ -140,7 +140,7 @@
     NSMutableDictionary * timestamps = [[NSMutableDictionary alloc] initWithCapacity:points.count];
     for (NSDictionary * point in points) {
         CLLocation * location = [[CLLocation alloc] initWithLatitude:[[[point objectForKey:@"coords"] objectAtIndex:0] doubleValue] longitude:[[[point objectForKey:@"coords"] objectAtIndex:1] doubleValue]];
-        CMTime timestamp = CMTimeMake(([[point objectForKey:@"timestamp"] doubleValue] * 60), 60);
+        CMTime timestamp = CMTimeMake(([[point objectForKey:@"timestamp"] doubleValue] * 1000000000), 1000000000);
         NSDictionary * tempDictionary = @{ [NSValue valueWithCMTime:timestamp] : @[ location, [point objectForKey:@"heading"] ] };
         [timestamps addEntriesFromDictionary:tempDictionary];
     }

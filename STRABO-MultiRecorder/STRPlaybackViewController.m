@@ -14,7 +14,7 @@
     
     // A dictionary to store the dataPoints of the local track
     // so that they are readily accessible
-    NSDictionary * dataPoints;
+    NSDictionary * _dataPoints;
 }
 
 @property()BOOL advancedLogging;
@@ -23,9 +23,18 @@
 @end
 
 @interface STRPlaybackViewController (InternalMethods)
+
+// Playback setup stuff
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context;
--(void)playerItemDidReachEnd:(NSNotification *)notification;
 -(void)addTimeObserverToPlayer:(AVPlayer *)readyPlayer;
+
+// Playback support
+-(void)playerItemDidReachEnd:(NSNotification *)notification;
+
+// Utilities
+// Rounds a number to 5 decimal places
+-(NSNumber *)roundNumber:(NSNumber *)number;
+
 @end
 
 @implementation STRPlaybackViewController
@@ -52,6 +61,10 @@ static const NSString *ItemStatusContext;
     
     // Populate the datapoints from the local capture
     _dataPoints = [_localCapture geoDataPoints];
+    
+    for (NSValue * key in [_localCapture geoDataPointTimestamps]) {
+        NSLog(@"Value in dictionary: %@", key);
+    }
     
     // Add a tap recognizer to the main view
     UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showHideNavbar:)];
@@ -215,8 +228,16 @@ static const NSString *ItemStatusContext;
     NSArray * timesArray = [_dataPoints allKeys];
     
     [readyPlayer addBoundaryTimeObserverForTimes:timesArray queue:NULL usingBlock:^(){
-        if (_advancedLogging) NSLog(@"Timestamp notification in playback: %f", ((double)_player.currentTime.value/(double)_player.currentTime.timescale));
+        if (_advancedLogging) {
+
+            NSLog(@"Location reached in playback: %@", [NSValue valueWithCMTime:_player.currentTime]);
+        }
     }];
+}
+
+-(NSNumber *)roundNumber:(NSNumber *)number {
+    NSString * numberString = [NSString stringWithFormat:@"%.5f", number.doubleValue];
+    return @( [numberString floatValue] );
 }
 
 @end

@@ -63,6 +63,11 @@
  */
 -(void)resaveTemporaryFilesOfType:(NSString *)captureType;
 
+// -- Utility Methods -- //
+
+-(void)mediaSelectorDidChange;
+-(void)syncUI;
+
 @end
 
 @interface STRCaptureViewController (STRCaptureDataControllerDelegate) <STRCaptureDataCollectorDelegate>
@@ -87,7 +92,11 @@
 
 @end
 
-@interface STRCaptureViewController ()
+@interface STRCaptureViewController () {
+    BOOL _advancedLogging;
+}
+
+@property()BOOL advancedLogging;
 
 @end
 
@@ -106,10 +115,16 @@
 {
     [super viewDidLoad];
     
-    //preferencesManager = [STRUserPreferencesManager preferencesForCurrentUser];
+    // Retrieve options from settings
+    _advancedLogging = [[STRSettings sharedSettings] advancedLogging];
     
+    // Set up recording constants
     mediaStartTime = CACurrentMediaTime();
     isRecording = NO;
+    
+    // Set up the mediaSelector event listener
+    [mediaSelectorControl addTarget:self action:@selector(mediaSelectorDidChange) forControlEvents:UIControlEventValueChanged];
+    videoRecordingMode = YES;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -117,7 +132,7 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated {
-
+    
     // Listen for orientation change events
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceDidRotate) name:UIDeviceOrientationDidChangeNotification object:nil];
@@ -175,7 +190,7 @@
         // Update the Location Manager with the new orientation setting.
         locationManager.headingOrientation = currentOrientation;
         
-        if ([[STRSettings sharedSettings] advancedLogging]) {
+        if (_advancedLogging) {
             NSLog(@"STRCaptureViewController: Orientation changed to: %i", currentOrientation);
         }
     }
@@ -195,20 +210,24 @@
 }
 
 -(IBAction)recordButtonWasPressed:(id)sender {
-    if (isRecording) {
-        // Stop capturing
-        [self stopCapturingVideo];
-        
-        // Start the activity spinner
-        [activityIndicator startAnimating];
-        
+    // Vary behavior based on the mediaSelectorControl
+    if (videoRecordingMode) {
+        // Start or stop recording video
+        if (isRecording) {
+            // Stop capturing
+            [self stopCapturingVideo];
+            
+            // Start the activity spinner
+            [activityIndicator startAnimating];
+            // Disallow activity while spinning
+            [recordButton setEnabled:NO];
+        } else {
+            [self startCapturingVideo];
+        }
     } else {
-        [self startCapturingVideo];
+        // Record an image
+        [self captureStillImage];
     }
-}
-
--(IBAction)tempImgButtonPressed:(id)sender {
-    [self captureStillImage];
 }
 
 @end
@@ -296,12 +315,39 @@
         // Move image files
         [fileOrganizer saveTempImageFilesWithInitialLocation:initialLocation heading:initialHeading];
     } else {
-        NSLog(@"Method resaveTemporaryFilesOfType: called with improper parameters. Please see documentation.");
+        NSLog(@"STRCaptureViewController: Method resaveTemporaryFilesOfType: called with improper parameters. Please see documentation.");
     }
     
     // Stop the activity spinner
     [activityIndicator stopAnimating];
     
+}
+
+#pragma mark - Event Listeners
+
+-(void)mediaSelectorDidChange {
+    // Update the video recording mode boolean
+    videoRecordingMode = (videoRecordingMode) ? NO : YES;
+    if (_advancedLogging) NSLog(@"STRCaptureViewController: Video recording mode constant did change to: %i", videoRecordingMode);
+}
+
+-(void)syncUI {
+    // Sync UI to reflect recording status
+    // Should be called when a video recording has started
+    // and again when a video recording has ended.
+    
+    // Set the record button to enabled
+    [recordButton setEnabled:YES];
+    [activityIndicator stopAnimating];
+    
+    if (isRecording) {
+        // Set the record button text
+        recordButton.title = @"Stop";
+        [mediaSelectorControl setEnabled:NO];
+    } else {
+        recordButton.title = @"Rec";
+        [mediaSelectorControl setEnabled:YES];
+    }
 }
 
 @end
@@ -346,8 +392,11 @@
 
 
 -(void)videoRecordingDidBegin {
-    NSLog(@"STRCaptureViewController: Video recording did begin.");
+    if (_advancedLogging) NSLog(@"STRCaptureViewController: Video recording did begin.");
     isRecording = YES;
+    
+    // Sync the UI now that recording has started
+    [self syncUI];
     
     // Force record the first geodata point
     mediaStartTime = CACurrentMediaTime();
@@ -362,7 +411,7 @@
 }
 
 -(void)videoRecordingDidEnd {
-    NSLog(@"STRCaptureViewController: Video recording did end.");
+    if (_advancedLogging) NSLog(@"STRCaptureViewController: Video recording did end.");
     isRecording = NO;
     
     // Write the JSON geo-data
@@ -370,10 +419,12 @@
     
     // Write files to a more permanent location
     [self resaveTemporaryFilesOfType:@"video"];
+    [self syncUI];
 }
 
 -(void)videoRecordingDidFailWithError:(NSError *)error {
     NSLog(@"STRCaptureViewController: !!!ERROR: Video recording failed: %@", error.description);
+    [self syncUI];
 }
 
 -(void)stillImageWasCaptured {
