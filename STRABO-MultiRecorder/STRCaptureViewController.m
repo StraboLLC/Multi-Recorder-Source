@@ -9,7 +9,7 @@
 
 #import "STRCaptureViewController.h"
 
-
+// Define constants
 @interface STRCaptureViewController (InternalMathods)
 
 // -- Service Initialization -- //
@@ -63,10 +63,11 @@
  */
 -(void)resaveTemporaryFilesOfType:(NSString *)captureType;
 
-// -- Utility Methods -- //
+// -- UI Methods -- //
 
 -(void)mediaSelectorDidChange;
--(void)syncUI;
+-(void)syncRecordUI;
+-(void)syncSelectorUI;
 
 @end
 
@@ -124,7 +125,9 @@
     
     // Set up the mediaSelector event listener
     [mediaSelectorControl addTarget:self action:@selector(mediaSelectorDidChange) forControlEvents:UIControlEventValueChanged];
-    videoRecordingMode = YES;
+    
+    // Set the default capture mode to video
+    [self setCaptureMode:STRCaptureModeImage];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -166,6 +169,33 @@
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
+}
+
+#pragma mark - Custom Accessors
+
+-(void)setCaptureMode:(STRCaptureModeState)captureMode {
+    if (_captureMode != captureMode) {
+        // Set the instance variable
+        _captureMode = captureMode;
+        
+        // Set the UI selector, just in case this method is called programatically
+        [self syncSelectorUI];
+    }
+    
+    // Annoying logging stuff
+    if (_advancedLogging) {
+        NSString * modeString;
+        if (_captureMode == STRCaptureModeVideo) {
+            modeString = @"STRCaptureModeVideo";
+        } else {
+            modeString = @"STRCaptureModeImage";
+        }
+        NSLog(@"STRCaptureViewController: Capture mode constant set to %@", modeString);
+    }
+}
+
+-(STRCaptureModeState)captureMode {
+    return _captureMode;
 }
 
 #pragma mark - Device Orientation Handling
@@ -211,7 +241,7 @@
 
 -(IBAction)recordButtonWasPressed:(id)sender {
     // Vary behavior based on the mediaSelectorControl
-    if (videoRecordingMode) {
+    if (_captureMode == STRCaptureModeVideo) {
         // Start or stop recording video
         if (isRecording) {
             // Stop capturing
@@ -323,15 +353,23 @@
     
 }
 
-#pragma mark - Event Listeners
+#pragma mark - UI Methods
 
 -(void)mediaSelectorDidChange {
-    // Update the video recording mode boolean
-    videoRecordingMode = (videoRecordingMode) ? NO : YES;
-    if (_advancedLogging) NSLog(@"STRCaptureViewController: Video recording mode constant did change to: %i", videoRecordingMode);
+    // Switch the capture mode if necessary
+    if (_captureMode == STRCaptureModeVideo) {
+        [self setCaptureMode:STRCaptureModeImage];
+    } else if (_captureMode == STRCaptureModeImage) {
+        [self setCaptureMode:STRCaptureModeVideo];
+    } else {
+        if (_advancedLogging) NSLog(@"STRCaptureViewController: Invalid STRCaptureModeState set for captureMode property.");
+    }
+    
+    // Sync the switch UI
+    [self syncSelectorUI];
 }
 
--(void)syncUI {
+-(void)syncRecordUI {
     // Sync UI to reflect recording status
     // Should be called when a video recording has started
     // and again when a video recording has ended.
@@ -347,6 +385,17 @@
     } else {
         recordButton.title = @"Rec";
         [mediaSelectorControl setEnabled:YES];
+    }
+}
+
+-(void)syncSelectorUI {
+    // Called when the capture mode is changed
+    if (_captureMode == STRCaptureModeImage) {
+        mediaSelectorControl.selectedSegmentIndex = 1;
+    } else if (_captureMode == STRCaptureModeVideo) {
+        mediaSelectorControl.selectedSegmentIndex = 0;
+    } else {
+        if (_advancedLogging) NSLog(@"STRCaptureViewController: Invalid STRCaptureModeState set for captureMode property.");
     }
 }
 
@@ -396,7 +445,7 @@
     isRecording = YES;
     
     // Sync the UI now that recording has started
-    [self syncUI];
+    [self syncRecordUI];
     
     // Force record the first geodata point
     mediaStartTime = CACurrentMediaTime();
@@ -419,12 +468,12 @@
     
     // Write files to a more permanent location
     [self resaveTemporaryFilesOfType:@"video"];
-    [self syncUI];
+    [self syncRecordUI];
 }
 
 -(void)videoRecordingDidFailWithError:(NSError *)error {
     NSLog(@"STRCaptureViewController: !!!ERROR: Video recording failed: %@", error.description);
-    [self syncUI];
+    [self syncRecordUI];
 }
 
 -(void)stillImageWasCaptured {
