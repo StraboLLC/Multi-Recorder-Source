@@ -7,6 +7,15 @@
 //
 
 #import "STRCaptureFileOrganizer.h"
+#import "STRSettings.h"
+
+@interface STRCaptureFileOrganizer () {
+    BOOL _advancedLogging;
+}
+
+@property()BOOL advancedLogging;
+
+@end
 
 @interface STRCaptureFileOrganizer (InternalMethods)
 
@@ -23,6 +32,15 @@
 @end
 
 @implementation STRCaptureFileOrganizer
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        _advancedLogging = [[STRSettings sharedSettings] advancedLogging];
+    }
+    return self;
+}
 
 -(void)saveTempImageFilesWithInitialLocation:(CLLocation *)location heading:(CLHeading *)heading {
     NSFileManager * fileManager = [NSFileManager defaultManager];
@@ -153,6 +171,26 @@
     [fileManager copyItemAtPath:geoDataTempPath toPath:geoDataNewPath error:nil];
 }
 
+-(void)saveMediaToPhotoRollFromPath:(NSString *)mediaPath {
+    
+    // Determine the type of media contained in the filepath
+    NSString * fileExtension = [mediaPath pathExtension];
+    
+    // Media is a video
+    if ([fileExtension isEqualToString:@"mov"]) {
+        if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(mediaPath)) {
+            UISaveVideoAtPathToSavedPhotosAlbum(mediaPath, nil, nil, nil);
+        } else {
+            if (_advancedLogging) NSLog(@"STRCaptureFileOrganizer: Error saving media to photo roll: video is incompatible.");
+        }
+    } else if ([fileExtension isEqualToString:@"jpg"]) {
+        UIImage * image = [UIImage imageWithContentsOfFile:mediaPath];
+        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+    } else {
+        if (_advancedLogging) NSLog(@"STRCaptureFileOrganizer: Error saving media to photo roll: invalid file extension found.");
+    }
+}
+
 @end
 
 @implementation STRCaptureFileOrganizer (InternalMethods)
@@ -272,35 +310,35 @@
 }
 
 +(CGImageRef)CGImage:(CGImageRef)imgRef rotatedByAngle:(CGFloat)angle {
-	CGFloat angleInRadians = angle * (M_PI / 180);
-	CGFloat width = CGImageGetWidth(imgRef);
-	CGFloat height = CGImageGetHeight(imgRef);
+    CGFloat angleInRadians = angle * (M_PI / 180);
+    CGFloat width = CGImageGetWidth(imgRef);
+    CGFloat height = CGImageGetHeight(imgRef);
     
-	CGRect imgRect = CGRectMake(0, 0, width, height);
-	CGAffineTransform transform = CGAffineTransformMakeRotation(angleInRadians);
-	CGRect rotatedRect = CGRectApplyAffineTransform(imgRect, transform);
+    CGRect imgRect = CGRectMake(0, 0, width, height);
+    CGAffineTransform transform = CGAffineTransformMakeRotation(angleInRadians);
+    CGRect rotatedRect = CGRectApplyAffineTransform(imgRect, transform);
     
-	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	CGContextRef bmContext = CGBitmapContextCreate(NULL,
-												   rotatedRect.size.width,
-												   rotatedRect.size.height,
-												   8,
-												   0,
-												   colorSpace,
-												   kCGImageAlphaPremultipliedFirst);
-	CGContextSetAllowsAntialiasing(bmContext, YES);
-	CGContextSetInterpolationQuality(bmContext, kCGInterpolationHigh);
-	CGColorSpaceRelease(colorSpace);
-	CGContextTranslateCTM(bmContext,
-						  +(rotatedRect.size.width/2),
-						  +(rotatedRect.size.height/2));
-	CGContextRotateCTM(bmContext, angleInRadians);
-	CGContextDrawImage(bmContext, CGRectMake(-width/2, -height/2, width, height),
-					   imgRef);
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef bmContext = CGBitmapContextCreate(NULL,
+                                                   rotatedRect.size.width,
+                                                   rotatedRect.size.height,
+                                                   8,
+                                                   0,
+                                                   colorSpace,
+                                                   kCGImageAlphaPremultipliedFirst);
+    CGContextSetAllowsAntialiasing(bmContext, YES);
+    CGContextSetInterpolationQuality(bmContext, kCGInterpolationHigh);
+    CGColorSpaceRelease(colorSpace);
+    CGContextTranslateCTM(bmContext,
+                          +(rotatedRect.size.width/2),
+                          +(rotatedRect.size.height/2));
+    CGContextRotateCTM(bmContext, angleInRadians);
+    CGContextDrawImage(bmContext, CGRectMake(-width/2, -height/2, width, height),
+                       imgRef);
     
-	CGImageRef rotatedImage = CGBitmapContextCreateImage(bmContext);
+    CGImageRef rotatedImage = CGBitmapContextCreateImage(bmContext);
     
-	return rotatedImage;
+    return rotatedImage;
 }
 
 +(NSString *)randomStringWithLength:(int)len {

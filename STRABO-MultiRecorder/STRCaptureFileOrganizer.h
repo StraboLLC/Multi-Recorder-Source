@@ -46,4 +46,13 @@
  */
 -(void)saveTempImageFilesWithInitialLocation:(CLLocation *)location heading:(CLHeading *)heading;
 
+/**
+ Function to save a media file, either a .jpg or a .mov to the iPhone photo album.
+ 
+ This function is called optionally after saving a capture to make a second copy of the media in the photo roll.
+ 
+ @param mediaPath The filepath to the desired media file. The media must be a MOV or a JPG file.
+ */
+-(void)saveMediaToPhotoRollFromPath:(NSString *)mediaPath;
+
 @end
