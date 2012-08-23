@@ -18,6 +18,7 @@
 -(UIImage *)thumbnailForImageAtPath:(NSString *)imagePath;
 -(UIImage *)thumbnailForVideoAtPath:(NSString *)videoPath;
 +(CGImageRef)CGImage:(CGImageRef)imgRef rotatedByAngle:(CGFloat)angle;
++(NSString *)randomStringWithLength:(int)len;
 
 @end
 
@@ -172,7 +173,7 @@
         [userDefaults synchronize];
     }
     uniqueIdentifier = [userDefaults objectForKey:kSTRUniqueIdentifierKey];
-    NSString * fileName = [NSString stringWithFormat:@"%@-%d", uniqueIdentifier, (int)[[NSDate date] timeIntervalSince1970]];
+    NSString * fileName = [NSString stringWithFormat:@"%@-%@-%d", uniqueIdentifier, [STRCaptureFileOrganizer randomStringWithLength:10], (int)[[NSDate date] timeIntervalSince1970]];
     return [fileName SHA2];
 }
 
@@ -300,6 +301,19 @@
 	CGImageRef rotatedImage = CGBitmapContextCreateImage(bmContext);
     
 	return rotatedImage;
+}
+
++(NSString *)randomStringWithLength:(int)len {
+    
+    NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    
+    NSMutableString *randomString = [NSMutableString stringWithCapacity: len];
+    
+    for (int i=0; i<len; i++) {
+        [randomString appendFormat: @"%C", [letters characterAtIndex: arc4random() % [letters length]]];
+    }
+    
+    return randomString;
 }
 
 @end

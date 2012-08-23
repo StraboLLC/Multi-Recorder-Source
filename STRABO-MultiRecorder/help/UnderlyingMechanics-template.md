@@ -1,5 +1,5 @@
 Underlying Mechanics
-===
+====================
 
 Although it should be rarely necessary to access the underlying file structure containing captures directly, this guide walks you through how captures are stored and upload in the filesystem, how capture tokens work, and the differences between different types of captures. If you are editing source code in the SDK directly, the following documentation will probably contain necessary knowledge.
 
@@ -141,13 +141,13 @@ The contents of a capture-info file should look similar to the following:
 	{
 		"created_at": 1344352260,
 		"heading": 99.43981838226318,
-		"thumbnail_file": "338d2c23d2308bfced6117b3e9d63180d5594c8a9f5b8bd5a050914c239f358d\/338d2c23d2308bfced6117b3e9d63180d5594c8a9f5b8bd5a050914c239f358d.png",
-		"media_file": "338d2c23d2308bfced6117b3e9d63180d5594c8a9f5b8bd5a050914c239f358d\/338d2c23d2308bfced6117b3e9d63180d5594c8a9f5b8bd5a050914c239f358d.mov",
+		"thumbnail_file": "338d2...c23d8\/338d2...c23d2.png",
+		"media_file": "338d2...f358d\/338d2...f358d.mov",
 		"media_type": "video",
 		"token": "338d2c23d2308bfced6117b3e9d63180d5594c8a9f5b8bd5a050914c239f358d",
 		"uploaded_at": 1344352275.333697,
 		"coords": [43.62538491719486, -72.51787712345703],
-		"geodata_file": "338d2c23d2308bfced6117b3e9d63180d5594c8a9f5b8bd5a050914c239f358d\/338d2c23d2308bfced6117b3e9d63180d5594c8a9f5b8bd5a050914c239f358d.json",
+		"geodata_file": "338d2...f358d\/338d2...f358d.json",
 		"orientation": "horizontal",
 		"title": "track"
 	}

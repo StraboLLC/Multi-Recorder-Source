@@ -132,6 +132,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:YES];
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 }
 
 -(void)viewDidAppear:(BOOL)animated {
@@ -163,6 +164,7 @@
 
 -(void)viewWillDisappear:(BOOL)animated {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+    [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
 }
 
 - (void)viewDidUnload

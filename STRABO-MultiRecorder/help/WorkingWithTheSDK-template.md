@@ -1,5 +1,5 @@
 Working With the SDK
-===
+====================
 
 If you have not downloaded the SDK yet, see "[Getting the SDK](GettingTheSDK)".
 
@@ -16,6 +16,12 @@ Presenting the Capture View Controller
 ---
 
 The custom capture view controller is similar in appearance to Apple's native capture application. You present the capture view, an instance of a [STRCaptureViewController](STRCaptureViewController), modally and then dismiss it when the user is done taking pictures or video.
+
+As of August 22, 2012, the STRCaptureViewController with all stock UI elements looks similar to the image on the right.
+
+<div style="">
+	<img src="iOS-screenshot1.png" style="width: 200px; float: right; margin: auto 20px;" />
+</div>
 
 Prepare the view controller that will present the STRCaptureViewController as follows:
 
@@ -168,8 +174,44 @@ To monitor the upload, you should implement the [STRCaptureUploadManagerDelegate
 
 Because the captures are uploaded to the Strabo servers, you will need to get a reference to the uploaded capture in order to access it via the web API. The [STRCaptureUploadManagerDelegate](STRCaptureUploadManagerDelegate) provides a means for you to easily obtain the unique token for a capture upon successful upload. You will need to figure out a way to save this token for later use with the web API. One possible solution is outlined below:
 
-*** STUB ***
+####Save the token
 
-- save token
-- upload token to server with associated user ID
-- access database of tokens
+Save the token locally. It may be helpful to keep a list of tokens that the user has previously uploaded on the device. It may also be helpful to associate some meta data with the token when you save it. For example, you could store all tokens in a table in a database or file with the following fields:
+
+<table>
+	<tr style="font-weight: bold;">
+		<td>token</td>
+		<td>userID</td>
+		<td>uploadDate</td>
+		<td>capturedDate</td>
+		<td>taggedSpecies</td>
+		<td>hasBeenUploaded</td>
+	</tr>
+	<tr>
+		<td>338d2c23d2308bfced...</td>
+		<td>00500001</td>
+		<td>1344352275.333697</td>
+		<td>1344352260</td>
+		<td>
+<pre>
+[ 
+	aspen, 
+	dogwood,
+	cherry,
+	sequoia
+]
+</pre>
+		</td>
+		<td>
+			YES
+		</td>
+	</tr>
+</table>
+
+####Upload tokens and associated data
+
+Upload the token and any associated data to your server. When the device has access to the internet, you could sync the local table as described above to a table that you keep on your cloud server.
+
+####Access tokens and retrieve captures
+
+Using the data stored on the cloud in your table of users, tokens, and associated data, you can search for tokens by any parameters you would like. For the example I have described above, you could, in theory, search for all captures tagged with "Sequoia" and generate an array of corresponding tokens. The web API describes how to access captures using the unique token identifier strings. Once you obtain this array of tokens from your own database, you can pass it to the javascript library to retrieve a series of captures.

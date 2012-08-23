@@ -114,7 +114,7 @@ typedef enum {
 /**
  Changes the mode so that the recorder captures either a video or an image.
  
- This method is used to switch the capture mode between video and image states. Usually this is called when the selector switch is changed on the capture view controller. If you want to change the capture state programmatically, you can use the custom setter setCaptureMode: to pass either STRCaptureModeVideo or STRCaptureModeImage.
+ This method is used to switch the capture mode between video and image states. Usually this is called when the selector switch is changed on the capture view controller. If you want to change the capture state programmatically, you can use the custom setter setCaptureMode: to pass either STRCaptureModeVideo or STRCaptureModeImage. For example, after you instantiate an instance of the STRCaptureViewController class, before presenting it, you can change the capture mode so that it will be in either Video mode or Image mode when the user pulls it up.
  */
 @property(getter = captureMode, setter = setCaptureMode:)STRCaptureModeState captureMode;
 

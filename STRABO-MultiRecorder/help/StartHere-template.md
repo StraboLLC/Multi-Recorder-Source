@@ -1,5 +1,5 @@
 Welcome to Ramble
-===
+=================
 
 This guide will walk you through downloading and incorporating the Ramble-style capture recorder into your iOS application.
 
