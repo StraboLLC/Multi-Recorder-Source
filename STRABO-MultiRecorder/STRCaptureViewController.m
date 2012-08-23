@@ -340,14 +340,24 @@
     // Perform saving actions
     STRCaptureFileOrganizer * fileOrganizer = [[STRCaptureFileOrganizer alloc] init];
     
+    NSString * mediaPath = NSTemporaryDirectory();
     if ([captureType isEqualToString:@"video"]) {
+        mediaPath = [mediaPath stringByAppendingPathComponent:@"output.mov"];
         // Move video files
         [fileOrganizer saveTempVideoFilesWithInitialLocation:initialLocation heading:initialHeading];
     } else if ([captureType isEqualToString:@"image"]) {
+        [mediaPath stringByAppendingPathComponent:@"output.jpg"];
         // Move image files
         [fileOrganizer saveTempImageFilesWithInitialLocation:initialLocation heading:initialHeading];
     } else {
-        NSLog(@"STRCaptureViewController: Method resaveTemporaryFilesOfType: called with improper parameters. Please see documentation.");
+        if (_advancedLogging) NSLog(@"STRCaptureViewController: Method resaveTemporaryFilesOfType: called with improper parameters. Please see documentation.");
+    }
+    
+    // If necessary, save the media file to the photo roll
+    
+    if ([[STRSettings sharedSettings] saveToPhotoRoll]) {
+        [fileOrganizer saveMediaToPhotoRollFromPath:mediaPath];
+        if (_advancedLogging) NSLog(@"STRCaptureViewController: Saving media files to the photo roll if possible.");
     }
     
     // Stop the activity spinner

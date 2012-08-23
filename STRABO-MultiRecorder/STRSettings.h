@@ -18,5 +18,6 @@
 
 -(NSString *)uploadPath;
 -(BOOL)advancedLogging;
+-(BOOL)saveToPhotoRoll;
 
 @end

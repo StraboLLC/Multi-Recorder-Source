@@ -32,5 +32,8 @@
     return [[_settingsDict objectForKey:@"Advanced_Logging"] boolValue];
 }
 
+-(BOOL)saveToPhotoRoll {
+    return [[_settingsDict objectForKey:@"Save_To_Photo_Roll"] boolValue];
+}
 
 @end
