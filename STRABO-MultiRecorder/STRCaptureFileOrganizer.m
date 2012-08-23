@@ -22,7 +22,11 @@
 -(NSString *)randomFileName;
 -(NSString *)capturesDirectoryPath;
 
-// Thumbnail Generation Support
+// -- Media Save Response Handling -- //
+-(void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo;
+-(void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo;
+
+// -- Thumbnail Generation Support -- //
 +(UIInterfaceOrientation)orientationForVideo:(AVAsset *)asset;
 -(UIImage *)thumbnailForImageAtPath:(NSString *)imagePath;
 -(UIImage *)thumbnailForVideoAtPath:(NSString *)videoPath;
@@ -176,16 +180,17 @@
     // Determine the type of media contained in the filepath
     NSString * fileExtension = [mediaPath pathExtension];
     
-    // Media is a video
-    if ([fileExtension isEqualToString:@"mov"]) {
+    //    NSLog(@"Media Path: %@, Detected extension: %@", mediaPath, fileExtension);
+    
+    if ([fileExtension isEqualToString:@"mov"]) { // Media is video
         if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(mediaPath)) {
-            UISaveVideoAtPathToSavedPhotosAlbum(mediaPath, nil, nil, nil);
+            UISaveVideoAtPathToSavedPhotosAlbum(mediaPath, self, @selector(video:didFinishSavingWithError:contextInfo:), nil);
         } else {
             if (_advancedLogging) NSLog(@"STRCaptureFileOrganizer: Error saving media to photo roll: video is incompatible.");
         }
-    } else if ([fileExtension isEqualToString:@"jpg"]) {
+    } else if ([fileExtension isEqualToString:@"jpg"]) { // Media is image
         UIImage * image = [UIImage imageWithContentsOfFile:mediaPath];
-        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+        UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
     } else {
         if (_advancedLogging) NSLog(@"STRCaptureFileOrganizer: Error saving media to photo roll: invalid file extension found.");
     }
@@ -194,6 +199,8 @@
 @end
 
 @implementation STRCaptureFileOrganizer (InternalMethods)
+
+#pragma mark - Utility Methods
 
 #define kSTRUniqueIdentifierKey @"kSTRUniqueIdentifierKey"
 
@@ -226,6 +233,32 @@
     return docPath;
     
 }
+
+#pragma mark - Response Handling
+
+-(void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
+    if (_advancedLogging) {
+        if (error) {
+            NSLog(@"STRCaptureFileOrganizer: Photo library saving returned with an error: %@", error);
+        } else {
+            NSLog(@"STRCaptureFileOrganizer: Photo library saving generated a successful response");
+            
+        }
+    }
+}
+
+-(void)video:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
+    if (_advancedLogging) {
+        if (error) {
+            NSLog(@"STRCaptureFileOrganizer: Photo library saving returned with an error: %@", error);
+        } else {
+            NSLog(@"STRCaptureFileOrganizer: Photo library saving generated a successful response");
+            
+        }
+    }
+}
+
+#pragma mark - Thumbnail Generation Support
 
 +(UIInterfaceOrientation)orientationForVideo:(AVAsset *)asset {
     AVAssetTrack *videoTrack = [[asset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];

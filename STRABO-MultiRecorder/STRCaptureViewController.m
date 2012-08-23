@@ -340,13 +340,13 @@
     // Perform saving actions
     STRCaptureFileOrganizer * fileOrganizer = [[STRCaptureFileOrganizer alloc] init];
     
-    NSString * mediaPath = NSTemporaryDirectory();
+    NSString * mediaPath;
     if ([captureType isEqualToString:@"video"]) {
-        mediaPath = [mediaPath stringByAppendingPathComponent:@"output.mov"];
+        mediaPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"output.mov"];
         // Move video files
         [fileOrganizer saveTempVideoFilesWithInitialLocation:initialLocation heading:initialHeading];
     } else if ([captureType isEqualToString:@"image"]) {
-        [mediaPath stringByAppendingPathComponent:@"output.jpg"];
+        mediaPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"output.jpg"];
         // Move image files
         [fileOrganizer saveTempImageFilesWithInitialLocation:initialLocation heading:initialHeading];
     } else {
@@ -356,8 +356,8 @@
     // If necessary, save the media file to the photo roll
     
     if ([[STRSettings sharedSettings] saveToPhotoRoll]) {
-        [fileOrganizer saveMediaToPhotoRollFromPath:mediaPath];
         if (_advancedLogging) NSLog(@"STRCaptureViewController: Saving media files to the photo roll if possible.");
+        [fileOrganizer saveMediaToPhotoRollFromPath:mediaPath];
     }
     
     // Stop the activity spinner
