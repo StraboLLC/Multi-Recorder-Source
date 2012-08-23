@@ -12,6 +12,6 @@
 	<key>Advanced_Logging</key>
 	<true/>
 	<key>Save_To_Photo_Roll</key>
-	<true/>
+	<false/>
 </dict>
 </plist>
