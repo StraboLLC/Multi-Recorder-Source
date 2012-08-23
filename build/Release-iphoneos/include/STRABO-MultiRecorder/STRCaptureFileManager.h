@@ -12,14 +12,20 @@
 
 // Tools
 #import "NSDate+Date_Utilities.h"
+#import "NSString+Hash.h"
 
-typedef enum {
-    STRCaptureAttributeLatitude,
-    STRCaptureAttributeLongitude,
-    STRCaptureAttributeHeading,
-    STRCaptureAttributeDate,
-    STRCaptureAttributeTitle
-} STRCaptureAttribute;
+/**
+ STRCaptureAttributes
+ 
+ Used as keys in the attributes dictionary of newCaptureWithImageAtPath:attributes:
+ */
+typedef NSString STRCaptureAttribute;
+
+STRCaptureAttribute * const STRCaptureAttributeLatitude;
+STRCaptureAttribute * const STRCaptureAttributeLongitude;
+STRCaptureAttribute * const STRCaptureAttributeHeading;
+STRCaptureAttribute * const STRCaptureAttributeDate;
+STRCaptureAttribute * const STRCaptureAttributeTitle;
 
 /**
  You should use an STRCaptureFileManager to access files stored on the device. This class provides methods for deleting, searching, and manipulating Strabo captures.
@@ -51,15 +57,6 @@ typedef enum {
  This is useful when trying to create a capture object from an image in the photo roll or with an image captured with some other application. You pass a local path pointing to the JPG image, as well as a couple of attributes, and the method builds and saves a capture object locally.
  
  The attributes dictionary contains some geodata information about the image. This is the information that is used to populate local files from which the STRCapture object is built. This dictionary has a set of predefined keys of type STRCaptureAttribute. They are outlined below:
- 
- |             |          Grouping           ||
- First Header  | Second Header | Third Header |
- ------------ | :-----------: | -----------: |
- Content       |          *Long Cell*        ||
- Content       |   **Cell**    |         Cell |
- 
- New section   |     More      |         Data |
- And more      |            And more          |
  
  <table>
     <tr style="font-weight: bold;">
@@ -103,6 +100,8 @@ typedef enum {
  @param mediaPath The path to the image on the device.
  
  @param attributes A dictionary containing attributes associated with the image. Dictionary keys are of type STRCaptureAttribute and the associated object values are described in the table above.
+ 
+ @return STRCapture A STRCapture object created from the new locally saved media file and associated data. Returns nil if there was an error.
  */
 -(STRCapture *)newCaptureWithImageAtPath:(NSString *)mediaPath attributes:(NSDictionary *)attributes;
 
