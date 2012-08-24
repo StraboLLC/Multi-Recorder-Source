@@ -16,7 +16,8 @@ Contents of the guide:
 2. [Underlying Mechanics](UnderlyingMechanics)
 	- Describes the file system, token generation, and other underlying principles of the SDK. Reading this guide might be helpful for you general understanding, but you shouldn't have to deal with the filesystem and other low-level features of the SDK in practice.
 2. [Constants Reference](ConstantsReference)
-	- This document describes the constants found in the Strabo Multi-Recorder SDK.
+	- Describes the constants found in the Strabo Multi-Recorder SDK.
+	- Details how to customize the SDK by changing the settings and options in the STRSettings PLIST file.
 3. [Release History](ReleaseHistory)
 	- Historical release notes for revisions of the SDK.
 
