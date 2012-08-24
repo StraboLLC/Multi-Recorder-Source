@@ -294,17 +294,19 @@ STRCaptureAttribute * const STRCaptureAttributeTitle = @"STRCaptureAttributeTitl
 
 -(NSString *)randomFileName {
     // Get UUID
-    NSString * uniqueIdentifier;
     NSUserDefaults * userDefaults = [NSUserDefaults standardUserDefaults];
     // Generate a new identifier if one does not already exist
     if (![userDefaults objectForKey:kSTRUniqueIdentifierKey]) {
         
-        NSString * newID = (__bridge id)(CFUUIDCreateString(kCFAllocatorDefault, CFUUIDCreate(kCFAllocatorDefault)));
+        CFUUIDRef theUUID = CFUUIDCreate(NULL);
+        CFStringRef UUIDstring = CFUUIDCreateString(NULL, theUUID);
+        CFRelease(theUUID);
         
-        [userDefaults setObject:newID forKey:kSTRUniqueIdentifierKey];
+        [userDefaults setObject:(__bridge_transfer NSString *)UUIDstring forKey:kSTRUniqueIdentifierKey];
         [userDefaults synchronize];
+        
     }
-    uniqueIdentifier = [userDefaults objectForKey:kSTRUniqueIdentifierKey];
+    NSString * uniqueIdentifier = [userDefaults objectForKey:kSTRUniqueIdentifierKey];
     NSString * fileName = [NSString stringWithFormat:@"%@-%@-%d", uniqueIdentifier, [STRCaptureFileManager randomStringWithLength:10], (int)[[NSDate date] timeIntervalSince1970]];
     return [fileName SHA2];
 }
@@ -364,6 +366,7 @@ STRCaptureAttribute * const STRCaptureAttributeTitle = @"STRCaptureAttributeTitl
 					   imgRef);
     
 	CGImageRef rotatedImage = CGBitmapContextCreateImage(bmContext);
+    CFRelease(bmContext);
     
 	return rotatedImage;
 }

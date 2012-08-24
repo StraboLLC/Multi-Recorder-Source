@@ -68,6 +68,7 @@
 -(void)mediaSelectorDidChange;
 -(void)syncRecordUI;
 -(void)syncSelectorUI;
+-(void)imageCaptureHandleUI;
 
 @end
 
@@ -318,6 +319,7 @@
 }
 
 -(void)captureStillImage {
+    
     // Write a new geoLocationData file
     geoLocationData = [[STRGeoLocationData alloc] init];
     initialLocation = locationManager.location;
@@ -331,6 +333,9 @@
     
     // Capture the image
     [captureDataCollector captureStillImageWithOrientation:currentOrientation];
+    
+    // Provide UI feedback of a still image capture
+    [self imageCaptureHandleUI];
 }
 
 #pragma mark - File Handling
@@ -371,8 +376,10 @@
     // Switch the capture mode if necessary
     if (_captureMode == STRCaptureModeVideo) {
         [self setCaptureMode:STRCaptureModeImage];
+        recordButton.title = @"Img";
     } else if (_captureMode == STRCaptureModeImage) {
         [self setCaptureMode:STRCaptureModeVideo];
+        recordButton.title = @"Rec";
     } else {
         if (_advancedLogging) NSLog(@"STRCaptureViewController: Invalid STRCaptureModeState set for captureMode property.");
     }
@@ -409,6 +416,28 @@
     } else {
         if (_advancedLogging) NSLog(@"STRCaptureViewController: Invalid STRCaptureModeState set for captureMode property.");
     }
+}
+
+-(void)imageCaptureHandleUI {
+    // Provide some sort of feedback to the user when an image has been captured
+    
+    // Animate a quick flash
+    CGRect newFrame = self.view.frame;
+    newFrame.origin = CGPointMake(0, 0);
+    UIView * flashView = [[UIView alloc] initWithFrame:newFrame];
+    
+    flashView.backgroundColor = [UIColor whiteColor];
+    
+    [self.view addSubview:flashView];
+    
+    [UIView animateWithDuration:0.3
+                     animations:^(void){
+                         [flashView setAlpha:0.0f];
+                     }
+                     completion:^(BOOL finished){
+                         [flashView removeFromSuperview];
+                     }
+     ];
 }
 
 @end

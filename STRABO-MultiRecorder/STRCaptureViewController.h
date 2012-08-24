@@ -65,6 +65,7 @@ typedef enum {
  
     -(void)syncRecordUI;
     -(void)syncSelectorUI;
+    -(void)imageCaptureHandleUI;
  
  An overview of the methods to override:
  
