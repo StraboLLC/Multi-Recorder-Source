@@ -15,6 +15,8 @@ Contents of the guide:
 	- Provides an overview of some of the key features of the SDK, including code samples and suggestions for optimal implementations of common views and tasks.
 2. [Underlying Mechanics](UnderlyingMechanics)
 	- Describes the file system, token generation, and other underlying principles of the SDK. Reading this guide might be helpful for you general understanding, but you shouldn't have to deal with the filesystem and other low-level features of the SDK in practice.
+2. [Constants Reference](ConstantsReference)
+	- This document describes the constants found in the Strabo Multi-Recorder SDK.
 3. [Release History](ReleaseHistory)
 	- Historical release notes for revisions of the SDK.
 

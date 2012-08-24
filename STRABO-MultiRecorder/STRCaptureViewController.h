@@ -90,7 +90,7 @@ typedef enum {
     IBOutlet UIBarButtonItem * recordButton;
     
     // Location support
-    CLLocationManager * locationManager;
+    CLLocationManager * _locationManager;
     STRGeoLocationData * geoLocationData;
     CLLocation * initialLocation;
     CLHeading * initialHeading;
@@ -118,6 +118,33 @@ typedef enum {
  This method is used to switch the capture mode between video and image states. Usually this is called when the selector switch is changed on the capture view controller. If you want to change the capture state programmatically, you can use the custom setter setCaptureMode: to pass either STRCaptureModeVideo or STRCaptureModeImage. For example, after you instantiate an instance of the STRCaptureViewController class, before presenting it, you can change the capture mode so that it will be in either Video mode or Image mode when the user pulls it up.
  */
 @property(getter = captureMode, setter = setCaptureMode:)STRCaptureModeState captureMode;
+
+/**
+ The CLLocation manager responsible for gathering geolocation information during a capture.
+ 
+ The location manager is set up automatically after a capture view appears and before the camera preview is loaded. STRCaptureViewController implements the CLLocationManagerDelegate protocol. The instance of the STRCaptureViewController class that owns the CLLocationManager should be set as the delegate object of the CLLocationManager instance.
+ 
+ This property is readwrite so that you can optionally use a different instance of the CLLocationManager than the one created by the STRCaptureViewController during setup. If you wish to provide your own instance of the CLLocationManager, simply set this property before modally presenting the STRCaptureViewController. For example:
+ 
+    // Create the instance of the view controller
+    STRCaptureViewController * captureView = [STRCaptureViewController captureManager];
+ 
+    // Set up your own location manager
+    CLLocationManager * myLocationManager = [[CLLocationManager alloc] init];
+    myLocationManager.delegate = captureView; // !! IMPORTANT !!
+    // Fire up the location updates
+    [myLocationManager startUpdatingHeading];
+    [myLocationManager startUpdatingLocation];
+ 
+    // Add the location manager to the STRCaptureViewController instance
+    captureView.locationManager = myLocationManager;
+    
+    // Present the capture view as you normally would
+    [captureView self presentModalViewController:captureView animated:YES];
+ 
+ Using your own CLLocationManager can be convenient if you already have one running in your application and would like to re-use that instance with this SDK. Also, because the CLLocationManager frequently takes some time to acquire an accurate location, it may improve accuracy (although also increase power consumption) to start receiving location updates some time before you start capturing any media. A custom CLLocationManager is not, however, required.
+ */
+@property(nonatomic, strong, readwrite)CLLocationManager * locationManager;
 
 /**
  Returns a new STRCaptureViewControllre object.

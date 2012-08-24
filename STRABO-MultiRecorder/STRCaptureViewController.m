@@ -64,11 +64,23 @@
 -(void)resaveTemporaryFilesOfType:(NSString *)captureType;
 
 // -- UI Methods -- //
+// All of these can be overridden for subclassing //
 
+/**
+
+ */
 -(void)mediaSelectorDidChange;
 -(void)syncRecordUI;
 -(void)syncSelectorUI;
 -(void)imageCaptureHandleUI;
+-(void)updateLocationIndicatorUI;
+
+/**
+ Animates the shutter over the screen to the open position.
+ 
+ This signifies that the view controller has finished loading and is ready to make a capture. It should be called after the view appears, after the location and video capture components have been set up and are running.
+ */
+-(void)animateShutterOpen;
 
 @end
 
@@ -128,7 +140,7 @@
     [mediaSelectorControl addTarget:self action:@selector(mediaSelectorDidChange) forControlEvents:UIControlEventValueChanged];
     
     // Set the default capture mode to video
-    [self setCaptureMode:STRCaptureModeImage];
+    [self setCaptureMode:STRCaptureModeVideo];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -138,13 +150,19 @@
 
 -(void)viewDidAppear:(BOOL)animated {
     
+    // UPGRADES NOTE:
+    // This could all be launched on a seperate thread so that it doesn't
+    // tie up UI elements like the DONE button or other media selectors.
+    
     // Listen for orientation change events
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceDidRotate) name:UIDeviceOrientationDidChangeNotification object:nil];
     
     // Set up location and capture here while the shutter is displayed
     // This will be done after the view loads.
-    [self setUpLocationServices];
+    if (!self.locationManager) {
+        [self setUpLocationServices];
+    }
     [self setUpCaptureServices];
     
     // Now that the capture services are set up,
@@ -161,6 +179,8 @@
     if (!isRecording) {
         [activityIndicator stopAnimating];
     }
+    
+    // Animate the 
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -221,7 +241,7 @@
         currentOrientation = newOrientation;
         
         // Update the Location Manager with the new orientation setting.
-        locationManager.headingOrientation = currentOrientation;
+        _locationManager.headingOrientation = currentOrientation;
         
         if (_advancedLogging) {
             NSLog(@"STRCaptureViewController: Orientation changed to: %i", currentOrientation);
@@ -270,12 +290,12 @@
 #pragma mark - Service Initialization
 
 -(void)setUpLocationServices {
+    
     // Set up the location support
-    locationManager = [[CLLocationManager alloc] init];
-    locationManager.delegate = self;
-    //locationManager.desiredAccuracy = preferencesManager.desiredLocationAccuracy;
-    [locationManager startUpdatingHeading];
-    [locationManager startUpdatingLocation];
+    _locationManager = [[CLLocationManager alloc] init];
+    _locationManager.delegate = self;
+    [_locationManager startUpdatingHeading];
+    [_locationManager startUpdatingLocation];
 }
 
 -(void)setUpCaptureServices {
@@ -302,11 +322,11 @@
 
 -(void)recordCurrentLocationToGeodataObject {
     // Add a point taken from the locationManager
-    [geoLocationData addDataPointWithLatitude:locationManager.location.coordinate.latitude
-                                    longitude:locationManager.location.coordinate.longitude
-                                      heading:locationManager.heading.trueHeading
+    [geoLocationData addDataPointWithLatitude:_locationManager.location.coordinate.latitude
+                                    longitude:_locationManager.location.coordinate.longitude
+                                      heading:_locationManager.heading.trueHeading
                                     timestamp:(CACurrentMediaTime() - mediaStartTime)
-                                     accuracy:locationManager.location.horizontalAccuracy];
+                                     accuracy:_locationManager.location.horizontalAccuracy];
 }
 
 -(void)startCapturingVideo {
@@ -322,13 +342,13 @@
     
     // Write a new geoLocationData file
     geoLocationData = [[STRGeoLocationData alloc] init];
-    initialLocation = locationManager.location;
-    initialHeading = locationManager.heading;
-    [geoLocationData addDataPointWithLatitude:locationManager.location.coordinate.latitude
-                                    longitude:locationManager.location.coordinate.longitude
-                                      heading:locationManager.heading.trueHeading
+    initialLocation = _locationManager.location;
+    initialHeading = _locationManager.heading;
+    [geoLocationData addDataPointWithLatitude:_locationManager.location.coordinate.latitude
+                                    longitude:_locationManager.location.coordinate.longitude
+                                      heading:_locationManager.heading.trueHeading
                                     timestamp:0.00
-                                     accuracy:locationManager.location.horizontalAccuracy];
+                                     accuracy:_locationManager.location.horizontalAccuracy];
     [geoLocationData writeDataPointsToTempFile];
     
     // Capture the image
@@ -430,7 +450,7 @@
     
     [self.view addSubview:flashView];
     
-    [UIView animateWithDuration:0.3
+    [UIView animateWithDuration:0.4
                      animations:^(void){
                          [flashView setAlpha:0.0f];
                      }
@@ -438,6 +458,14 @@
                          [flashView removeFromSuperview];
                      }
      ];
+}
+
+-(void)updateLocationIndicatorUI {
+    #warning Incomplete implementation
+}
+
+-(void)animateShutterOpen {
+    #warning Incomplete implementation
 }
 
 @end
@@ -491,13 +519,13 @@
     // Force record the first geodata point
     mediaStartTime = CACurrentMediaTime();
     // Write an initial point to the data
-    initialLocation = locationManager.location;
-    initialHeading = locationManager.heading;
-    [geoLocationData addDataPointWithLatitude:locationManager.location.coordinate.latitude
-                                    longitude:locationManager.location.coordinate.longitude
-                                      heading:locationManager.heading.trueHeading
+    initialLocation = _locationManager.location;
+    initialHeading = _locationManager.heading;
+    [geoLocationData addDataPointWithLatitude:_locationManager.location.coordinate.latitude
+                                    longitude:_locationManager.location.coordinate.longitude
+                                      heading:_locationManager.heading.trueHeading
                                     timestamp:0.00
-                                     accuracy:locationManager.location.horizontalAccuracy];
+                                     accuracy:_locationManager.location.horizontalAccuracy];
 }
 
 -(void)videoRecordingDidEnd {
