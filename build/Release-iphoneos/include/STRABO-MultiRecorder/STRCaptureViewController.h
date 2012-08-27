@@ -17,10 +17,15 @@
 // File management
 #import "STRCaptureFileOrganizer.h"
 
+//****************************************************************************************
+// Constant Definitions
+//****************************************************************************************
 typedef enum {
     STRCaptureModeVideo,    // Video capture mode
     STRCaptureModeImage     // Image capture mode
 } STRCaptureModeState;
+
+NSTimeInterval const STRLenscapAnimationDuration;
 
 /**
  This is the protocol that the delegate object of the STRCaptureViewController should implement.
@@ -95,8 +100,6 @@ typedef enum {
     IBOutlet UISegmentedControl * mediaSelectorControl;
     IBOutlet UIBarButtonItem * recordButton;
     IBOutlet UIView * videoPreviewLayer;
-    // Shutter UI Elements
-    IBOutlet UIView * lenscapView;
 }
 
 /**

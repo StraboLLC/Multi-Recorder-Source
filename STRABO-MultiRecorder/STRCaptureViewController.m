@@ -10,7 +10,7 @@
 #import "STRCaptureViewController.h"
 
 // Constant definitions
-NSTimeInterval const STRLenscapAnimationDuration = 2;
+NSTimeInterval const STRLenscapAnimationDuration = 0.6;
 
 @interface STRCaptureViewController (InternalMathods)
 
@@ -80,6 +80,7 @@ NSTimeInterval const STRLenscapAnimationDuration = 2;
 -(void)syncRecordUI;
 -(void)syncSelectorUI;
 -(void)imageCaptureHandleUI;
+-(void)updateInterfaceToReflectOrientationChange;
 -(void)updateGeoIndicatorUI;
 
 // -- Lens Cap Support -- //
@@ -132,7 +133,7 @@ NSTimeInterval const STRLenscapAnimationDuration = 2;
     
     // General capture support
     double mediaStartTime;
-    UIDeviceOrientation currentOrientation;
+    
     
     // UI elements
     UIView * lenscapView;
@@ -140,6 +141,9 @@ NSTimeInterval const STRLenscapAnimationDuration = 2;
 }
 
 @property()BOOL advancedLogging;
+
+// Make the currentOrientation internally readwrite
+@property(nonatomic, readwrite)UIDeviceOrientation currentOrientation;
 
 @end
 
@@ -202,7 +206,7 @@ NSTimeInterval const STRLenscapAnimationDuration = 2;
     [self setUpCaptureServices];
     
     // Set up the current orientation
-    currentOrientation = [[UIDevice currentDevice] orientation];
+    _currentOrientation = [[UIDevice currentDevice] orientation];
     
     NSOperationQueue * setupQueue = [[NSOperationQueue alloc] init];
     [setupQueue addOperationWithBlock:^{
@@ -292,21 +296,21 @@ NSTimeInterval const STRLenscapAnimationDuration = 2;
 
 -(void)deviceDidRotate {
     UIDeviceOrientation newOrientation = [[UIDevice currentDevice] orientation];
-    if (currentOrientation
+    if (_currentOrientation
         && newOrientation
-        && (currentOrientation != newOrientation)
+        && (_currentOrientation != newOrientation)
         && (!_isRecording)
         && (newOrientation != UIDeviceOrientationFaceUp)
         && (newOrientation != UIDeviceOrientationFaceDown)) {
         
         // Update currentOrientation to keep track of the old orientation
-        currentOrientation = newOrientation;
+        _currentOrientation = newOrientation;
         
         // Update the Location Manager with the new orientation setting.
-        _locationManager.headingOrientation = currentOrientation;
+        _locationManager.headingOrientation = _currentOrientation;
         
         if (_advancedLogging) {
-            NSLog(@"STRCaptureViewController: Orientation changed to: %i", currentOrientation);
+            NSLog(@"STRCaptureViewController: Orientation changed to: %i", _currentOrientation);
         }
     }
 }
@@ -395,7 +399,7 @@ NSTimeInterval const STRLenscapAnimationDuration = 2;
 
 -(void)startCapturingVideo {
     geoLocationData = [[STRGeoLocationData alloc] init];
-    [captureDataCollector startCapturingVideoWithOrientation:currentOrientation];
+    [captureDataCollector startCapturingVideoWithOrientation:_currentOrientation];
 }
 
 -(void)stopCapturingVideo {
@@ -422,7 +426,7 @@ NSTimeInterval const STRLenscapAnimationDuration = 2;
     [geoLocationData writeDataPointsToTempFile];
     
     // Capture the image
-    [captureDataCollector captureStillImageWithOrientation:currentOrientation];
+    [captureDataCollector captureStillImageWithOrientation:_currentOrientation];
     
     // UPGRADES NOTE:
     // Launch this on the main thread
@@ -545,6 +549,10 @@ NSTimeInterval const STRLenscapAnimationDuration = 2;
      ];
 }
 
+-(void)updateInterfaceToReflectOrientationChange {
+    
+}
+
 -(void)updateGeoIndicatorUI {
     
 }
@@ -556,8 +564,8 @@ NSTimeInterval const STRLenscapAnimationDuration = 2;
     CGRect lenscapFrame = self.view.frame;
     lenscapFrame.origin = CGPointMake(0, 0);
     lenscapView = [[UIView alloc] initWithFrame:lenscapFrame];
+    lenscapView.backgroundColor = [UIColor clearColor];
     [self.view insertSubview:lenscapView aboveSubview:videoPreviewLayer];
-    
     
     // Create the images
     UIImage * lenscapTopImage = [UIImage imageNamed:@"lenscapTop"];
@@ -581,9 +589,9 @@ NSTimeInterval const STRLenscapAnimationDuration = 2;
 
 -(void)animateLenscapOpen {
     
-    if (_advancedLogging) NSLog(@"STRCaptureViewController: Opening Lenscap");
-    
     NSTimeInterval animationHalfDuration = (double)STRLenscapAnimationDuration / (double)2.0;
+    
+    if (_advancedLogging) NSLog(@"STRCaptureViewController: Opening Lenscap with duration 2 x %0.01f", animationHalfDuration);
     
     __block UIImageView * lenscapTopView = [lenscapView.subviews objectAtIndex:0];
     __block CGRect lenscapTopFrame = lenscapTopView.frame;
@@ -597,7 +605,6 @@ NSTimeInterval const STRLenscapAnimationDuration = 2;
                          lenscapTopView.frame = lenscapTopFrame;
                      }
                      completion:^(BOOL finished){
-                         
                          [UIView animateWithDuration:animationHalfDuration
                                           animations:^{
                                               // Perform the second part of the animation
