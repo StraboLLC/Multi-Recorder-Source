@@ -9,7 +9,9 @@
 
 #import "STRCaptureViewController.h"
 
-// Define constants
+// Constant definitions
+NSTimeInterval const STRLenscapAnimationDuration = 2;
+
 @interface STRCaptureViewController (InternalMathods)
 
 // -- Service Initialization -- //
@@ -581,7 +583,7 @@
     
     if (_advancedLogging) NSLog(@"STRCaptureViewController: Opening Lenscap");
     
-    NSTimeInterval animationHalfDuration = 0.5;
+    NSTimeInterval animationHalfDuration = (double)STRLenscapAnimationDuration / (double)2.0;
     
     __block UIImageView * lenscapTopView = [lenscapView.subviews objectAtIndex:0];
     __block CGRect lenscapTopFrame = lenscapTopView.frame;
