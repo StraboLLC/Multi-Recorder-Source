@@ -116,6 +116,7 @@
 @end
 
 @interface STRCaptureViewController () {
+    
     BOOL _advancedLogging;
     
     // Location Support
@@ -130,6 +131,9 @@
     // General capture support
     double mediaStartTime;
     UIDeviceOrientation currentOrientation;
+    
+    // UI elements
+    UIView * lenscapView;
     
 }
 
@@ -169,7 +173,7 @@
     // Set the default capture mode to video
     [self setCaptureMode:STRCaptureModeVideo];
     
-    // Load the lenscap
+    // Load the lenscap subview and then the lenscap
     [self setUpLensCap];
 }
 
@@ -546,6 +550,12 @@
 #pragma mark Lens Cap Support
 
 -(void)setUpLensCap {
+    // Set up the lenscapView
+    CGRect lenscapFrame = self.view.frame;
+    lenscapFrame.origin = CGPointMake(0, 0);
+    lenscapView = [[UIView alloc] initWithFrame:lenscapFrame];
+    [self.view insertSubview:lenscapView aboveSubview:videoPreviewLayer];
+    
     
     // Create the images
     UIImage * lenscapTopImage = [UIImage imageNamed:@"lenscapTop"];

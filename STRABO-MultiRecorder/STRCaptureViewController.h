@@ -95,8 +95,6 @@ typedef enum {
     IBOutlet UISegmentedControl * mediaSelectorControl;
     IBOutlet UIBarButtonItem * recordButton;
     IBOutlet UIView * videoPreviewLayer;
-    // Shutter UI Elements
-    IBOutlet UIView * lenscapView;
 }
 
 /**
