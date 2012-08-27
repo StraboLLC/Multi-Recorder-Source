@@ -28,6 +28,8 @@
  */
 -(void)setUpCaptureServices;
 
+// -- Service Teardown -- //
+
 // -- Error Handling -- //
 
 /**
@@ -73,7 +75,7 @@
 -(void)syncRecordUI;
 -(void)syncSelectorUI;
 -(void)imageCaptureHandleUI;
--(void)updateLocationIndicatorUI;
+-(void)updateGeoIndicatorUI;
 
 /**
  Animates the shutter over the screen to the open position.
@@ -108,6 +110,20 @@
 
 @interface STRCaptureViewController () {
     BOOL _advancedLogging;
+    
+    // Location Support
+    STRGeoLocationData * geoLocationData;
+    CLLocation * initialLocation;
+    CLHeading * initialHeading;
+    
+    // Camera capture support
+    STRCaptureDataCollector * captureDataCollector;
+    AVCaptureVideoPreviewLayer * capturePreviewLayer;
+    
+    // General capture support
+    double mediaStartTime;
+    UIDeviceOrientation currentOrientation;
+
 }
 
 @property()BOOL advancedLogging;
@@ -125,6 +141,8 @@
     return self;
 }
 
+#pragma mark - View Lifecycle
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -134,9 +152,11 @@
     
     // Set up recording constants
     mediaStartTime = CACurrentMediaTime();
-    isRecording = NO;
+    self.isRecording = NO;
+    self.isReadyToRecord = NO;
+    [activityIndicator stopAnimating];
     
-    // Set up the mediaSelector event listener
+    // Set up the mediaSelector event observer
     [mediaSelectorControl addTarget:self action:@selector(mediaSelectorDidChange) forControlEvents:UIControlEventValueChanged];
     
     // Set the default capture mode to video
@@ -144,6 +164,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent animated:YES];
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
 }
@@ -153,6 +174,9 @@
     // UPGRADES NOTE:
     // This could all be launched on a seperate thread so that it doesn't
     // tie up UI elements like the DONE button or other media selectors.
+    
+    // Check all dependent services
+    [self checkEnabledLocationServices];
     
     // Listen for orientation change events
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
@@ -175,12 +199,7 @@
     // Set up the current orientation
     currentOrientation = [[UIDevice currentDevice] orientation];
     
-    // By default, make sure the activity indicator is off
-    if (!isRecording) {
-        [activityIndicator stopAnimating];
-    }
-    
-    // Animate the 
+    self.isReadyToRecord = YES;
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -192,9 +211,24 @@
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
+    videoPreviewLayer = nil;
 }
 
 #pragma mark - Custom Accessors
+
+-(void)setIsRecording:(BOOL)isRecording {
+    // Change the instance variable
+    _isRecording = isRecording;
+    // Make updates to the UI as necessary
+    [self syncRecordUI];
+}
+
+-(void)setIsReadyToRecord:(BOOL)isReadyToRecord {
+    // Change the instance variable
+    _isReadyToRecord = isReadyToRecord;
+    // Make updates to the UI as necessary
+    [self syncRecordUI];
+}
 
 -(void)setCaptureMode:(STRCaptureModeState)captureMode {
     if (_captureMode != captureMode) {
@@ -221,10 +255,11 @@
     return _captureMode;
 }
 
+
+
 #pragma mark - Device Orientation Handling
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+-(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
@@ -233,7 +268,7 @@
     if (currentOrientation
         && newOrientation
         && (currentOrientation != newOrientation)
-        && (!isRecording)
+        && (!_isRecording)
         && (newOrientation != UIDeviceOrientationFaceUp)
         && (newOrientation != UIDeviceOrientationFaceDown)) {
         
@@ -266,7 +301,7 @@
     // Vary behavior based on the mediaSelectorControl
     if (_captureMode == STRCaptureModeVideo) {
         // Start or stop recording video
-        if (isRecording) {
+        if (_isRecording) {
             // Stop capturing
             [self stopCapturingVideo];
             
@@ -302,6 +337,15 @@
     captureDataCollector = [[STRCaptureDataCollector alloc] init];
     captureDataCollector.delegate = self;
 }
+
+-(void)setUpRecordingObservers {
+    NSLog(@"Setting up recording observers");
+    [self addObserver:self forKeyPath:@"isRecording" options:0 context:nil];
+    [self addObserver:self forKeyPath:@"_isRecording" options:0 context:nil];
+    
+}
+
+#pragma mark - Service Teardown
 
 #pragma mark - Error Handling
 
@@ -340,6 +384,12 @@
 
 -(void)captureStillImage {
     
+    // UPGRADES NOTE:
+    // This could all be launched on a seperate thread so that it doesn't
+    // tie up UI elements and then the completion handler could set isRecording to NO;
+    
+    self.isRecording = YES;
+    
     // Write a new geoLocationData file
     geoLocationData = [[STRGeoLocationData alloc] init];
     initialLocation = _locationManager.location;
@@ -354,8 +404,13 @@
     // Capture the image
     [captureDataCollector captureStillImageWithOrientation:currentOrientation];
     
+    // UPGRADES NOTE:
+    // Launch this on the main thread
+    
     // Provide UI feedback of a still image capture
     [self imageCaptureHandleUI];
+    
+    self.isRecording = NO;
 }
 
 #pragma mark - File Handling
@@ -396,33 +451,39 @@
     // Switch the capture mode if necessary
     if (_captureMode == STRCaptureModeVideo) {
         [self setCaptureMode:STRCaptureModeImage];
-        recordButton.title = @"Img";
     } else if (_captureMode == STRCaptureModeImage) {
         [self setCaptureMode:STRCaptureModeVideo];
-        recordButton.title = @"Rec";
     } else {
         if (_advancedLogging) NSLog(@"STRCaptureViewController: Invalid STRCaptureModeState set for captureMode property.");
     }
     
-    // Sync the switch UI
-    [self syncSelectorUI];
+    // Selector UI is automatically changed because setCaptureMode: automatically
+    // also calls the helper UI method syncSelectorUI:.
 }
 
 -(void)syncRecordUI {
-    // Sync UI to reflect recording status
-    // Should be called when a video recording has started
-    // and again when a video recording has ended.
     
-    // Set the record button to enabled
-    [recordButton setEnabled:YES];
-    [activityIndicator stopAnimating];
+    // Set the record button to enabled if recording is ready
+    if (_isReadyToRecord) {
+        [recordButton setEnabled:YES];
+        [activityIndicator stopAnimating];
+    } else {
+        [recordButton setEnabled:NO];
+        [activityIndicator startAnimating];
+    }
     
-    if (isRecording) {
+    if (_isRecording) {
         // Set the record button text
         recordButton.title = @"Stop";
         [mediaSelectorControl setEnabled:NO];
     } else {
-        recordButton.title = @"Rec";
+        
+        if (_captureMode == STRCaptureModeVideo) {
+            recordButton.title = @"Rec";
+        } else {
+            recordButton.title = @"Img";
+        }
+        
         [mediaSelectorControl setEnabled:YES];
     }
 }
@@ -430,8 +491,10 @@
 -(void)syncSelectorUI {
     // Called when the capture mode is changed
     if (_captureMode == STRCaptureModeImage) {
+        recordButton.title = @"Img";
         mediaSelectorControl.selectedSegmentIndex = 1;
     } else if (_captureMode == STRCaptureModeVideo) {
+        recordButton.title = @"Rec";
         mediaSelectorControl.selectedSegmentIndex = 0;
     } else {
         if (_advancedLogging) NSLog(@"STRCaptureViewController: Invalid STRCaptureModeState set for captureMode property.");
@@ -460,8 +523,8 @@
      ];
 }
 
--(void)updateLocationIndicatorUI {
-    #warning Incomplete implementation
+-(void)updateGeoIndicatorUI {
+
 }
 
 -(void)animateShutterOpen {
@@ -476,11 +539,12 @@
 -(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation {
     
     // Log the current location and heading
-    if (isRecording) {
+    if (_isRecording) {
         [self recordCurrentLocationToGeodataObject];
     }
     
-    // Update the accuracy indicator
+    // Update the accuracy indicator or location indicator
+    [self updateGeoIndicatorUI];
     
 }
 
@@ -491,16 +555,16 @@
 #pragma mark - Responding to heading events
 -(void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading {
     // Log the current heading and location
-    if (isRecording) {
+    if (_isRecording) {
         [self recordCurrentLocationToGeodataObject];
     }
     
     // Update the compass
-    
+    [self updateGeoIndicatorUI];
 }
 
 -(BOOL)locationManagerShouldDisplayHeadingCalibration:(CLLocationManager *)manager {
-    if (isRecording) return NO;
+    if (_isRecording) return NO;
     return YES;
 }
 
@@ -511,10 +575,7 @@
 
 -(void)videoRecordingDidBegin {
     if (_advancedLogging) NSLog(@"STRCaptureViewController: Video recording did begin.");
-    isRecording = YES;
-    
-    // Sync the UI now that recording has started
-    [self syncRecordUI];
+    self.isRecording = YES;
     
     // Force record the first geodata point
     mediaStartTime = CACurrentMediaTime();
@@ -530,24 +591,26 @@
 
 -(void)videoRecordingDidEnd {
     if (_advancedLogging) NSLog(@"STRCaptureViewController: Video recording did end.");
-    isRecording = NO;
+    self.isRecording = NO;
+    self.isReadyToRecord = NO;
     
     // Write the JSON geo-data
     [geoLocationData writeDataPointsToTempFile];
     
     // Write files to a more permanent location
     [self resaveTemporaryFilesOfType:@"video"];
-    [self syncRecordUI];
+    self.isReadyToRecord = YES;
 }
 
 -(void)videoRecordingDidFailWithError:(NSError *)error {
     NSLog(@"STRCaptureViewController: !!!ERROR: Video recording failed: %@", error.description);
-    [self syncRecordUI];
+    self.isReadyToRecord = YES;
 }
 
 -(void)stillImageWasCaptured {
     // Save the temp files
     [self resaveTemporaryFilesOfType:@"image"];
+    self.isReadyToRecord = YES;
 }
 
 @end

@@ -81,28 +81,20 @@ typedef enum {
 @interface STRCaptureViewController : UIViewController {
     
     id _delegate;
-    BOOL isRecording;
+    
+    // Capture Support    
+    BOOL _isRecording;
+    BOOL _isReadyToRecord;
     STRCaptureModeState _captureMode;
+    
+    // Location support
+    CLLocationManager * _locationManager;
     
     // UI Elements
     IBOutlet UIActivityIndicatorView * activityIndicator;
     IBOutlet UISegmentedControl * mediaSelectorControl;
     IBOutlet UIBarButtonItem * recordButton;
-    
-    // Location support
-    CLLocationManager * _locationManager;
-    STRGeoLocationData * geoLocationData;
-    CLLocation * initialLocation;
-    CLHeading * initialHeading;
-    
-    // Camera capture support
-    STRCaptureDataCollector * captureDataCollector;
-    AVCaptureVideoPreviewLayer * capturePreviewLayer;
     IBOutlet UIView * videoPreviewLayer;
-    
-    // General capture support
-    double mediaStartTime;
-    UIDeviceOrientation currentOrientation;
 }
 
 /**
@@ -111,6 +103,20 @@ typedef enum {
  The delegate of a STRCaptureViewController should implement a [STRCaptureViewControllerDelegate].
  */
 @property(strong)id delegate;
+
+/**
+ Set to YES when the system is recording a new capture.
+ 
+ You should always use the setter setIsRecording: to set the value of this property so that the proper methods are called for UI updates.
+ */
+@property(nonatomic, setter = setIsRecording:)BOOL isRecording;
+
+/**
+ Set to YES when the system is ready to record a new capture. Set to NO when the system is processing and is unable to begin a new recording.
+ 
+ You should always use the setter setIsReadyToRecord: to set the value of this property so that the proper methods are called for UI updates.
+ */
+@property(nonatomic, setter = setIsReadyToRecord:)BOOL isReadyToRecord;
 
 /**
  Changes the mode so that the recorder captures either a video or an image.
