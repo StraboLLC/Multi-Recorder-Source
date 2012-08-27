@@ -69,20 +69,27 @@
 // All of these can be overridden for subclassing //
 
 /**
-
+ 
  */
 -(void)mediaSelectorDidChange;
+
+// -- Subclassable Methods -- //
+
 -(void)syncRecordUI;
 -(void)syncSelectorUI;
 -(void)imageCaptureHandleUI;
 -(void)updateGeoIndicatorUI;
+
+// -- Lens Cap Support -- //
+
+-(void)setUpLensCap;
 
 /**
  Animates the shutter over the screen to the open position.
  
  This signifies that the view controller has finished loading and is ready to make a capture. It should be called after the view appears, after the location and video capture components have been set up and are running.
  */
--(void)animateShutterOpen;
+-(void)animateLenscapOpen;
 
 @end
 
@@ -123,7 +130,7 @@
     // General capture support
     double mediaStartTime;
     UIDeviceOrientation currentOrientation;
-
+    
 }
 
 @property()BOOL advancedLogging;
@@ -161,6 +168,9 @@
     
     // Set the default capture mode to video
     [self setCaptureMode:STRCaptureModeVideo];
+    
+    // Load the lenscap
+    [self setUpLensCap];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -170,10 +180,6 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated {
-    
-    // UPGRADES NOTE:
-    // This could all be launched on a seperate thread so that it doesn't
-    // tie up UI elements like the DONE button or other media selectors.
     
     // Check all dependent services
     [self checkEnabledLocationServices];
@@ -189,17 +195,32 @@
     }
     [self setUpCaptureServices];
     
-    // Now that the capture services are set up,
-    // load the video preview layer with the captureSession
-    capturePreviewLayer = [AVCaptureVideoPreviewLayer layerWithSession:[captureDataCollector session]];
-    capturePreviewLayer.frame = videoPreviewLayer.bounds;
-    capturePreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-    [videoPreviewLayer.layer addSublayer:capturePreviewLayer];
-    
     // Set up the current orientation
     currentOrientation = [[UIDevice currentDevice] orientation];
     
-    self.isReadyToRecord = YES;
+    NSOperationQueue * setupQueue = [[NSOperationQueue alloc] init];
+    [setupQueue addOperationWithBlock:^{
+        // Perform expensive operations on a seperate thread
+        
+        // Now that the capture services are set up,
+        // load the video preview layer with the captureSession
+        capturePreviewLayer = [AVCaptureVideoPreviewLayer layerWithSession:[captureDataCollector session]];
+        capturePreviewLayer.frame = videoPreviewLayer.bounds;
+        capturePreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+        
+        // When capture setup is complete perform the following UI updates on the main thread
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            
+            // Add the video feed to the preview layer
+            [videoPreviewLayer.layer addSublayer:capturePreviewLayer];
+            
+            // Open the shutter
+            [self animateLenscapOpen];
+            
+            // Set that the device is now ready to record a captures
+            self.isReadyToRecord = YES;
+        }];
+    }];
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
@@ -338,13 +359,6 @@
     captureDataCollector.delegate = self;
 }
 
--(void)setUpRecordingObservers {
-    NSLog(@"Setting up recording observers");
-    [self addObserver:self forKeyPath:@"isRecording" options:0 context:nil];
-    [self addObserver:self forKeyPath:@"_isRecording" options:0 context:nil];
-    
-}
-
 #pragma mark - Service Teardown
 
 #pragma mark - Error Handling
@@ -461,6 +475,8 @@
     // also calls the helper UI method syncSelectorUI:.
 }
 
+#pragma mark Subclassable Methods
+
 -(void)syncRecordUI {
     
     // Set the record button to enabled if recording is ready
@@ -514,7 +530,7 @@
     [self.view addSubview:flashView];
     
     [UIView animateWithDuration:0.4
-                     animations:^(void){
+                     animations:^{
                          [flashView setAlpha:0.0f];
                      }
                      completion:^(BOOL finished){
@@ -524,11 +540,66 @@
 }
 
 -(void)updateGeoIndicatorUI {
-
+    
 }
 
--(void)animateShutterOpen {
-    #warning Incomplete implementation
+#pragma mark Lens Cap Support
+
+-(void)setUpLensCap {
+    
+    // Create the images
+    UIImage * lenscapTopImage = [UIImage imageNamed:@"lenscapTop"];
+    UIImage * lenscapBottomImage = [UIImage imageNamed:@"lenscapBottom"];
+    
+    // Set up the image views
+    UIImageView * lenscapTopView = [[UIImageView alloc] initWithImage:lenscapTopImage];
+    UIImageView * lenscapBottomView = [[UIImageView alloc] initWithImage:lenscapBottomImage];
+    
+    // Create the frames
+    int splitHeight = (int)( ( (double)416.0 / (double)920.0 ) * lenscapView.frame.size.height);
+    CGRect topFrame = CGRectMake(0, 0, lenscapView.frame.size.width, splitHeight);
+    CGRect bottomFrame = CGRectMake(0, splitHeight, lenscapView.frame.size.width, (lenscapView.frame.size.height - splitHeight));
+    lenscapTopView.frame = topFrame;
+    lenscapBottomView.frame = bottomFrame;
+    
+    // Add the image views to the lenscap view
+    [lenscapView addSubview:lenscapTopView];
+    [lenscapView addSubview:lenscapBottomView];
+}
+
+-(void)animateLenscapOpen {
+    
+    if (_advancedLogging) NSLog(@"STRCaptureViewController: Opening Lenscap");
+    
+    NSTimeInterval animationHalfDuration = 0.5;
+    
+    __block UIImageView * lenscapTopView = [lenscapView.subviews objectAtIndex:0];
+    __block CGRect lenscapTopFrame = lenscapTopView.frame;
+    __block UIImageView * lenscapBottomView = [lenscapView.subviews objectAtIndex:1];
+    __block CGRect lenscapBottomFrame = lenscapBottomView.frame;
+    
+    [UIView animateWithDuration:animationHalfDuration
+                     animations:^{
+                         // Perform the first part of the animation
+                         lenscapTopFrame.origin = CGPointMake(0, lenscapTopView.frame.size.height);
+                         lenscapTopView.frame = lenscapTopFrame;
+                     }
+                     completion:^(BOOL finished){
+                         
+                         [UIView animateWithDuration:animationHalfDuration
+                                          animations:^{
+                                              // Perform the second part of the animation
+                                              CGPoint bottomOrigin = CGPointMake(0, lenscapView.frame.size.height);
+                                              lenscapTopFrame.origin = bottomOrigin;
+                                              lenscapBottomFrame.origin = bottomOrigin;
+                                              lenscapTopView.frame = lenscapTopFrame;
+                                              lenscapBottomView.frame = lenscapBottomFrame;
+                                          }
+                                          completion:^(BOOL finished){
+                                              // Get rid of the lens cap view
+                                              lenscapView.hidden = YES;
+                                          }];
+                     }];
 }
 
 @end

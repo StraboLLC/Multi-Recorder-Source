@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12A269" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2549" systemVersion="12B19" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1498"/>
     </dependencies>
@@ -16,6 +16,11 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" id="juy-Mu-ngU">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="whiteLarge" id="fk6-EN-MsP">
                                 <rect key="frame" x="141" y="212" width="37" height="37"/>
@@ -67,6 +72,7 @@
                     </view>
                     <connections>
                         <outlet property="activityIndicator" destination="fk6-EN-MsP" id="ln6-sM-Onq"/>
+                        <outlet property="lenscapView" destination="juy-Mu-ngU" id="Uvq-cs-Kge"/>
                         <outlet property="mediaSelectorControl" destination="j3p-YT-vBR" id="w5e-gv-Et1"/>
                         <outlet property="recordButton" destination="9fS-v1-fm1" id="jRV-Os-YXn"/>
                         <outlet property="videoPreviewLayer" destination="idY-sG-q88" id="IMY-Ol-iCJ"/>
@@ -143,6 +149,7 @@
                 <relationship kind="action" name="doneButtonWasPressed:"/>
                 <relationship kind="action" name="recordButtonWasPressed:"/>
                 <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="lenscapView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="mediaSelectorControl" candidateClass="UISegmentedControl"/>
                 <relationship kind="outlet" name="recordButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="videoPreviewLayer" candidateClass="UIView"/>

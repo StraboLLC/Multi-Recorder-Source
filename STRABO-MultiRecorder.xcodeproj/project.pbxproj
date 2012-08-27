@@ -28,6 +28,10 @@
 		96B1C8B415AB39870041F8AC /* STRCaptureDataCollector.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B1C8AF15AB39870041F8AC /* STRCaptureDataCollector.m */; };
 		96B1C8B515AB39870041F8AC /* STRCaptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B1C8B115AB39870041F8AC /* STRCaptureViewController.m */; };
 		96B1C8B615AB39870041F8AC /* STRGeoLocationData.m in Sources */ = {isa = PBXBuildFile; fileRef = 96B1C8B315AB39870041F8AC /* STRGeoLocationData.m */; };
+		96C23DFF15EBED3400935D13 /* lenscapBottom.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C23DFB15EBED3400935D13 /* lenscapBottom.png */; };
+		96C23E0015EBED3400935D13 /* lenscapBottom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C23DFC15EBED3400935D13 /* lenscapBottom@2x.png */; };
+		96C23E0115EBED3400935D13 /* lenscapTop.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C23DFD15EBED3400935D13 /* lenscapTop.png */; };
+		96C23E0215EBED3400935D13 /* lenscapTop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 96C23DFE15EBED3400935D13 /* lenscapTop@2x.png */; };
 		96E6F89215AB306E00DE1AA5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96E6F89115AB306E00DE1AA5 /* Foundation.framework */; };
 		96E6F8A115AB306E00DE1AA5 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96E6F8A015AB306E00DE1AA5 /* SenTestingKit.framework */; };
 		96E6F8A415AB306E00DE1AA5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 96E6F89115AB306E00DE1AA5 /* Foundation.framework */; };
@@ -95,6 +99,10 @@
 		96B1C8B115AB39870041F8AC /* STRCaptureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRCaptureViewController.m; sourceTree = "<group>"; };
 		96B1C8B215AB39870041F8AC /* STRGeoLocationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRGeoLocationData.h; sourceTree = "<group>"; };
 		96B1C8B315AB39870041F8AC /* STRGeoLocationData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRGeoLocationData.m; sourceTree = "<group>"; };
+		96C23DFB15EBED3400935D13 /* lenscapBottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lenscapBottom.png; sourceTree = "<group>"; };
+		96C23DFC15EBED3400935D13 /* lenscapBottom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lenscapBottom@2x.png"; sourceTree = "<group>"; };
+		96C23DFD15EBED3400935D13 /* lenscapTop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lenscapTop.png; sourceTree = "<group>"; };
+		96C23DFE15EBED3400935D13 /* lenscapTop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lenscapTop@2x.png"; sourceTree = "<group>"; };
 		96E6F88E15AB306E00DE1AA5 /* libSTRABO-MultiRecorder.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libSTRABO-MultiRecorder.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		96E6F89115AB306E00DE1AA5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		96E6F89515AB306E00DE1AA5 /* STRABO-MultiRecorder-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "STRABO-MultiRecorder-Prefix.pch"; sourceTree = "<group>"; };
@@ -230,6 +238,10 @@
 		96E6F89415AB306E00DE1AA5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				96C23DFB15EBED3400935D13 /* lenscapBottom.png */,
+				96C23DFC15EBED3400935D13 /* lenscapBottom@2x.png */,
+				96C23DFD15EBED3400935D13 /* lenscapTop.png */,
+				96C23DFE15EBED3400935D13 /* lenscapTop@2x.png */,
 				96E6F89515AB306E00DE1AA5 /* STRABO-MultiRecorder-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -336,6 +348,10 @@
 			files = (
 				96E6F8AD15AB306E00DE1AA5 /* InfoPlist.strings in Resources */,
 				9629AC0815AB7BF6004FB443 /* AppledocSettings.plist in Resources */,
+				96C23DFF15EBED3400935D13 /* lenscapBottom.png in Resources */,
+				96C23E0015EBED3400935D13 /* lenscapBottom@2x.png in Resources */,
+				96C23E0115EBED3400935D13 /* lenscapTop.png in Resources */,
+				96C23E0215EBED3400935D13 /* lenscapTop@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
