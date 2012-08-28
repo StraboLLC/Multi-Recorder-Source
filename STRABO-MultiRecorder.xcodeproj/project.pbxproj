@@ -11,6 +11,7 @@
 		9629AC0815AB7BF6004FB443 /* AppledocSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9629AC0715AB7BF6004FB443 /* AppledocSettings.plist */; };
 		9634F5F615ADBEED005E1C21 /* STRCaptureFileOrganizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9634F5F515ADBEED005E1C21 /* STRCaptureFileOrganizer.m */; };
 		9643233615B8955E00937DDA /* STRCaptureUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9643233515B8955E00937DDA /* STRCaptureUploadManager.m */; };
+		9647B6D715ED21AC00BF27D2 /* pinImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 9647B6D615ED21AC00BF27D2 /* pinImage.png */; };
 		9654D6EF15DAB156003E17E8 /* STRSettings.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 965BB21615D1BE7600F13D73 /* STRSettings.h */; };
 		9654D6F015DAB156003E17E8 /* multi-recorder-sdk.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 969A743F15AC799400160FD2 /* multi-recorder-sdk.h */; };
 		9654D6F115DAB156003E17E8 /* STRCaptureViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 96B1C8B015AB39870041F8AC /* STRCaptureViewController.h */; };
@@ -80,6 +81,7 @@
 		9634F5F515ADBEED005E1C21 /* STRCaptureFileOrganizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRCaptureFileOrganizer.m; sourceTree = "<group>"; };
 		9643233415B8955E00937DDA /* STRCaptureUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRCaptureUploadManager.h; sourceTree = "<group>"; };
 		9643233515B8955E00937DDA /* STRCaptureUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRCaptureUploadManager.m; sourceTree = "<group>"; };
+		9647B6D615ED21AC00BF27D2 /* pinImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pinImage.png; sourceTree = "<group>"; };
 		9654D6FB15DACF38003E17E8 /* STRPlaybackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRPlaybackViewController.h; sourceTree = "<group>"; };
 		9654D6FC15DACF38003E17E8 /* STRPlaybackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STRPlaybackViewController.m; sourceTree = "<group>"; };
 		9654D71715DAD75D003E17E8 /* STRPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STRPlayerView.h; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 				96C23DFC15EBED3400935D13 /* lenscapBottom@2x.png */,
 				96C23DFD15EBED3400935D13 /* lenscapTop.png */,
 				96C23DFE15EBED3400935D13 /* lenscapTop@2x.png */,
+				9647B6D615ED21AC00BF27D2 /* pinImage.png */,
 				96E6F89515AB306E00DE1AA5 /* STRABO-MultiRecorder-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -352,6 +355,7 @@
 				96C23E0015EBED3400935D13 /* lenscapBottom@2x.png in Resources */,
 				96C23E0115EBED3400935D13 /* lenscapTop.png in Resources */,
 				96C23E0215EBED3400935D13 /* lenscapTop@2x.png in Resources */,
+				9647B6D715ED21AC00BF27D2 /* pinImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

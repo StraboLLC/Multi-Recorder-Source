@@ -199,9 +199,9 @@
 /**
  Generates a dictionary of points information with timestamps as keys and geodata objects.
  
- The returned dictionary contains keys of the same values as returned by geoDataPointTimestamps. These keys correspond to NSArray objects. The first element of the array object is a CLLocationCoordinate2D. The second array element is a heading, represented by an NSNumber. This method essentially builds an object from the [geodata file](UnderlyingMechanics) that you can handle easily.
+ The returned dictionary contains keys of the same values as returned by geoDataPointTimestamps. These keys correspond to NSArray objects. The first element of the array object is a CLLocation. The second array element is a heading, represented by an NSNumber. This method essentially builds an object from the [geodata file](UnderlyingMechanics) that you can handle easily.
  
- @return NSDictionary A dictionary of key-value pairs that correspond to geodata points collected during a capture. The keys correspond to timestamps and the values are arrays containing CLLocationCoordinate2D's at index 0 and NSNumber headings at index 1.
+ @return NSDictionary A dictionary of key-value pairs that correspond to geodata points collected during a capture. The keys correspond to timestamps and the values are arrays containing CLLocations at index 0 and NSNumber headings at index 1.
  
  Returns nil in the event of an error.
  */

@@ -100,6 +100,10 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
+                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="O0f-iK-UU6">
+                                        <rect key="frame" x="0.0" y="240" width="320" height="240"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    </mapView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -127,6 +131,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="hbK-Y9-Xka" id="3uK-ai-KAb"/>
                         <outlet property="mainView" destination="9EH-oH-ZS9" id="8zR-pz-51U"/>
+                        <outlet property="mapView" destination="O0f-iK-UU6" id="OIc-nr-VyD"/>
                         <outlet property="playButton" destination="QvV-4u-GBJ" id="TBv-6e-5jd"/>
                         <outlet property="playerView" destination="62M-ly-rrh" id="Owh-Xo-VgU"/>
                         <outlet property="toolbar" destination="3Rm-sU-pH6" id="oa6-tc-dXh"/>
@@ -143,7 +148,6 @@
                 <relationship kind="action" name="doneButtonWasPressed:"/>
                 <relationship kind="action" name="recordButtonWasPressed:"/>
                 <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="lenscapView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="mediaSelectorControl" candidateClass="UISegmentedControl"/>
                 <relationship kind="outlet" name="recordButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="videoPreviewLayer" candidateClass="UIView"/>
@@ -155,6 +159,7 @@
                 <relationship kind="action" name="playButtonWasPressed:"/>
                 <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="mainView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
                 <relationship kind="outlet" name="playButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="playerView" candidateClass="STRPlayerView"/>
                 <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>

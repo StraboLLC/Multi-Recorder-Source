@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
+#import <MapKit/MapKit.h>
 
 #import "STRCapture.h"
 #import "STRPlayerView.h"
@@ -27,6 +28,9 @@
 @property(nonatomic)AVPlayerItem * playerItem;
 @property(nonatomic, weak)IBOutlet STRPlayerView * playerView;
 @property(nonatomic, weak)IBOutlet UIBarButtonItem * playButton;
+
+// Map Stuff
+@property(nonatomic, weak)IBOutlet MKMapView * mapView;
 
 // UI Stuff
 @property(nonatomic, weak)IBOutlet UIActivityIndicatorView * activityIndicator;
