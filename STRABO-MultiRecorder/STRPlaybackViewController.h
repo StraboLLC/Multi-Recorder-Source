@@ -13,6 +13,13 @@
 #import "STRCapture.h"
 #import "STRPlayerView.h"
 
+/*
+ A viewer which plays back video and movements on a map simultaneously in a split-screen interface.
+ 
+ Completely self-contained player for a STRCapture object.
+ 
+ @warning This class is built completely on top of and using public functions of the SDK. It is meant to be a proof of concept and is in no way ready for production. It has NOT been debugged and error handling is essentially non-existent. I hacked it out one morning to demonstrate that it is possible (and relatively easy) to build a player on top of the SDK.
+ */
 @interface STRPlaybackViewController : UIViewController {
     STRCapture * _localCapture;
 }

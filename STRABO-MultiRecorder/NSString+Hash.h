@@ -15,11 +15,15 @@
 
 /**
  Hashes a given string with the MD5 algorithm.
+ 
+ @return NSString A string hashed with the MD5 algorithm.
  */
 -(NSString *)MD5;
 
 /**
  Hashes a given string with the SHA2 algorithm.
+ 
+ @return NSString A string hashed with the SHA2 algorithm.
  */
 -(NSString *)SHA2;
 

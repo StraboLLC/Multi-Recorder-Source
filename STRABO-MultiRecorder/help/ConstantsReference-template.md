@@ -53,6 +53,18 @@ Default Value:
 Constants
 ---------
 
-###Some Title
+###STRCaptureAttribute
 
-***STUB***
+####Description
+
+Used as keys for attributes that describe information associated with a capture.
+
+These constants are used when creating a new capture from a file rather than recording a capture with a STRCaptureViewController. Create a dictionary using these keys as values to pass to the method newCaptureWithImageAtPath:attributes: in the STRCaptureFileManager class. See the documentation for that method for more information about how to construct the dictionary.
+
+####Possible Values
+
+STRCaptureAttributeLatitude
+STRCaptureAttributeLongitude
+STRCaptureAttributeHeading
+STRCaptureAttributeDate
+STRCaptureAttributeTitle

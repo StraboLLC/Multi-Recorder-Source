@@ -17,8 +17,14 @@
  Creating a Capture object
  -------------------------
  
+ You can either create a capture object using captureFromFilesAtDirectory: or captureWithToken:. Using the current directory structure (as described in the Underlying Mechanics guide), these methods perform nearly identical functions. You can search for local captures by recursively searching for files in the Strabo Captures directory.
+ 
+ If you are implementing the full SDK, there is no reason to search through the directory structure for tracks. You should use a STRCaptureFileManager to obtain arrays of local tracks which contain STRCapture objects. The class methods in this class are mostly for internal support.
+ 
  Editing a Capture object
  ------------------------
+ 
+ You are free to edit the public, readwrite properties of this class. When you create an instance of a STRCapture, you can change the values of title and uploadDate. Once you change these values, call the save method to make your changes persistent. The values for the rest of the properties are handled for you, although you have read access to all of them.
  */
 @interface STRCapture : NSObject {
     NSString * _captureInfoPath;
@@ -128,14 +134,14 @@
  
  "Untitled Capture" is the default value for this property. If you wish to reset the title of a capture, change this property and then commit your changes by calling the save method.
  */
-@property(nonatomic, strong)NSString * title;
+@property(nonatomic, strong, readwrite)NSString * title;
 
 /**
  The date that the track was uploaded.
  
  Set to nil by default, but can be changed so that you can keep track of if and when tracks are uploaded to the server. Set this property and then use the save method to commit your changes.
  */
-@property(nonatomic, strong)NSDate * uploadDate;
+@property(nonatomic, strong, readwrite)NSDate * uploadDate;
 
 ///---------------------------------------------------------------------------------------
 /// @name Class Methods
@@ -144,7 +150,7 @@
 /**
  Returns a new STRCapture object with the files at the directory specified.
  
- Notice that the capture directory is not the absolute path to the directory, but is rather the name of the directory containing the capture media files relative to the "StraboCaptures" directory. ~~For example, under the naming scheme as of July, 2012, the capture directory could be something like: @"1342193443".~~ For example under the naming scheme as of August, 2012, the capture directory could be something like "
+ Notice that the capture directory is not the absolute path to the directory, but is rather the name of the directory containing the capture media files relative to the "StraboCaptures" directory. ~~For example, under the naming scheme as of July, 2012, the capture directory could be something like: @"1342193443".~~ For example under the naming scheme as of August, 2012, the capture directory could be something like "13asdf193...134asdf93/1342asdf3...13asdf93"
  
  @param captureDirectory The name of the directory containing the capture media files.
  */

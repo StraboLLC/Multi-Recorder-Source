@@ -5,6 +5,8 @@ If you have not downloaded the SDK yet, see "[Getting the SDK](GettingTheSDK)".
 
 If you have downloaded and implemented the SDK, at some point in your application you will undoubtedly want to display the view to capture a video or image using the Strabo capture geo-tagging technique. This guide will walk you through the steps to present the capture view, dismiss the capture view, and then access the files that may have been captured.
 
+Note that this is a basic guide. A few fundamental features are covered here, but please see the documentation that accompanies each class for more information about advanced features of the SDK.
+
 Contents of this guide:
 
 1. [Presenting the Capture View Controller](#section1)
@@ -23,6 +25,8 @@ As of August 22, 2012, the STRCaptureViewController with all stock UI elements l
 	<img src="iOS-screenshot1.png" style="width: 200px; float: right; margin: auto 20px;" />
 </div>
 
+When the view is first presented, a lenscap image covers the screen. Once the image preview is loaded and all of the components of the recorder are set up, the lenscap automatically animates open. This behavior is very similar to Apple's native camera application.
+
 Prepare the view controller that will present the STRCaptureViewController as follows:
 
 In your header file, import the sdk header file. This will ensure that you have access to all of the classes that you might decide to implement.
@@ -33,9 +37,9 @@ Alternatively, if you are a pro, you could just include the files that you know 
 	
 	#import "StraboCaptureViewController.h"
 
-Your view controller should also serve as a [STRCaptureViewControllerDelegate](STRCaptureViewControllerDelegate). That means that it needs to implement at least the required delegate methods. See the documentation for STRCaptureViewControllerDelegate for more details.
+Your view controller should also serve as a [STRCaptureViewControllerDelegate](STRCaptureViewControllerDelegate). That means that it needs to implement at least the required methods in the protocol. See the documentation for STRCaptureViewControllerDelegate for more details.
 
-In many examples, the capture view will need to be presented when the user taps a button. For this reason, in my example, I will include the code to display the capture view as if it is hooked up to a button in a Storyboard file.
+In many examples, the capture view will need to be presented when the user taps a button. For this reason, in my example, I will include the code to display the capture view as if it is hooked up to a button in a Storyboard or XIB file.
 
 In total, your .h file might look similar to the following:
 
@@ -215,3 +219,8 @@ Upload the token and any associated data to your server. When the device has acc
 ####Access tokens and retrieve captures
 
 Using the data stored on the cloud in your table of users, tokens, and associated data, you can search for tokens by any parameters you would like. For the example I have described above, you could, in theory, search for all captures tagged with "Sequoia" and generate an array of corresponding tokens. The web API describes how to access captures using the unique token identifier strings. Once you obtain this array of tokens from your own database, you can pass it to the javascript library to retrieve a series of captures.
+
+Further Reading
+---------------
+
+For more information about the underlying storage and upload techniques, feel free to read the [Underlying Mechanics guide](UnderlyingMechanics). This may be helpful for your understanding of the backend code but should not be necessary reading for you to implement the basic features and functions of the SDK.

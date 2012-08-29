@@ -5,7 +5,7 @@ This guide will walk you through downloading and incorporating the Ramble-style 
 
 This recorder is similar to the iPhone native camera application in appearance, but it captures location data from the user in a unique way. When taking pictures, the application creates and stores a file with all relevant associated geo-data. For videos, the application creates and stores a file with geo-data relevant to the movemenet of the device throughout the capturing of the video.
 
-This SDK was designed to be as plug-and-play as possible. The files are meant to me a module that you can customize and include in your application in order to modally present a view with camera functionality to your user at any time.
+This SDK was designed to be as plug-and-play as possible. The files are meant to be a module that you can customize and include in your application in order to modally present a view with camera functionality to your user at any time.
 
 Contents of the guide:
 

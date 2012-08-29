@@ -16,7 +16,7 @@ Run the following code in terminal:
 	$ cd ~/new/directory/strabo-multi-recorder
 	$ git clone https://github.com/StraboLLC/Strabo-Multi-Recorder
 
-NOTE: Alternatively, you can clone the repository using SSH rather than HTTPS with the following:
+NOTE: Alternatively, you can clone the repository using SSH rather than HTTPS with the following URL:
 
 	git@github.com:StraboLLC/Strabo-Multi-Recorder.git
 
@@ -31,6 +31,29 @@ The contents of the cloned repo should be as follows:
 			installDocs
 		src/
 			libStrabo-Multi-Recorder.a
+			NSDate+Date_Utilities.h		
+			NSString+Hash.h			
+			STRCapture.h			
+			STRCaptureDataCollector.h	
+			STRCaptureFileManager.h		
+			STRCaptureFileOrganizer.h	
+			STRCaptureUploadManager.h	
+			STRCaptureViewController.h	
+			STRGeoLocationData.h		
+			STRMultiRecorderStoryboard.storyboard
+			STRPlaybackViewController.h
+			STRPlayerView.h
+			STRSettings.h
+			STRSettings.plist
+			lenscapBottom.png
+			lenscapBottom@2x.png
+			lenscapTop.png
+			lenscapTop@2x.png
+			libSTRABO-MultiRecorder.a
+			multi-recorder-sdk.h
+			pinImage.png
+
+
 
 Installing the Documentation
 ----------------------------
