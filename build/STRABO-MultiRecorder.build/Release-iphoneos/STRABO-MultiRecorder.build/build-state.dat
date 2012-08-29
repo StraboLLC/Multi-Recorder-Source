@@ -4,6 +4,7 @@ r1
 cCheck dependencies
 cProcessPCH /var/folders/wm/7xthqbg91bj5h7nf2wj8f1n00000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/STRABO-MultiRecorder-Prefix-gpvgoviddcdocngrzsfitfvyzhvv/STRABO-MultiRecorder-Prefix.pch.pth STRABO-MultiRecorder/STRABO-MultiRecorder-Prefix.pch normal armv7 objective-c com.apple.compilers.llvm.clang.1_0.compiler
 cCompileC build/STRABO-MultiRecorder.build/Release-iphoneos/STRABO-MultiRecorder.build/Objects-normal/armv7/STRCaptureViewController.o /Users/tnbeatty/Documents/Developer/StraboGIS/Multi-Recorder/STRABO-MultiRecorder/STRABO-MultiRecorder/STRCaptureViewController.m normal armv7 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/STRABO-MultiRecorder.build/Release-iphoneos/STRABO-MultiRecorder.build/Objects-normal/armv7/STRPlayerView.o /Users/tnbeatty/Documents/Developer/StraboGIS/Multi-Recorder/STRABO-MultiRecorder/STRABO-MultiRecorder/STRPlayerView.m normal armv7 objective-c com.apple.compilers.llvm.clang.1_0.compiler
 cCompileC build/STRABO-MultiRecorder.build/Release-iphoneos/STRABO-MultiRecorder.build/Objects-normal/armv7/STRCaptureDataCollector.o /Users/tnbeatty/Documents/Developer/StraboGIS/Multi-Recorder/STRABO-MultiRecorder/STRABO-MultiRecorder/STRCaptureDataCollector.m normal armv7 objective-c com.apple.compilers.llvm.clang.1_0.compiler
 cCompileC build/STRABO-MultiRecorder.build/Release-iphoneos/STRABO-MultiRecorder.build/Objects-normal/armv7/STRGeoLocationData.o /Users/tnbeatty/Documents/Developer/StraboGIS/Multi-Recorder/STRABO-MultiRecorder/STRABO-MultiRecorder/STRGeoLocationData.m normal armv7 objective-c com.apple.compilers.llvm.clang.1_0.compiler
 cCompileC build/STRABO-MultiRecorder.build/Release-iphoneos/STRABO-MultiRecorder.build/Objects-normal/armv7/STRCaptureFileManager.o /Users/tnbeatty/Documents/Developer/StraboGIS/Multi-Recorder/STRABO-MultiRecorder/STRABO-MultiRecorder/STRCaptureFileManager.m normal armv7 objective-c com.apple.compilers.llvm.clang.1_0.compiler
@@ -14,7 +15,6 @@ cCompileC build/STRABO-MultiRecorder.build/Release-iphoneos/STRABO-MultiRecorder
 cCompileC build/STRABO-MultiRecorder.build/Release-iphoneos/STRABO-MultiRecorder.build/Objects-normal/armv7/STRCaptureUploadManager.o /Users/tnbeatty/Documents/Developer/StraboGIS/Multi-Recorder/STRABO-MultiRecorder/STRABO-MultiRecorder/STRCaptureUploadManager.m normal armv7 objective-c com.apple.compilers.llvm.clang.1_0.compiler
 cCompileC build/STRABO-MultiRecorder.build/Release-iphoneos/STRABO-MultiRecorder.build/Objects-normal/armv7/STRSettings.o /Users/tnbeatty/Documents/Developer/StraboGIS/Multi-Recorder/STRABO-MultiRecorder/STRABO-MultiRecorder/STRSettings.m normal armv7 objective-c com.apple.compilers.llvm.clang.1_0.compiler
 cCompileC build/STRABO-MultiRecorder.build/Release-iphoneos/STRABO-MultiRecorder.build/Objects-normal/armv7/STRPlaybackViewController.o /Users/tnbeatty/Documents/Developer/StraboGIS/Multi-Recorder/STRABO-MultiRecorder/STRABO-MultiRecorder/STRPlaybackViewController.m normal armv7 objective-c com.apple.compilers.llvm.clang.1_0.compiler
-cCompileC build/STRABO-MultiRecorder.build/Release-iphoneos/STRABO-MultiRecorder.build/Objects-normal/armv7/STRPlayerView.o /Users/tnbeatty/Documents/Developer/StraboGIS/Multi-Recorder/STRABO-MultiRecorder/STRABO-MultiRecorder/STRPlayerView.m normal armv7 objective-c com.apple.compilers.llvm.clang.1_0.compiler
 cLibtool /Users/tnbeatty/Documents/Developer/StraboGIS/Multi-Recorder/STRABO-MultiRecorder/build/Release-iphoneos/libSTRABO-MultiRecorder.a normal armv7
 cPBXCp STRABO-MultiRecorder/STRSettings.h build/Release-iphoneos/include/STRABO-MultiRecorder/STRSettings.h
 cPBXCp STRABO-MultiRecorder/multi-recorder-sdk.h build/Release-iphoneos/include/STRABO-MultiRecorder/multi-recorder-sdk.h
@@ -329,7 +329,7 @@ s2873808
 
 CCheck dependencies
 r0
-lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependencies734bd3bdb3eeb541^82028bbeb3eeb541^---0#1#0#--18"Check dependencies36"E2ABC6D3-7338-44E0-A91B-538EE435A96F-
+lSLF05#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependencies336e128bb5eeb541^0b41428bb5eeb541^---0#1#0#--18"Check dependencies36"52065D50-0C53-4A9E-940A-815B34D5152C-
 
 CCompileC build/STRABO-MultiRecorder.build/Release-iphoneos/STRABO-MultiRecorder.build/Objects-normal/armv7/NSDate+Date_Utilities.o /Users/tnbeatty/Documents/Developer/StraboGIS/Multi-Recorder/STRABO-MultiRecorder/STRABO-MultiRecorder/NSDate+Date_Utilities.m normal armv7 objective-c com.apple.compilers.llvm.clang.1_0.compiler
 s367526157.993293
