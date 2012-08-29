@@ -31,6 +31,8 @@ NSTimeInterval const STRLenscapAnimationDuration;
  This is the protocol that the delegate object of the STRCaptureViewController should implement.
  
  The only method that you need to implement is parentShouldDismissCaputreViewController:. Because you should have presented the STRCaptureViewController modally, as described in its documentation, it should be dismissed by its parent like any other modally presented view.
+ 
+ If for some reason you presented the capture view using a custom presentation method, like with a custom container view controller, etc, implementing this protocol allows you to dismiss the STRCaptureViewController in any way that you would like.
  */
 @protocol STRCaptureViewControllerDelegate
 
@@ -41,7 +43,7 @@ NSTimeInterval const STRLenscapAnimationDuration;
  
  When this method is called, take any necessary action and then dismiss the view controller with a line of code similar to the following:
  
-    [self dismissViewControllerAnimated:YES completion:^{ NSLog("Capture view controller was dismissed.") }]
+    [self dismissViewControllerAnimated:YES completion:^{ NSLog("Capture view controller dismissed.") }];
  
  @param sender The capture view controller (STRCaptureViewController) that should be dismissed.
  */
@@ -71,6 +73,8 @@ NSTimeInterval const STRLenscapAnimationDuration;
     -(void)syncRecordUI;
     -(void)syncSelectorUI;
     -(void)imageCaptureHandleUI;
+    -(void)updateInterfaceToReflectOrientationChange; 
+    -(void)updateGeoIndicatorUI;
  
  An overview of the methods to override:
  
@@ -78,9 +82,41 @@ NSTimeInterval const STRLenscapAnimationDuration;
  
  Syncs the user interface to reflect recording status. This method is called when video recording has started and again when it has ended (independent of success). In this method, you should update any user interface elements that respond to a change in the status of the instance variable isRecording.
  
- First, you should check isRecording to determine the recording state of the player. Next, you should update UI elements as necessary. For example, start or end record button flashing, enable or disable record buttons or capture mode selectors, etc.
+ First, you should check the instance variables `_isRecording` and `_isReadyToRecord` to determine the recording state of the player. Next, you should update UI elements as necessary. For example, start or end a flashing recording button, enable or disable record buttons or capture mode selectors, etc, start or stop an activity indicator to indicate that the player is not ready to record.
  
- ***STUB*** (good BBQ sauce)
+ This method is called anytime either `_isRecording` or `_isReadyToRecord` changes.
+ 
+ ###syncSelectorUI
+ 
+ Syncs the user interface to reflect the current capture mode. You should check the `_captureMode` instance variable (it will be set to a STRCaptureModeState) and update your user interface accordingly.
+ 
+ For example, if you are using a segmented control or a switch that allows the user to change between capture modes, you might override this method in your subclass to change the image on the record button from a camera to a video recorder or vice versa.
+ 
+ ###imageCaptureHandleUI
+ 
+ Provides some sort of feedback to the user when an image is captured. This method is called exactly when a still image is captured.
+ 
+ The default behavior is to display a flash over the screen. You could change the flash behavior by overriding this method and providing your own animation.
+ 
+ ###updateInterfaceToReflectOrientationChange
+ 
+ Called whenever the device rotates. To avoid supporting traditional device rotations with rearranged views, this method provides feedback whenever the device is rotated.
+ 
+ You would choose to subclass this method if you would like to rotate on-screen UI elements when the device is rotated. For example, you could rotate a camera image on your record button so that it always remains face-up.
+ 
+ When subclassing this method, first check the instance variable `_currentOrientation`, which will be set to a UIDeviceOrientation. Then, update any necessary user interface elements appropriately.
+ 
+ ###updateGeoIndicatorUI
+ 
+ Called whenever the CLLocationManager changes its location, heading, or accuracy.
+ 
+ If you are displaying an accuracy indicator, compass bearing, or other location indicator, you may want to override this method.
+ 
+ You should check the `_locationManager`, which contains the current location information, to get any information that you need to update your location UI elements.
+ 
+ For example, you can get the current location accuracy in meters with the following line of code:
+ 
+    CLLocationAccuracy currentAccuracy = [[_locationManager location] horizontalAccuracy];
  
  */
 @interface STRCaptureViewController : UIViewController {
@@ -167,6 +203,10 @@ NSTimeInterval const STRLenscapAnimationDuration;
  */
 @property(nonatomic, strong, readwrite)CLLocationManager * locationManager;
 
+///---------------------------------------------------------------------------------------
+/// @name Class Methods
+///---------------------------------------------------------------------------------------
+
 /**
  Returns a new STRCaptureViewControllre object.
  
@@ -176,12 +216,25 @@ NSTimeInterval const STRLenscapAnimationDuration;
  */
 +(STRCaptureViewController *)captureManager;
 
+///---------------------------------------------------------------------------------------
+/// @name Utilities
+///---------------------------------------------------------------------------------------
+
 /**
  Called to handle rotation events without updating UIInterfaceOrientation.
  
  You should never need to call this method directly. It is called by the default device notification center in the event of a device rotation.
  */
 -(void)deviceDidRotate;
+
+/**
+ Resets the capture quality to the desired setting.
+ 
+ Alters the associated instance of STRCaptureDataCollector so that it records video at the quality set by the parameter. The capture qualities are defined in `AVCaptureSession.h` in the AVFoundation framework.
+ 
+ @param NSString An AVCaptureSessionPreset, as defined in `AVCaptureSession.h`.
+ */
+-(void)setCaptureQuality:(NSString *)captureSessionPreset;
 
 ///---------------------------------------------------------------------------------------
 /// @name Button Handling

@@ -309,9 +309,7 @@ NSTimeInterval const STRLenscapAnimationDuration = 0.6;
         // Update the Location Manager with the new orientation setting.
         _locationManager.headingOrientation = _currentOrientation;
         
-        if (_advancedLogging) {
-            NSLog(@"STRCaptureViewController: Orientation changed to: %i", _currentOrientation);
-        }
+        if (_advancedLogging) NSLog(@"STRCaptureViewController: Orientation changed to: %i", _currentOrientation);
     }
 }
 
@@ -320,6 +318,10 @@ NSTimeInterval const STRLenscapAnimationDuration = 0.6;
 +(STRCaptureViewController *)captureManager {
     UIStoryboard * recorderStoryboard = [UIStoryboard storyboardWithName:@"STRMultiRecorderStoryboard" bundle:[NSBundle mainBundle]];
     return [recorderStoryboard instantiateViewControllerWithIdentifier:@"captureViewController"];
+}
+
+-(void)setCaptureQuality:(NSString *)captureSessionPreset {
+    [captureDataCollector setCaptureQuality:captureSessionPreset];
 }
 
 #pragma mark - Button Handling

@@ -203,6 +203,10 @@ NSTimeInterval const STRLenscapAnimationDuration;
  */
 @property(nonatomic, strong, readwrite)CLLocationManager * locationManager;
 
+///---------------------------------------------------------------------------------------
+/// @name Class Methods
+///---------------------------------------------------------------------------------------
+
 /**
  Returns a new STRCaptureViewControllre object.
  
@@ -212,12 +216,25 @@ NSTimeInterval const STRLenscapAnimationDuration;
  */
 +(STRCaptureViewController *)captureManager;
 
+///---------------------------------------------------------------------------------------
+/// @name Utilities
+///---------------------------------------------------------------------------------------
+
 /**
  Called to handle rotation events without updating UIInterfaceOrientation.
  
  You should never need to call this method directly. It is called by the default device notification center in the event of a device rotation.
  */
 -(void)deviceDidRotate;
+
+/**
+ Resets the capture quality to the desired setting.
+ 
+ Alters the associated instance of STRCaptureDataCollector so that it records video at the quality set by the parameter. The capture qualities are defined in `AVCaptureSession.h` in the AVFoundation framework.
+ 
+ @param NSString An AVCaptureSessionPreset, as defined in `AVCaptureSession.h`.
+ */
+-(void)setCaptureQuality:(NSString *)captureSessionPreset;
 
 ///---------------------------------------------------------------------------------------
 /// @name Button Handling

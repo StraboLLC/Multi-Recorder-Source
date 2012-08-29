@@ -12,6 +12,8 @@
  Holds the geo-location data recorded by a capture.
  
  Using one of these objects is a convenient way to store a series of geo-data points associated with any type of capture supported by Strabo.
+ 
+ @warning When implementing the basic functions of the SDK, you should not need to create a STRCaptureDataCollector instance directly. This object is used by a STRCaptureViewController to handle the recording of geodata.s
  */
 @interface STRGeoLocationData : NSObject {
     id delegate;

@@ -10,6 +10,13 @@
 #import <AVFoundation/AVFoundation.h>
 #import <UIKit/UIKit.h>
 
+/**
+ Protocol required to be implemented by the delegate object of a [STRCaptureDataCollector].
+ 
+ This protocol allows the STRCaptureDataCollector to notify its delegate object about important recording events, both for image and video recording. This allows the coordination of other data-capture objects in the Strabo Multi-Recorder SDK.
+ 
+ @warning When implementing the basic functions of the SDK, you should not need to create a STRCaptureDataCollector instance directly. This object is used by a STRCaptureViewController to handle video, audio, and image recording.
+ */
 @protocol STRCaptureDataCollectorDelegate
 
 @required
@@ -24,7 +31,7 @@
 /**
  An object for recording both video and still images.
  
- Upon initialization, this object sets up a recording session with some default values. Values like the recording quality can be altered by calling methods like setCaptureQuality.
+ Upon initialization, this object sets up a recording session with some default values. The recording quality can be set with setCaptureQuality:.
  */
 @interface STRCaptureDataCollector : NSObject {
     id _delegate;
@@ -36,6 +43,11 @@
     AVCaptureStillImageOutput * _imageFileOutput;
 }
 
+/**
+ The delegate for the STRCaptureDataCollector object.
+ 
+ The delgate object should implement the [STRCaptureDataCollectorDelegate] protocol.
+ */
 @property(strong)id delegate;
 
 @property(readonly)AVCaptureSession * session;

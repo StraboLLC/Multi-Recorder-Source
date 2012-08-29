@@ -59,6 +59,8 @@
 
 /**
  Reports that the capture was not able to be successfully uploaded.
+ 
+ @param error The error that occurred which caused the capture upload to fail. Nil if the error is unknown.
  */
 -(void)fileUploadDidFailWithError:(NSError *)error;
 
@@ -95,7 +97,7 @@
 /**
  Creates and returns a new STRCaptureUploadManager
  
- @return STRCaptureUploadManager A new instance of a STRCaptureUploadManager. Have fun with it.
+ @return STRCaptureUploadManager A new instance of a STRCaptureUploadManager.
  */
 +(STRCaptureUploadManager *)defaultManager;
 

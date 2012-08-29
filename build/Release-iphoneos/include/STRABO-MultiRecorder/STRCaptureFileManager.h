@@ -18,6 +18,8 @@
  STRCaptureAttributes
  
  Used as keys in the attributes dictionary of newCaptureWithImageAtPath:attributes:
+ 
+ See the [ConstantsReference] guide for more information.
  */
 typedef NSString STRCaptureAttribute;
 

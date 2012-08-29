@@ -6,9 +6,25 @@ Revisions to the master branch of the SDK will continue to be made, without noti
 1.0
 ---
 
-###1.0.1
+###1.0.2 - Stable Release Candidate
+#####August 29, 2012
+
+- New Features
+	- STRCaptureViewController Lenscap animation
+	- Added settings and utility functions to multiple classes
+	- Successfully built and tested sample proof of concept capture player
+		- Player support utility functions tested, documented, and finalized
+- Stabilized Features
+	- Multithreaded STRCaptureViewController video initialization
+		- Vastly improved video preview loadtime
+		- Improved stability
+		- UI usability during loadtime now that expensive processing is moved off of the main thread
+- Bugfixes
+	- Minor bugfixes
+
+###1.0.1 - Beta
 #####August 24, 2012
-- New features
+- New Features
 	- Settings stored in plist file
 	- Import from URL or Photo Roll
 	- Export to iOS shared photo roll
@@ -26,7 +42,7 @@ Revisions to the master branch of the SDK will continue to be made, without noti
 	- Capture sorting
 	- Plugged memory leaks
 
-###1.0.0
+###1.0.0 - Alpha
 #####August 1, 2012
 - Basic Functionality
   - Capture video and still images
